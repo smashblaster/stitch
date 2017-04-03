@@ -7,14 +7,41 @@ CGamecubeConsole console(3);
 #define pinLed LED_BUILTIN
 
 // Zero the buffer and control stick
-int bufferrr = 0;
+int dashBuffer = 0;
 int i = 1;
 int X = 128;
 
 void setup() {
 	Serial.begin(9600);
-	// Set up debug led
 	pinMode(pinLed, OUTPUT);
+}
+
+void dashback(auto r1, Gamecube_Data_t data) {
+	// Zeros the x-Axis in the code
+	if (i == 1) {
+		int X = r1.xAxis;
+		i = 0;
+	}
+
+	// If the x axis is between these two than set buffer to eight
+	if (r1.xAxis > X - 21 && r1.xAxis < X + 21) {
+		// CHANGE THIS TO 8 IF PLAYING ON DOLPHIN
+		dashBuffer = 2;
+	}
+
+	// The dashback modification
+	if (r1.xAxis < X - 22 || r1.xAxis > X + 22) {
+		// Automatically dashes and skips all buffer if you enter running state
+		if (r1.xAxis > X + 97 || r1.xAxis < X - 97) {
+			data.report.xAxis = r1.xAxis;
+			dashBuffer = 0;
+		}
+		if (dashBuffer > 0) {
+			// Set x-axis to neutral
+			data.report.xAxis = 128;
+			dashBuffer = dashBuffer - 1;
+		}
+	}
 }
 
 void loop() {
@@ -30,18 +57,6 @@ void loop() {
 
 	// Zero the controller out on startup
 	data.origin = controller.getOrigin();
-
-	// Zeros the x-Axis in the code
-	if (i == 1){
-		int X = r1.xAxis;
-		i = 0;
-	}
-
-	// If the x axis is between these two than set buffer to eight
-	if (r1.xAxis > X - 21 && r1.xAxis < X + 21){
-		// CHANGE THIS TO 8 IF PLAYING ON DOLPHIN
-		bufferrr = 2;
-	}
 
 	// Reporting all buttons, sticks, sliders
 	data.report.a = r1.a;
@@ -66,19 +81,7 @@ void loop() {
 	data.report.left = r1.left;
 	data.report.right = r1.right;
 
-	// The dashback modification
-	if (r1.xAxis < X - 22 || r1.xAxis > X + 22){
-		// Automatically dashes and skips all buffer if you enter running state
-		if (r1.xAxis > X + 97 || r1.xAxis < X - 97){
-			data.report.xAxis = r1.xAxis;
-			bufferrr = 0;
-		}
-		if (bufferrr > 0){
-			// Set x-axis to neutral
-			data.report.xAxis = 128;
-			bufferrr = bufferrr - 1;
-		}
-	}
+	dashback(r1, data);
 
 	// Sends the data to the console
 	if (!console.write(data)) {
