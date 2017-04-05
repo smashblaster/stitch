@@ -90,11 +90,8 @@ void loop() {
 	// Sends the data to the console
 	if (!console.write(data)) {
 		delay(100);
+		console.write(data);
 	}
 
-	if (data.status.rumble) {
-		controller.setRumble(true);
-	} else {
-		controller.setRumble(false);
-	}
+	controller.setRumble(data.status.rumble);
 }
