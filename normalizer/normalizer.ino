@@ -22,13 +22,40 @@ void setup() {
 	pinMode(pinLed, OUTPUT);
 }
 
-void dashback(auto report, Gamecube_Data_t *data) {
-	if (isInit == false) {
-		// Reset x-axis
-		center = report.xAxis;
-		isInit = true;
-	}
+void init(auto report, Gamecube_Data_t *data) {
+	// Zero the controller out on startup
+	(*data).origin = controller.getOrigin();
 
+	// Reset x-axis
+	center = report.xAxis;
+}
+
+void map(auto report, Gamecube_Data_t *data) {
+	// Reporting all buttons, sticks, sliders
+	(*data).report.a = report.a;
+	(*data).report.b = report.b;
+	(*data).report.x = report.x;
+	(*data).report.y = report.y;
+	(*data).report.start = report.start;
+
+	(*data).report.dleft = report.dleft;
+	(*data).report.dright = report.dright;
+	(*data).report.ddown = report.ddown;
+	(*data).report.dup = report.dup;
+
+	(*data).report.z = report.z;
+	(*data).report.r = report.r;
+	(*data).report.l = report.l;
+
+	(*data).report.xAxis = report.xAxis;
+	(*data).report.yAxis = report.yAxis;
+	(*data).report.cxAxis = report.cxAxis;
+	(*data).report.cyAxis = report.cyAxis;
+	(*data).report.left = report.left;
+	(*data).report.right = report.right;
+}
+
+void dashback(auto report, Gamecube_Data_t *data) {
 	// If the x axis is between these two than set buffer to eight
 	if (report.xAxis > center - deadZone - 1 && report.xAxis < center + deadZone - 1) {
 		dashBuffer = maxDashBuffer;
@@ -51,41 +78,23 @@ void dashback(auto report, Gamecube_Data_t *data) {
 void loop() {
 	// Just stops the code if no controller is found
 	if (!controller.read()) {
+		isInit = false;
 		delay(100);
 		return;
 	}
 
 	// Gets the data of controller
-	auto r1 = controller.getReport();
+	auto report = controller.getReport();
 	Gamecube_Data_t data = defaultGamecubeData;
 
-	// Zero the controller out on startup
-	data.origin = controller.getOrigin();
+	if (isInit == false) {
+		init(report, &data);
+		isInit = true;
+	}
 
-	// Reporting all buttons, sticks, sliders
-	data.report.a = r1.a;
-	data.report.b = r1.b;
-	data.report.x = r1.x;
-	data.report.y = r1.y;
-	data.report.start = r1.start;
+	map(report, &data);
 
-	data.report.dleft = r1.dleft;
-	data.report.dright = r1.dright;
-	data.report.ddown = r1.ddown;
-	data.report.dup = r1.dup;
-
-	data.report.z = r1.z;
-	data.report.r = r1.r;
-	data.report.l = r1.l;
-
-	data.report.xAxis = r1.xAxis;
-	data.report.yAxis = r1.yAxis;
-	data.report.cxAxis = r1.cxAxis;
-	data.report.cyAxis = r1.cyAxis;
-	data.report.left = r1.left;
-	data.report.right = r1.right;
-
-	dashback(r1, &data);
+	dashback(report, &data);
 
 	// Sends the data to the console
 	if (!console.write(data)) {
