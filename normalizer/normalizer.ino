@@ -6,39 +6,43 @@ CGamecubeConsole console(3);
 // Pin definitions
 #define pinLed LED_BUILTIN
 
+int maxDashBuffer = 2;
+// int maxDashBuffer = 8;
+
 // Zero the buffer and control stick
 int dashBuffer = 0;
-int i = 1;
-int X = 128;
+int center = 128;
+int deadZone = 22;
+// int smashZone = 97;
+int smashZone = 64;
+bool isInit = false;
 
 void setup() {
 	Serial.begin(9600);
 	pinMode(pinLed, OUTPUT);
 }
 
-void dashback(auto r1, Gamecube_Data_t data) {
-	// Zeros the x-Axis in the code
-	if (i == 1) {
-		int X = r1.xAxis;
-		i = 0;
+void dashback(auto report, Gamecube_Data_t *data) {
+	if (isInit == false) {
+		// Reset x-axis
+		center = report.xAxis;
+		isInit = true;
 	}
 
 	// If the x axis is between these two than set buffer to eight
-	if (r1.xAxis > X - 21 && r1.xAxis < X + 21) {
-		// CHANGE THIS TO 8 IF PLAYING ON DOLPHIN
-		dashBuffer = 2;
+	if (report.xAxis > center - deadZone - 1 && report.xAxis < center + deadZone - 1) {
+		dashBuffer = maxDashBuffer;
 	}
 
-	// The dashback modification
-	if (r1.xAxis < X - 22 || r1.xAxis > X + 22) {
+	if (report.xAxis < center - deadZone || report.xAxis > center + deadZone) {
 		// Automatically dashes and skips all buffer if you enter running state
-		if (r1.xAxis > X + 97 || r1.xAxis < X - 97) {
-			data.report.xAxis = r1.xAxis;
+		if (report.xAxis > center + smashZone || report.xAxis < center - smashZone) {
+			(*data).report.xAxis = report.xAxis;
 			dashBuffer = 0;
 		}
 		if (dashBuffer > 0) {
 			// Set x-axis to neutral
-			data.report.xAxis = 128;
+			(*data).report.xAxis = 128;
 			dashBuffer = dashBuffer - 1;
 		}
 	}
@@ -81,7 +85,7 @@ void loop() {
 	data.report.left = r1.left;
 	data.report.right = r1.right;
 
-	dashback(r1, data);
+	dashback(r1, &data);
 
 	// Sends the data to the console
 	if (!console.write(data)) {
