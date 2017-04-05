@@ -55,6 +55,10 @@ void map(Gamecube_Report_t state, Gamecube_Data_t *data) {
 	(*data).report.right = state.right;
 }
 
+void remap(Gamecube_Report_t state, Gamecube_Data_t *data) {
+	(*data).report.x = (*data).report.z;
+}
+
 void dashback(Gamecube_Report_t state, Gamecube_Data_t *data) {
 	// If the x axis is between these two than set buffer to eight
 	if (state.xAxis > center - deadZone - 1 && state.xAxis < center + deadZone - 1) {
@@ -93,6 +97,8 @@ void loop() {
 	}
 
 	map(state, &data);
+
+	remap(state, &data);
 
 	dashback(state, &data);
 
