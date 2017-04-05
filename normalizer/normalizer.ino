@@ -22,49 +22,49 @@ void setup() {
 	pinMode(pinLed, OUTPUT);
 }
 
-void init(auto report, Gamecube_Data_t *data) {
+void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
 	// Zero the controller out on startup
 	(*data).origin = controller.getOrigin();
 
 	// Reset x-axis
-	center = report.xAxis;
+	center = state.xAxis;
 }
 
-void map(auto report, Gamecube_Data_t *data) {
+void map(Gamecube_Report_t state, Gamecube_Data_t *data) {
 	// Reporting all buttons, sticks, sliders
-	(*data).report.a = report.a;
-	(*data).report.b = report.b;
-	(*data).report.x = report.x;
-	(*data).report.y = report.y;
-	(*data).report.start = report.start;
+	(*data).report.a = state.a;
+	(*data).report.b = state.b;
+	(*data).report.x = state.x;
+	(*data).report.y = state.y;
+	(*data).report.start = state.start;
 
-	(*data).report.dleft = report.dleft;
-	(*data).report.dright = report.dright;
-	(*data).report.ddown = report.ddown;
-	(*data).report.dup = report.dup;
+	(*data).report.dleft = state.dleft;
+	(*data).report.dright = state.dright;
+	(*data).report.ddown = state.ddown;
+	(*data).report.dup = state.dup;
 
-	(*data).report.z = report.z;
-	(*data).report.r = report.r;
-	(*data).report.l = report.l;
+	(*data).report.z = state.z;
+	(*data).report.r = state.r;
+	(*data).report.l = state.l;
 
-	(*data).report.xAxis = report.xAxis;
-	(*data).report.yAxis = report.yAxis;
-	(*data).report.cxAxis = report.cxAxis;
-	(*data).report.cyAxis = report.cyAxis;
-	(*data).report.left = report.left;
-	(*data).report.right = report.right;
+	(*data).report.xAxis = state.xAxis;
+	(*data).report.yAxis = state.yAxis;
+	(*data).report.cxAxis = state.cxAxis;
+	(*data).report.cyAxis = state.cyAxis;
+	(*data).report.left = state.left;
+	(*data).report.right = state.right;
 }
 
-void dashback(auto report, Gamecube_Data_t *data) {
+void dashback(Gamecube_Report_t state, Gamecube_Data_t *data) {
 	// If the x axis is between these two than set buffer to eight
-	if (report.xAxis > center - deadZone - 1 && report.xAxis < center + deadZone - 1) {
+	if (state.xAxis > center - deadZone - 1 && state.xAxis < center + deadZone - 1) {
 		dashBuffer = maxDashBuffer;
 	}
 
-	if (report.xAxis < center - deadZone || report.xAxis > center + deadZone) {
+	if (state.xAxis < center - deadZone || state.xAxis > center + deadZone) {
 		// Automatically dashes and skips all buffer if you enter running state
-		if (report.xAxis > center + smashZone || report.xAxis < center - smashZone) {
-			(*data).report.xAxis = report.xAxis;
+		if (state.xAxis > center + smashZone || state.xAxis < center - smashZone) {
+			(*data).report.xAxis = state.xAxis;
 			dashBuffer = 0;
 		}
 		if (dashBuffer > 0) {
@@ -84,17 +84,17 @@ void loop() {
 	}
 
 	// Gets the data of controller
-	auto report = controller.getReport();
+	Gamecube_Report_t state = controller.getReport();
 	Gamecube_Data_t data = defaultGamecubeData;
 
 	if (isInit == false) {
-		init(report, &data);
+		init(state, &data);
 		isInit = true;
 	}
 
-	map(report, &data);
+	map(state, &data);
 
-	dashback(report, &data);
+	dashback(state, &data);
 
 	// Sends the data to the console
 	if (!console.write(data)) {
