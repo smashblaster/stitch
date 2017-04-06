@@ -55,7 +55,23 @@ void map(Gamecube_Report_t state, Gamecube_Data_t *data) {
 }
 
 void remap(Gamecube_Report_t state, Gamecube_Data_t *data) {
-	(*data).report.z = (*data).report.x;
+	if (state.x == 1) {
+		(*data).report.z = state.x;
+		(*data).report.x = 0;
+	}
+
+	if (state.ddown == 1) {
+		(*data).report.yAxis = 0;
+		(*data).report.ddown = 0;
+	}
+	if (state.dleft == 1) {
+		(*data).report.xAxis = 0;
+		(*data).report.dleft = 0;
+	}
+	if (state.dright == 1) {
+		(*data).report.xAxis = 255;
+		(*data).report.dright = 0;
+	}
 
 	if (state.dup == 1) {
 		(*data).report.dup = 0;
