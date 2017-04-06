@@ -56,7 +56,7 @@ void map(Gamecube_Report_t state, Gamecube_Data_t *data) {
 }
 
 void remap(Gamecube_Report_t state, Gamecube_Data_t *data) {
-	(*data).report.x = (*data).report.z;
+	(*data).report.z = (*data).report.x;
 }
 
 void dashback(Gamecube_Report_t state, Gamecube_Data_t *data) {
