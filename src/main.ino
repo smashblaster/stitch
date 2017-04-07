@@ -6,8 +6,9 @@ CGamecubeConsole console(3);
 // Pin definitions
 #define pinLed LED_BUILTIN
 
-int maxDashBuffer = 2;
-// int maxDashBuffer = 8;
+int maxDashBufferVanilla = 2;
+int maxDashBufferDolphin = 8;
+int maxDashBuffer = maxDashBufferVanilla;
 
 // Zero the buffer and control stick
 int dashBuffer = 0;
@@ -16,6 +17,7 @@ int deadZone = 22;
 // int smashZone = 97;
 int smashZone = 64;
 bool isInit = false;
+bool isPassthrough = false;
 
 void setup() {
 	Serial.begin(9600);
@@ -55,22 +57,22 @@ void map(Gamecube_Report_t state, Gamecube_Data_t *data) {
 }
 
 void remap(Gamecube_Report_t state, Gamecube_Data_t *data) {
+	// Map x => shield
 	if (state.x == 1) {
-		(*data).report.z = state.x;
 		(*data).report.x = 0;
+		(*data).report.l = 1;
 	}
 
-	if (state.ddown == 1) {
-		(*data).report.yAxis = 0;
-		(*data).report.ddown = 0;
-	}
-	if (state.dleft == 1) {
-		(*data).report.xAxis = 0;
-		(*data).report.dleft = 0;
-	}
+	// Map dright => toggle between vanilla / dolphin
 	if (state.dright == 1) {
-		(*data).report.xAxis = 255;
 		(*data).report.dright = 0;
+		if (maxDashBuffer == maxDashBufferVanilla) {
+			maxDashBuffer = maxDashBufferDolphin;
+			digitalWrite(LED_BUILTIN, HIGH);
+		} else {
+			maxDashBuffer = maxDashBufferVanilla;
+			digitalWrite(LED_BUILTIN, LOW);
+		}
 	}
 
 	if (state.dup == 1) {
@@ -101,7 +103,7 @@ void dashback(Gamecube_Report_t state, Gamecube_Data_t *data) {
 }
 
 void debug(Gamecube_Report_t state, Gamecube_Data_t *data) {
-	if (state.x == 1) {
+	if (state.ddown == 1) {
 		Serial.print(state.xAxis);
 		Serial.print("\t");
 		Serial.print(state.yAxis);
@@ -127,10 +129,19 @@ void loop() {
 	}
 
 	map(state, &data);
-	remap(state, &data);
-	dashback(state, &data);
 
-	// debug(state, &data);
+	// Map dleft => toggle noop
+	if (state.dleft == 1) {
+		data.report.dleft = 0;
+		isPassthrough = (isPassthrough == true) ? false : true;
+		data.report.start = 1;
+	}
+
+	if (isPassthrough == false) {
+		debug(state, &data);
+		remap(state, &data);
+		dashback(state, &data);
+	}
 
 	// Sends the data to the console
 	if (!console.write(data)) {
