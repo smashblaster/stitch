@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "Nintendo.h"
 
 CGamecubeController controller(4);

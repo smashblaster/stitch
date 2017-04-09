@@ -1,0 +1,1 @@
+call SetupPlatformioEnvironment(expand('<sfile>:p'))
