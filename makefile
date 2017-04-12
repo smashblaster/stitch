@@ -19,3 +19,6 @@ uploadfs:
 
 update:
 	platformio -f -c vim update
+
+watch:
+	platformio device monitor
