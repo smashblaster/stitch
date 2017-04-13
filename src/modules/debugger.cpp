@@ -2,7 +2,7 @@
 #include "Nintendo.h"
 #include "module.cpp"
 
-class Debug: public Module {
+class Debugger: public Module {
 	public:
 		void update(Gamecube_Report_t state, Gamecube_Data_t *data) {
 			if (state.ddown == 1) {

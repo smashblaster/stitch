@@ -1,10 +1,9 @@
 #include "Arduino.h"
 #include "Nintendo.h"
-
-#include "map.cpp"
-#include "debug.cpp"
-#include "remap.cpp"
-#include "dashback.cpp"
+#include "modules/backdasher.cpp"
+#include "modules/debugger.cpp"
+#include "modules/mapper.cpp"
+#include "modules/remapper.cpp"
 
 CGamecubeController controller(4);
 CGamecubeConsole console(3);
@@ -15,10 +14,10 @@ CGamecubeConsole console(3);
 bool isInit = false;
 bool isPassthrough = false;
 
-Map mapper;
-Debug debugger;
-Remap remapper;
-Dashback dasher;
+Backdasher backdasher;
+Debugger debugger;
+Mapper mapper;
+Remapper remapper;
 
 void setup() {
 	Serial.begin(9600);
@@ -26,14 +25,10 @@ void setup() {
 }
 
 void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
-	// TODO: move to map module
-	// Zero the controller out on startup
-	(*data).origin = controller.getOrigin();
-
-	mapper.init(state, data);
-	debugger.init(state, data);
-	remapper.init(state, data);
-	dasher.init(state, data);
+	mapper.init(state, data, controller);
+	debugger.init(state, data, controller);
+	remapper.init(state, data, controller);
+	backdasher.init(state, data, controller);
 }
 
 void loop() {
@@ -65,7 +60,7 @@ void loop() {
 	if (isPassthrough == false) {
 		// debugger.update(state, &data);
 		remapper.update(state, &data);
-		dasher.update(state, &data);
+		backdasher.update(state, &data);
 	}
 
 	// Sends the data to the console

@@ -1,9 +1,11 @@
 #include "Nintendo.h"
 #include "module.cpp"
 
-class Map: public Module {
+class Mapper: public Module {
 	public:
-		void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
+		void init(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+			// Zero the controller out on startup
+			(*data).origin = controller.getOrigin();
 		}
 
 		void update(Gamecube_Report_t state, Gamecube_Data_t *data) {

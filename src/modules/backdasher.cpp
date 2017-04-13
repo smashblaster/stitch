@@ -1,7 +1,7 @@
 #include "Nintendo.h"
 #include "module.cpp"
 
-class Dashback: public Module {
+class Backdasher: public Module {
 	private:
 		int deadZone = 22;
 		int center = 128;
@@ -14,7 +14,7 @@ class Dashback: public Module {
 		int maxDashBuffer = maxDashBufferVanilla;
 
 	public:
-		void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
+		void init(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
 			// Reset x-axis
 			center = state.xAxis;
 		}

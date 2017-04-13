@@ -1,7 +1,7 @@
 #include "Nintendo.h"
 #include "module.cpp"
 
-class Remap: public Module {
+class Remapper: public Module {
 	public:
 		void update(Gamecube_Report_t state, Gamecube_Data_t *data) {
 			// Map x => shield
