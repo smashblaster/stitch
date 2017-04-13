@@ -1,6 +1,11 @@
 #include "Arduino.h"
 #include "Nintendo.h"
 
+#include "map.cpp"
+#include "debug.cpp"
+#include "remap.cpp"
+#include "dashback.cpp"
+
 CGamecubeController controller(4);
 CGamecubeConsole console(3);
 
@@ -9,6 +14,11 @@ CGamecubeConsole console(3);
 
 bool isInit = false;
 bool isPassthrough = false;
+
+Map mapper;
+Debug debugger;
+Remap remapper;
+Dashback dasher;
 
 void setup() {
 	Serial.begin(9600);
@@ -19,6 +29,11 @@ void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
 	// TODO: move to map module
 	// Zero the controller out on startup
 	(*data).origin = controller.getOrigin();
+
+	mapper.init(state, data);
+	debugger.init(state, data);
+	remapper.init(state, data);
+	dasher.init(state, data);
 }
 
 void loop() {
@@ -38,7 +53,7 @@ void loop() {
 		isInit = true;
 	}
 
-	map(state, &data);
+	mapper.update(state, &data);
 
 	// Map dleft => toggle noop
 	if (state.dleft == 1) {
@@ -48,9 +63,9 @@ void loop() {
 	}
 
 	if (isPassthrough == false) {
-		// debug(state, &data);
-		// remap(state, &data);
-		dashback(state, &data);
+		// debugger.update(state, &data);
+		remapper.update(state, &data);
+		dasher.update(state, &data);
 	}
 
 	// Sends the data to the console

@@ -1,18 +1,18 @@
 #include "Nintendo.h"
 #include "module.cpp"
 
-int deadZone = 22;
-int center = 128;
-// int smashZone = 97;
-int smashZone = 64;
-
-// Zero the buffer and control stick
-int dashBuffer = 0;
-int maxDashBufferVanilla = 2;
-int maxDashBufferDolphin = 8;
-int maxDashBuffer = maxDashBufferVanilla;
-
 class Dashback: public Module {
+	private:
+		int deadZone = 22;
+		int center = 128;
+		// int smashZone = 97;
+		int smashZone = 64;
+
+		int dashBuffer = 0;
+		int maxDashBufferVanilla = 2;
+		int maxDashBufferDolphin = 8;
+		int maxDashBuffer = maxDashBufferVanilla;
+
 	public:
 		void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
 			// Reset x-axis
