@@ -2,6 +2,7 @@
 #include "modules/backdasher.cpp"
 #include "modules/debugger.cpp"
 #include "modules/mapper.cpp"
+#include "modules/meta.cpp"
 #include "modules/remapper.cpp"
 
 #ifndef WAVESINE
@@ -10,7 +11,6 @@
 class WaveSine {
 	private:
 		bool isInit = false;
-		bool isPassthrough = false;
 
 		CGamecubeConsole console;
 		CGamecubeController controller;
@@ -18,6 +18,7 @@ class WaveSine {
 		Backdasher backdasher;
 		Debugger debugger;
 		Mapper mapper;
+		Meta meta;
 		Remapper remapper;
 
 	public:
@@ -47,19 +48,13 @@ class WaveSine {
 				isInit = true;
 			}
 
-			mapper.update(state, &data);
+			mapper.update(state, &data, controller);
+			meta.update(state, &data, controller);
 
-			// Map dleft => toggle noop
-			if (state.dleft == 1) {
-				data.report.dleft = 0;
-				isPassthrough = (isPassthrough == true) ? false : true;
-				data.report.start = 1;
-			}
-
-			if (isPassthrough == false) {
+			if (meta.isPassthrough == false) {
 				// debugger.update(state, &data);
-				remapper.update(state, &data);
-				backdasher.update(state, &data);
+				remapper.update(state, &data, controller);
+				backdasher.update(state, &data, controller);
 			}
 
 			// Sends the data to the console

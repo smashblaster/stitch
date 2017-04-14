@@ -3,7 +3,7 @@
 
 class Remapper: public Module {
 	public:
-		void update(Gamecube_Report_t state, Gamecube_Data_t *data) {
+		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
 			// Map x => shield
 			if (state.x == 1) {
 				(*data).report.x = 0;

@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "wavesine.cc"
+#include "wavesine.cpp"
 
 // Pin definitions
 #define pinLed LED_BUILTIN

@@ -19,7 +19,7 @@ class Backdasher: public Module {
 			center = state.xAxis;
 		}
 
-		void update(Gamecube_Report_t state, Gamecube_Data_t *data) {
+		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
 			// If the x axis is between these two than set buffer to eight
 			if (state.xAxis > center - deadZone - 1 && state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;

@@ -8,7 +8,7 @@ class Mapper: public Module {
 			(*data).origin = controller.getOrigin();
 		}
 
-		void update(Gamecube_Report_t state, Gamecube_Data_t *data) {
+		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
 			(*data).report.a = state.a;
 			(*data).report.b = state.b;
 			(*data).report.start = state.start;
