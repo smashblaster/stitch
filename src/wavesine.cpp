@@ -19,6 +19,8 @@ class WaveSine {
 		Meta meta;
 		Remapper remapper;
 
+		bool rumbleSetting = false;
+
 	public:
 		WaveSine(int cons, int cont): console(cons), controller(cont) {}
 
@@ -59,7 +61,7 @@ class WaveSine {
 				console.write(data);
 			}
 
-			controller.setRumble(data.status.rumble || meta.rumble);
+			controller.setRumble(rumbleSetting && data.status.rumble || meta.rumble);
 		};
 };
 

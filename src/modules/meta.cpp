@@ -14,13 +14,13 @@ class Meta: public Module {
 				(*data).report.start = 0;
 
 				// a => start
-				if (state.a == 1) {
-					(*data).report.a = 0;
+				if (state.b == 1) {
+					(*data).report.b = 0;
 					(*data).report.start = 1;
 				}
 
-				if (state.b == 1) {
-					(*data).report.b = 0;
+				if (state.x == 1) {
+					(*data).report.x = 0;
 					rumble = true;
 				}
 
