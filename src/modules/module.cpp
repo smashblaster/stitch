@@ -1,7 +1,7 @@
 #include "Nintendo.h"
 
-#ifndef module
-#define module
+#ifndef MODULE
+#define MODULE
 
 class Module {
 	public:
