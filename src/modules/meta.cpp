@@ -9,14 +9,14 @@ class Meta: public Module {
 		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
 			rumble = false;
 
-			// super = start
-			if (state.start == 1) {
-				(*data).report.start = 0;
+			// super = ddown
+			if (state.ddown == 1) {
+				(*data).report.ddown = 0;
 
-				// a => start
-				if (state.b == 1) {
-					(*data).report.b = 0;
-					(*data).report.start = 1;
+				// z => ddown
+				if (state.z == 1) {
+					(*data).report.z = 0;
+					(*data).report.ddown = 1;
 				}
 
 				if (state.x == 1) {
@@ -24,9 +24,9 @@ class Meta: public Module {
 					rumble = true;
 				}
 
-				// dleft => toggle noop
-				if (state.ddown == 1) {
-					(*data).report.ddown = 0;
+				// start => toggle noop
+				if (state.start == 1) {
+					(*data).report.start = 0;
 					isPassthrough = (isPassthrough == true) ? false : true;
 					rumble = true;
 				}
