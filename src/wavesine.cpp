@@ -50,7 +50,7 @@ class WaveSine {
 			mapper.update(state, &data, controller);
 			meta.update(state, &data, controller);
 
-			if (meta.isPassthrough == false) {
+			if (meta.isEnabled == true) {
 				remapper.update(state, &data, controller);
 				backdasher.update(state, &data, controller);
 			}
