@@ -4,6 +4,7 @@
 class Meta: public Module {
 	public:
 		bool isEnabled = false;
+		bool isDebug = false;
 		bool rumble = false;
 
 		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
@@ -26,12 +27,15 @@ class Meta: public Module {
 				if (state.x == 1) {
 					(*data).report.x = 0;
 					rumble = true;
-
-					Serial.print(state.xAxis);
-					Serial.print("\t");
-					Serial.print(state.yAxis);
-					Serial.println("");
+					isDebug = true;
 				}
+			}
+
+			if (isDebug) {
+				Serial.print(state.xAxis);
+				Serial.print("\t");
+				Serial.print(state.yAxis);
+				Serial.println("");
 			}
 		}
 };

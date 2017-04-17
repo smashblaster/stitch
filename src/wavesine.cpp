@@ -42,7 +42,7 @@ class WaveSine {
 			Gamecube_Report_t state = controller.getReport();
 			Gamecube_Data_t data = defaultGamecubeData;
 
-			if (isInit == false) {
+			if (!isInit) {
 				init(state, &data);
 				isInit = true;
 			}
@@ -50,7 +50,7 @@ class WaveSine {
 			mapper.update(state, &data, controller);
 			meta.update(state, &data, controller);
 
-			if (meta.isEnabled == true) {
+			if (meta.isEnabled) {
 				remapper.update(state, &data, controller);
 				backdasher.update(state, &data, controller);
 			}
@@ -61,7 +61,7 @@ class WaveSine {
 				console.write(data);
 			}
 
-			controller.setRumble(rumbleSetting && data.status.rumble || meta.rumble);
+			controller.setRumble((rumbleSetting && data.status.rumble) || meta.rumble);
 		};
 };
 
