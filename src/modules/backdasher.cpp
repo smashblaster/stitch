@@ -14,28 +14,28 @@ class Backdasher: public Module {
 		int maxDashBuffer = maxDashBufferVanilla;
 
 	public:
-		void init(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+		void init(Context *ctx, CGamecubeController controller) {
 			// Reset x-axis
-			center = state.xAxis;
+			center = ctx->state.xAxis;
 		}
 
-		void update(Context *ctx, Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+		void update(Context *ctx, CGamecubeController controller) {
 			if (!ctx->enabled) return;
 
 			// If the x axis is between these two than set buffer to eight
-			if (state.xAxis > center - deadZone - 1 && state.xAxis < center + deadZone - 1) {
+			if (ctx->state.xAxis > center - deadZone - 1 && ctx->state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;
 			}
 
-			if (state.xAxis < center - deadZone || state.xAxis > center + deadZone) {
+			if (ctx->state.xAxis < center - deadZone || ctx->state.xAxis > center + deadZone) {
 				// Automatically dashes and skips all buffer if you enter running state
-				if (state.xAxis > center + smashZone || state.xAxis < center - smashZone) {
-					data->report.xAxis = state.xAxis;
+				if (ctx->state.xAxis > center + smashZone || ctx->state.xAxis < center - smashZone) {
+					ctx->data.report.xAxis = ctx->state.xAxis;
 					dashBuffer = 0;
 				}
 				if (dashBuffer > 0) {
 					// Set x-axis to neutral
-					data->report.xAxis = 128;
+					ctx->data.report.xAxis = 128;
 					dashBuffer = dashBuffer - 1;
 				}
 			}

@@ -14,12 +14,12 @@ using namespace std;
 class WaveSine {
 	private:
 		vector<Module>::iterator module;
+		vector<Module> modules;
 
 		CGamecubeConsole console;
 		CGamecubeController controller;
 
-		vector<Module> modules;
-
+		// TODO: read from config
 		bool rumbleSetting = false;
 
 	public:
@@ -33,10 +33,11 @@ class WaveSine {
 			modules.push_back(Backdasher());
 		}
 
-		void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
+		void init() {
 			for (module = modules.begin(); module != modules.end(); ++module) {
-				module->init(state, data, controller);
+				module->init(&ctx, controller);
 			}
+			ctx.init = true;
 		}
 
 		void update() {
@@ -48,25 +49,22 @@ class WaveSine {
 			}
 
 			// Gets the data of controller
-			Gamecube_Report_t state = controller.getReport();
-			Gamecube_Data_t data = defaultGamecubeData;
+			ctx.state = controller.getReport();
+			ctx.data = defaultGamecubeData;
 
-			if (!ctx.init) {
-				init(state, &data);
-				ctx.init = true;
-			}
+			if (!ctx.init) init();
 
 			for (module = modules.begin(); module != modules.end(); ++module) {
-				module->update(&ctx, state, &data, controller);
+				module->update(&ctx, controller);
 			}
 
 			// Sends the data to the console
-			if (!console.write(data)) {
+			if (!console.write(ctx.data)) {
 				delay(100);
 				return;
 			}
 
-			// controller.setRumble((rumbleSetting && data.status.rumble) || meta.rumble);
+			controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
 		};
 };
 
