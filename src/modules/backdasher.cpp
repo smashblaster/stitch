@@ -28,12 +28,12 @@ class Backdasher: public Module {
 			if (state.xAxis < center - deadZone || state.xAxis > center + deadZone) {
 				// Automatically dashes and skips all buffer if you enter running state
 				if (state.xAxis > center + smashZone || state.xAxis < center - smashZone) {
-					(*data).report.xAxis = state.xAxis;
+					data->report.xAxis = state.xAxis;
 					dashBuffer = 0;
 				}
 				if (dashBuffer > 0) {
 					// Set x-axis to neutral
-					(*data).report.xAxis = 128;
+					data->report.xAxis = 128;
 					dashBuffer = dashBuffer - 1;
 				}
 			}

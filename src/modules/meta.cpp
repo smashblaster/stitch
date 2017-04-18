@@ -12,20 +12,20 @@ class Meta: public Module {
 
 			// super = start + z
 			if (state.start == 1 && state.z == 1) {
-				(*data).report.start = 0;
-				(*data).report.z = 0;
+				data->report.start = 0;
+				data->report.z = 0;
 
 				// ddown => toggle
 				if (state.dup == 1 || state.ddown == 1) {
-					(*data).report.dup = 0;
-					(*data).report.ddown = 0;
+					data->report.dup = 0;
+					data->report.ddown = 0;
 					isEnabled = state.dup == 1;
 					rumble = true;
 				}
 
 				// x => debug
 				if (state.x == 1) {
-					(*data).report.x = 0;
+					data->report.x = 0;
 					rumble = true;
 					isDebug = true;
 				}
