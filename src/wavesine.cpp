@@ -1,9 +1,9 @@
-#include "modules/backdasher.cpp"
+#include "modules/backdash.cpp"
 #include "modules/debug.cpp"
-#include "modules/mapper.cpp"
+#include "modules/map.cpp"
 #include "modules/meta.cpp"
 #include "modules/module.cpp"
-#include "modules/remapper.cpp"
+#include "modules/remap.cpp"
 #include <Nintendo.h>
 #include <vector>
 using namespace std;
@@ -26,11 +26,11 @@ class WaveSine {
 		Context ctx;
 
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
-			modules.push_back(Mapper());
+			modules.push_back(Map());
 			modules.push_back(Meta());
 			modules.push_back(Debug());
-			modules.push_back(Remapper());
-			modules.push_back(Backdasher());
+			modules.push_back(Remap());
+			modules.push_back(Backdash());
 		}
 
 		void init() {

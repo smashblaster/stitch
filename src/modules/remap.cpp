@@ -1,7 +1,7 @@
 #include "module.cpp"
 #include <Nintendo.h>
 
-class Remapper: public Module {
+class Remap: public Module {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
 			if (!ctx->enabled) return;

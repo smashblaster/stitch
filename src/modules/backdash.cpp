@@ -1,7 +1,7 @@
 #include "module.cpp"
 #include <Nintendo.h>
 
-class Backdasher: public Module {
+class Backdash: public Module {
 	private:
 		int deadZone = 22;
 		int center = 128;

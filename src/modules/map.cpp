@@ -1,7 +1,7 @@
 #include "module.cpp"
 #include <Nintendo.h>
 
-class Mapper: public Module {
+class Map: public Module {
 	public:
 		void init(Context *ctx, CGamecubeController controller) {
 			// Zero the controller out on startup
