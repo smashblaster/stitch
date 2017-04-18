@@ -1,14 +1,10 @@
-#include "Nintendo.h"
 #include "module.cpp"
+#include <Nintendo.h>
 
 class Meta: public Module {
 	public:
-		bool isEnabled = false;
-		bool isDebug = false;
-		bool rumble = false;
-
-		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
-			rumble = false;
+		void update(Context *ctx, Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+			ctx->rumble = false;
 
 			// super = start + z
 			if (state.start == 1 && state.z == 1) {
@@ -19,15 +15,15 @@ class Meta: public Module {
 				if (state.dup == 1 || state.ddown == 1) {
 					data->report.dup = 0;
 					data->report.ddown = 0;
-					isEnabled = state.dup == 1;
-					rumble = true;
+					ctx->enabled = state.dup == 1;
+					ctx->rumble = true;
 				}
 
 				// x => debug
 				if (state.x == 1) {
 					data->report.x = 0;
-					rumble = true;
-					isDebug = true;
+					ctx->rumble = true;
+					ctx->debug = true;
 				}
 			}
 		}

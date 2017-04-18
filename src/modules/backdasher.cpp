@@ -1,5 +1,5 @@
-#include "Nintendo.h"
 #include "module.cpp"
+#include <Nintendo.h>
 
 class Backdasher: public Module {
 	private:
@@ -19,7 +19,9 @@ class Backdasher: public Module {
 			center = state.xAxis;
 		}
 
-		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+		void update(Context *ctx, Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+			if (!ctx->enabled) return;
+
 			// If the x axis is between these two than set buffer to eight
 			if (state.xAxis > center - deadZone - 1 && state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;

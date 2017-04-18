@@ -1,43 +1,48 @@
-#include "Nintendo.h"
 #include "modules/backdasher.cpp"
 #include "modules/debug.cpp"
 #include "modules/mapper.cpp"
 #include "modules/meta.cpp"
+#include "modules/module.cpp"
 #include "modules/remapper.cpp"
+#include <Nintendo.h>
+#include <vector>
+using namespace std;
 
 #ifndef WAVESINE
 #define WAVESINE
 
 class WaveSine {
 	private:
-		bool isInit = false;
+		vector<Module>::iterator module;
 
 		CGamecubeConsole console;
 		CGamecubeController controller;
 
-		Backdasher backdasher;
-		Debug debug;
-		Mapper mapper;
-		Meta meta;
-		Remapper remapper;
+		vector<Module> modules;
 
 		bool rumbleSetting = false;
 
 	public:
-		WaveSine(int cons, int cont): console(cons), controller(cont) {}
+		Context ctx;
+
+		WaveSine(int cons, int cont): console(cons), controller(cont) {
+			modules.push_back(Mapper());
+			modules.push_back(Meta());
+			modules.push_back(Debug());
+			modules.push_back(Remapper());
+			modules.push_back(Backdasher());
+		}
 
 		void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
-			mapper.init(state, data, controller);
-			meta.init(state, data, controller);
-			debug.init(state, data, controller);
-			remapper.init(state, data, controller);
-			backdasher.init(state, data, controller);
+			for (module = modules.begin(); module != modules.end(); ++module) {
+				module->init(state, data, controller);
+			}
 		}
 
 		void update() {
 			// Just stops the code if no controller is found
 			if (!controller.read()) {
-				isInit = false;
+				ctx.init = false;
 				delay(100);
 				return;
 			}
@@ -46,18 +51,13 @@ class WaveSine {
 			Gamecube_Report_t state = controller.getReport();
 			Gamecube_Data_t data = defaultGamecubeData;
 
-			if (!isInit) {
+			if (!ctx.init) {
 				init(state, &data);
-				isInit = true;
+				ctx.init = true;
 			}
 
-			mapper.update(state, &data, controller);
-			meta.update(state, &data, controller);
-
-			if (meta.isEnabled) {
-				if (meta.isDebug) debug.update(state, &data, controller);
-				remapper.update(state, &data, controller);
-				backdasher.update(state, &data, controller);
+			for (module = modules.begin(); module != modules.end(); ++module) {
+				module->update(&ctx, state, &data, controller);
 			}
 
 			// Sends the data to the console
@@ -66,7 +66,7 @@ class WaveSine {
 				return;
 			}
 
-			controller.setRumble((rumbleSetting && data.status.rumble) || meta.rumble);
+			// controller.setRumble((rumbleSetting && data.status.rumble) || meta.rumble);
 		};
 };
 

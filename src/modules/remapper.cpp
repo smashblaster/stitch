@@ -1,9 +1,11 @@
-#include "Nintendo.h"
 #include "module.cpp"
+#include <Nintendo.h>
 
 class Remapper: public Module {
 	public:
-		void update(Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+		void update(Context *ctx, Gamecube_Report_t state, Gamecube_Data_t *data, CGamecubeController controller) {
+			if (!ctx->enabled) return;
+
 			// Map x => shield
 			if (state.x == 1) {
 				data->report.x = 0;
