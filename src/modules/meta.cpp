@@ -30,12 +30,5 @@ class Meta: public Module {
 					isDebug = true;
 				}
 			}
-
-			if (isDebug) {
-				Serial.print(state.xAxis);
-				Serial.print("\t");
-				Serial.print(state.yAxis);
-				Serial.println("");
-			}
 		}
 };

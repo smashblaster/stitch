@@ -1,5 +1,6 @@
 #include "Nintendo.h"
 #include "modules/backdasher.cpp"
+#include "modules/debug.cpp"
 #include "modules/mapper.cpp"
 #include "modules/meta.cpp"
 #include "modules/remapper.cpp"
@@ -15,6 +16,7 @@ class WaveSine {
 		CGamecubeController controller;
 
 		Backdasher backdasher;
+		Debug debug;
 		Mapper mapper;
 		Meta meta;
 		Remapper remapper;
@@ -26,6 +28,8 @@ class WaveSine {
 
 		void init(Gamecube_Report_t state, Gamecube_Data_t *data) {
 			mapper.init(state, data, controller);
+			meta.init(state, data, controller);
+			debug.init(state, data, controller);
 			remapper.init(state, data, controller);
 			backdasher.init(state, data, controller);
 		}
@@ -51,6 +55,7 @@ class WaveSine {
 			meta.update(state, &data, controller);
 
 			if (meta.isEnabled) {
+				if (meta.isDebug) debug.update(state, &data, controller);
 				remapper.update(state, &data, controller);
 				backdasher.update(state, &data, controller);
 			}
@@ -58,7 +63,7 @@ class WaveSine {
 			// Sends the data to the console
 			if (!console.write(data)) {
 				delay(100);
-				console.write(data);
+				return;
 			}
 
 			controller.setRumble((rumbleSetting && data.status.rumble) || meta.rumble);
