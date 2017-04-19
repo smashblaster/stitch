@@ -13,8 +13,8 @@ using namespace std;
 
 class WaveSine {
 	private:
-		vector<Module>::iterator module;
-		vector<Module> modules;
+		vector<Module*> modules;
+		vector<Module*>::iterator module;
 
 		CGamecubeConsole console;
 		CGamecubeController controller;
@@ -26,16 +26,16 @@ class WaveSine {
 		Context ctx;
 
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
-			modules.push_back(Map());
-			modules.push_back(Meta());
-			modules.push_back(Debug());
-			modules.push_back(Remap());
-			modules.push_back(Backdash());
+			modules.push_back(new Map());
+			modules.push_back(new Meta());
+			modules.push_back(new Debug());
+			modules.push_back(new Remap());
+			modules.push_back(new Backdash());
 		}
 
 		void init() {
 			for (module = modules.begin(); module != modules.end(); ++module) {
-				module->init(&ctx, controller);
+				(*module)->init(&ctx, controller);
 			}
 			ctx.init = true;
 		}
@@ -55,7 +55,7 @@ class WaveSine {
 			if (!ctx.init) init();
 
 			for (module = modules.begin(); module != modules.end(); ++module) {
-				module->update(&ctx, controller);
+				(*module)->update(&ctx, controller);
 			}
 
 			// Sends the data to the console

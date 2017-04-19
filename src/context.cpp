@@ -6,10 +6,10 @@
 struct Context {
 	Gamecube_Data_t data;
 	Gamecube_Report_t state;
-	bool debug;
-	bool enabled;
-	bool init;
-	bool rumble;
+	bool debug = false;
+	bool enabled = true;
+	bool init = false;
+	bool rumble = false;
 };
 
 #endif
