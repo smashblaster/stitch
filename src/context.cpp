@@ -1,4 +1,5 @@
 #include <Nintendo.h>
+#include <set>
 
 #ifndef CONTEXT
 #define CONTEXT
@@ -10,6 +11,8 @@ struct Context {
 	bool enabled = true;
 	bool init = false;
 	bool rumble = false;
+	std::set<std::string> pressed;
+	std::set<std::string> released;
 };
 
 #endif

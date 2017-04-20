@@ -6,15 +6,14 @@
 #include "modules/remap.cpp"
 #include <Nintendo.h>
 #include <vector>
-using namespace std;
 
 #ifndef WAVESINE
 #define WAVESINE
 
 class WaveSine {
 	private:
-		vector<Module*> modules;
-		vector<Module*>::iterator module;
+		std::vector<Module*> modules;
+		std::vector<Module*>::iterator module;
 
 		CGamecubeConsole console;
 		CGamecubeController controller;

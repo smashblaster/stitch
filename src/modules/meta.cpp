@@ -23,7 +23,7 @@ class Meta: public Module {
 				if (ctx->state.x == 1) {
 					ctx->data.report.x = 0;
 					ctx->rumble = true;
-					ctx->debug = true;
+					ctx->debug = !ctx->debug;
 				}
 			}
 		}
