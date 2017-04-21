@@ -1,12 +1,10 @@
 #include "module.cpp"
 #include <Nintendo.h>
-#include <map>
 
 class Map: public Module {
 	private:
 		std::string buttons[12] = { "a", "b", "start", "x", "y", "l", "r", "z", "ddown", "dleft", "dright", "dup" };
-		std::map<std::string, bool> buttonState;
-		uint8_t value;
+		uint8_t value, prevValue;
 
 	public:
 		void init(Context *ctx, CGamecubeController controller) {
@@ -15,34 +13,21 @@ class Map: public Module {
 		}
 
 		void update(Context *ctx, CGamecubeController controller) {
-			ctx->pressed.clear();
-			ctx->released.clear();
+			ctx->pressedButtons.clear();
+			ctx->releasedButtons.clear();
 
 			for (auto &button : buttons) {
-				value = ctx->getButton(button);
+				value = ctx->getButton(button, ctx->state);
+				prevValue = ctx->getButton(button, ctx->prevState);
 
-				// if (value == 1 && !buttonState[button]) {
-				// 	ctx->pressed.insert(button);
-				// } else if (value == 0 && buttonState[button]) {
-				// 	ctx->released.insert(button);
-				// }
+				if (value == 1 && prevValue == 0) {
+					ctx->pressedButtons.push_back(button);
+				} else if (value == 0 && prevValue == 1) {
+					ctx->releasedButtons.push_back(button);
+				}
 
 				ctx->setButton(button, value);
-				// buttonState[button] = value == 1;
 			}
-
-			// ctx->data.report.a = ctx->state.a;
-			// ctx->data.report.b = ctx->state.b;
-			// ctx->data.report.start = ctx->state.start;
-			// ctx->data.report.x = ctx->state.x;
-			// ctx->data.report.y = ctx->state.y;
-			// ctx->data.report.ddown = ctx->state.ddown;
-			// ctx->data.report.dleft = ctx->state.dleft;
-			// ctx->data.report.dright = ctx->state.dright;
-			// ctx->data.report.dup = ctx->state.dup;
-			// ctx->data.report.l = ctx->state.l;
-			// ctx->data.report.r = ctx->state.r;
-			// ctx->data.report.z = ctx->state.z;
 
 			ctx->data.report.cxAxis = ctx->state.cxAxis;
 			ctx->data.report.cyAxis = ctx->state.cyAxis;
@@ -50,5 +35,7 @@ class Map: public Module {
 			ctx->data.report.right = ctx->state.right;
 			ctx->data.report.xAxis = ctx->state.xAxis;
 			ctx->data.report.yAxis = ctx->state.yAxis;
+
+			ctx->prevState = ctx->data.report;
 		}
 };

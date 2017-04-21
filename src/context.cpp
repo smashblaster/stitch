@@ -1,5 +1,6 @@
 #include <Nintendo.h>
-#include <set>
+#include <string>
+#include <vector>
 
 #ifndef CONTEXT
 #define CONTEXT
@@ -8,16 +9,17 @@ class Context {
 	public:
 		Gamecube_Data_t data;
 		Gamecube_Report_t state;
+		Gamecube_Report_t prevState;
 		bool debug = false;
 		bool enabled = true;
 		bool init = false;
 		bool rumble = false;
-		std::set<std::string> pressed;
-		std::set<std::string> released;
+		std::vector<std::string> pressedButtons;
+		std::vector<std::string> releasedButtons;
 
 		~Context() {}
 
-		uint8_t getButton(std::string button) {
+		uint8_t getButton(std::string button, Gamecube_Report_t state) {
 			if (button == "a") return state.a;
 			if (button == "b") return state.b;
 			if (button == "x") return state.x;
@@ -58,6 +60,18 @@ class Context {
 			if (button == "right") data.report.right = value;
 			if (button == "xAxis") data.report.xAxis = value;
 			if (button == "yAxis") data.report.yAxis = value;
+		}
+
+		bool pressed(std::string button) {
+			return std::find(pressedButtons.begin(), pressedButtons.end(), button) != pressedButtons.end();
+		}
+
+		bool released(std::string button) {
+			return std::find(releasedButtons.begin(), releasedButtons.end(), button) != releasedButtons.end();
+		}
+
+		bool down(std::string button) {
+			return getButton(button, data.report) == 1;
 		}
 };
 
