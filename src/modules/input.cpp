@@ -17,7 +17,7 @@ class Input: public Module {
 			ctx->releasedButtons.clear();
 
 			for (auto &button : buttons) {
-				value = ctx->getButton(button, ctx->state);
+				value = ctx->getButton(button);
 				prevValue = ctx->getButton(button, ctx->prevState);
 
 				if (value == 1 && prevValue == 0) {

@@ -33,8 +33,8 @@ class WaveSine {
 		}
 
 		void init() {
-			for (module = modules.begin(); module != modules.end(); ++module) {
-				(*module)->init(&ctx, controller);
+			for (auto &module : modules) {
+				module->init(&ctx, controller);
 			}
 			ctx.init = true;
 		}
@@ -50,12 +50,12 @@ class WaveSine {
 			// Gets the data of controller
 			ctx.data = defaultGamecubeData;
 			ctx.state = controller.getReport();
-			ctx.data.report = ctx.state;
+			memcpy(&ctx.data.report, &ctx.state, sizeof(ctx.state));
 
 			if (!ctx.init) init();
 
-			for (module = modules.begin(); module != modules.end(); ++module) {
-				(*module)->update(&ctx, controller);
+			for (auto &module : modules) {
+				module->update(&ctx, controller);
 			}
 
 			// Sends the data to the console

@@ -19,6 +19,10 @@ class Context {
 
 		~Context() {}
 
+		uint8_t getButton(std::string button) {
+			getButton(button, state);
+		}
+
 		uint8_t getButton(std::string button, Gamecube_Report_t state) {
 			if (button == "a") return state.a;
 			if (button == "b") return state.b;

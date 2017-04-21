@@ -13,7 +13,7 @@ class Remap: public Module {
 			}
 
 			// // Map dright => toggle between vanilla / dolphin
-			// if (ctx->state.dright == 1) {
+			// if (ctx->pressed("dright") {
 			// 	ctx->data.report.dright = 0;
 			// 	if (maxDashBuffer == maxDashBufferVanilla) {
 			// 		maxDashBuffer = maxDashBufferDolphin;
@@ -24,7 +24,7 @@ class Remap: public Module {
 			// 	}
 			// }
 
-			// if (ctx->state.dup == 1) {
+			// if (ctx->pressed("dup") {
 			// 	ctx->data.report.dup = 0;
 			// 	ctx->data.report.xAxis = 138;
 			// 	ctx->data.report.yAxis = 80;
