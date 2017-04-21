@@ -4,10 +4,12 @@
 class Meta: public Module {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
+			ctx->meta = false;
 			ctx->rumble = false;
 
 			// super = start + z
 			if (ctx->down("start") && ctx->down("z")) {
+				ctx->meta = true;
 				ctx->release("start");
 				ctx->release("z");
 
