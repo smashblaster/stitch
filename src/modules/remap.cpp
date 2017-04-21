@@ -7,9 +7,9 @@ class Remap: public Module {
 			if (!ctx->enabled) return;
 
 			// Map x => shield
-			if (ctx->state.x == 1) {
-				ctx->data.report.x = 0;
-				ctx->data.report.l = 1;
+			if (ctx->down("x")) {
+				ctx->release("x");
+				ctx->press("l");
 			}
 
 			// // Map dright => toggle between vanilla / dolphin

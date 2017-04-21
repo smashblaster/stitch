@@ -62,6 +62,14 @@ class Context {
 			if (button == "yAxis") data.report.yAxis = value;
 		}
 
+		void press(std::string button) {
+			setButton(button, 1);
+		}
+
+		void release(std::string button) {
+			setButton(button, 0);
+		}
+
 		bool pressed(std::string button) {
 			return std::find(pressedButtons.begin(), pressedButtons.end(), button) != pressedButtons.end();
 		}

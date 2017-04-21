@@ -8,22 +8,21 @@ class Meta: public Module {
 
 			// super = start + z
 			if (ctx->down("start") && ctx->down("z")) {
-				ctx->data.report.start = 0;
-				ctx->data.report.z = 0;
+				ctx->release("start");
+				ctx->release("z");
 
 				// ddown => toggle
-				if (ctx->pressed("dup") || ctx->pressed("ddown")) {
-					ctx->data.report.dup = 0;
-					ctx->data.report.ddown = 0;
-					ctx->enabled = ctx->state.dup == 1;
+				if (ctx->pressed("ddown")) {
+					ctx->release("ddown");
+					ctx->enabled = !ctx->enabled;
 					ctx->rumble = true;
 				}
 
 				// x => debug
 				if (ctx->pressed("x")) {
-					ctx->data.report.x = 0;
-					ctx->rumble = true;
+					ctx->release("x");
 					ctx->debug = !ctx->debug;
+					ctx->rumble = true;
 				}
 			}
 		}
