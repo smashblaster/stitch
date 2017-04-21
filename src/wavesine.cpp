@@ -1,6 +1,6 @@
 #include "modules/backdash.cpp"
 #include "modules/debug.cpp"
-#include "modules/map.cpp"
+#include "modules/input.cpp"
 #include "modules/meta.cpp"
 #include "modules/module.cpp"
 #include "modules/remap.cpp"
@@ -25,7 +25,7 @@ class WaveSine {
 		Context ctx;
 
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
-			modules.push_back(new Map());
+			modules.push_back(new Input());
 			modules.push_back(new Meta());
 			modules.push_back(new Debug());
 			modules.push_back(new Remap());
@@ -48,8 +48,9 @@ class WaveSine {
 			}
 
 			// Gets the data of controller
-			ctx.state = controller.getReport();
 			ctx.data = defaultGamecubeData;
+			ctx.state = controller.getReport();
+			ctx.data.report = ctx.state;
 
 			if (!ctx.init) init();
 
