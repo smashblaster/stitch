@@ -27,8 +27,8 @@ class WaveSine {
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
 			modules.push_back(new Input());
 			modules.push_back(new Meta());
-			modules.push_back(new Debug());
 			modules.push_back(new Remap());
+			modules.push_back(new Debug());
 			modules.push_back(new Backdash());
 		}
 
@@ -60,6 +60,7 @@ class WaveSine {
 
 			// Sends the data to the console
 			if (!console.write(ctx.data)) {
+				ctx.init = false;
 				delay(100);
 				return;
 			}
