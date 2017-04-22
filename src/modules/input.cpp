@@ -7,6 +7,8 @@ class Input: public Module {
 		uint8_t value, prevValue;
 
 	public:
+		std::string const name() { return "input"; }
+
 		void init(Context *ctx, CGamecubeController controller) {
 			// Zero the controller out on startup
 			ctx->data.origin = controller.getOrigin();

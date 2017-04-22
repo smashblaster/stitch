@@ -6,8 +6,11 @@
 
 class Module {
 	public:
+		bool enabled = true;
+
 		virtual ~Module() {}
-		virtual void init(Context *ctx, CGamecubeController controller) {}
+		virtual std::string const name() = 0;
+		virtual void init(Context *ctx, CGamecubeController controller) {};
 		virtual void update(Context *ctx, CGamecubeController controller) {};
 };
 

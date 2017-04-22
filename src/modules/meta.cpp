@@ -3,6 +3,8 @@
 
 class Meta: public Module {
 	public:
+		std::string const name() { return "meta"; }
+
 		void update(Context *ctx, CGamecubeController controller) {
 			ctx->meta = false;
 			ctx->rumble = false;

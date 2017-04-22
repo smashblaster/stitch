@@ -14,6 +14,8 @@ class Backdash: public Module {
 		int maxDashBuffer = maxDashBufferVanilla;
 
 	public:
+		std::string const name() { return "backdash"; }
+
 		void init(Context *ctx, CGamecubeController controller) {
 			// Reset x-axis
 			center = ctx->state.xAxis;
