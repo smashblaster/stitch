@@ -7,8 +7,8 @@
 class System {
 	public:
 		std::string name;
+		bool enabled = false;
 		bool persistent = false;
-		bool enabled = true;
 
 		virtual ~System() {}
 		virtual void init(Context *ctx, CGamecubeController controller) {};
@@ -16,6 +16,7 @@ class System {
 		void enable() { enabled = true; }
 		void disable() { enabled = false; }
 		void toggle() { enabled = !enabled; }
+		void toggle(bool value) { enabled = value; }
 		void setPersistent(bool value) { persistent = value; }
 };
 

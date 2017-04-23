@@ -25,8 +25,8 @@ class WaveSine {
 		Context ctx;
 
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
-			addSystem("input", new Input(), true);
-			addSystem("meta", new Meta(), true);
+			addSystem("input", new Input(), true, true);
+			addSystem("meta", new Meta(), true, true);
 			addSystem("remap", new Remap());
 			addSystem("debug", new Debug());
 			addSystem("backdash", new Backdash());
@@ -68,8 +68,9 @@ class WaveSine {
 			controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
 		};
 
-		void addSystem(std::string name, System* system, bool persistent = false) {
+		void addSystem(std::string name, System* system, bool enabled = true, bool persistent = false) {
 			system->name = name;
+			system->toggle(enabled);
 			system->setPersistent(persistent);
 			systems.push_back(system);
 		};
