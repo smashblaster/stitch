@@ -3,8 +3,6 @@
 
 class Remap: public Module {
 	public:
-		std::string const name() { return "remap"; }
-
 		void update(Context *ctx, CGamecubeController controller) {
 			if (!ctx->enabled) return;
 

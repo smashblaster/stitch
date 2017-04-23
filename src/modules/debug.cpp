@@ -3,8 +3,6 @@
 
 class Debug: public Module {
 	public:
-		std::string const name() { return "debug"; }
-
 		void update(Context *ctx, CGamecubeController controller) {
 			if (!ctx->enabled || !ctx->debug) return;
 

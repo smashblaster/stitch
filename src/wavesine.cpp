@@ -25,11 +25,11 @@ class WaveSine {
 		Context ctx;
 
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
-			modules.push_back(new Input());
-			modules.push_back(new Meta());
-			modules.push_back(new Remap());
-			modules.push_back(new Debug());
-			modules.push_back(new Backdash());
+			addSystem("input", new Input());
+			addSystem("meta", new Meta());
+			addSystem("remap", new Remap());
+			addSystem("debug", new Debug());
+			addSystem("backdash", new Backdash());
 		}
 
 		void init() {
@@ -66,6 +66,11 @@ class WaveSine {
 			}
 
 			controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
+		};
+
+		void addSystem(std::string name, Module* module) {
+			module->name = name;
+			modules.push_back(module);
 		};
 };
 
