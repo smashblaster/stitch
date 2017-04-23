@@ -25,8 +25,8 @@ class WaveSine {
 		Context ctx;
 
 		WaveSine(int cons, int cont): console(cons), controller(cont) {
-			addSystem("input", new Input());
-			addSystem("meta", new Meta());
+			addSystem("input", new Input(), true);
+			addSystem("meta", new Meta(), true);
 			addSystem("remap", new Remap());
 			addSystem("debug", new Debug());
 			addSystem("backdash", new Backdash());
@@ -34,7 +34,7 @@ class WaveSine {
 
 		void init() {
 			for (auto &system : systems) {
-				if (system->enabled) system->init(&ctx, controller);
+				if (system->enabled && (ctx.enabled || system->persistent)) system->init(&ctx, controller);
 			}
 			ctx.init = true;
 		}
@@ -55,7 +55,7 @@ class WaveSine {
 			if (!ctx.init) init();
 
 			for (auto &system : systems) {
-				if (system->enabled) system->update(&ctx, controller);
+				if (system->enabled && (ctx.enabled || system->persistent)) system->update(&ctx, controller);
 			}
 
 			// Sends the data to the console
@@ -68,8 +68,9 @@ class WaveSine {
 			controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
 		};
 
-		void addSystem(std::string name, System* system) {
+		void addSystem(std::string name, System* system, bool persistent = false) {
 			system->name = name;
+			system->setPersistent(persistent);
 			systems.push_back(system);
 		};
 
