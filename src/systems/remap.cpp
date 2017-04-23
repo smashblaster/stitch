@@ -4,8 +4,6 @@
 class Remap: public System {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
-			if (!ctx->enabled) return;
-
 			// Map x => shield
 			if (ctx->down("x")) {
 				ctx->release("x");

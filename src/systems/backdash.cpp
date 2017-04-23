@@ -20,8 +20,6 @@ class Backdash: public System {
 		}
 
 		void update(Context *ctx, CGamecubeController controller) {
-			if (!ctx->enabled) return;
-
 			// If the x axis is between these two than set buffer to eight
 			if (ctx->state.xAxis > center - deadZone - 1 && ctx->state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;

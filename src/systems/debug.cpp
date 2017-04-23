@@ -4,7 +4,7 @@
 class Debug: public System {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
-			if (!ctx->enabled || !ctx->debug) return;
+			if (!ctx->debug) return;
 
 			// Serial.print(ctx->state.xAxis);
 			// Serial.print("\t");
