@@ -34,7 +34,7 @@ class WaveSine {
 
 		void init() {
 			for (auto &module : modules) {
-				module->init(&ctx, controller);
+				if (module->enabled) module->init(&ctx, controller);
 			}
 			ctx.init = true;
 		}
@@ -55,7 +55,7 @@ class WaveSine {
 			if (!ctx.init) init();
 
 			for (auto &module : modules) {
-				module->update(&ctx, controller);
+				if (module->enabled) module->update(&ctx, controller);
 			}
 
 			// Sends the data to the console
@@ -71,6 +71,33 @@ class WaveSine {
 		void addSystem(std::string name, Module* module) {
 			module->name = name;
 			modules.push_back(module);
+		};
+
+		void enableSystem(std::string name) {
+			for (auto &module : modules) {
+				if (module->name == name) {
+					module->enabled = true;
+					break;
+				}
+			}
+		};
+
+		void disableSystem(std::string name) {
+			for (auto &module : modules) {
+				if (module->name == name) {
+					module->enabled = false;
+					break;
+				}
+			}
+		};
+
+		void toggleSystem(std::string name) {
+			for (auto &module : modules) {
+				if (module->name == name) {
+					module->enabled = !module->enabled;
+					break;
+				}
+			}
 		};
 };
 
