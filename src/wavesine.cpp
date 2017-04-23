@@ -73,32 +73,29 @@ class WaveSine {
 			systems.push_back(system);
 		};
 
-		void enableSystem(std::string name) {
-			for (auto &system : systems) {
-				if (system->name == name) {
-					system->enabled = true;
-					break;
-				}
-			}
-		};
-
-		void disableSystem(std::string name) {
-			for (auto &system : systems) {
-				if (system->name == name) {
-					system->enabled = false;
-					break;
-				}
-			}
-		};
+		void enableSystem(std::string name) { toggleSystem(name, true); };
+		void disableSystem(std::string name) { toggleSystem(name, false); };
 
 		void toggleSystem(std::string name) {
 			for (auto &system : systems) {
 				if (system->name == name) {
-					system->enabled = !system->enabled;
+					toggleSystem(system, !system->enabled);
 					break;
 				}
 			}
 		};
+
+		void toggleSystem(std::string name, bool value) {
+			for (auto &system : systems) {
+				if (system->name == name) {
+					toggleSystem(system, value);
+					break;
+				}
+			}
+		};
+
+		void toggleSystem(System* system) { system->enabled = !system->enabled; };
+		void toggleSystem(System* system, bool value) { system->enabled = value; };
 };
 
 #endif
