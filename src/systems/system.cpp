@@ -1,15 +1,15 @@
 #include "../context.cpp"
 #include <Nintendo.h>
 
-#ifndef MODULE
-#define MODULE
+#ifndef SYSTEM
+#define SYSTEM
 
-class Module {
+class System {
 	public:
 		std::string name;
 		bool enabled = true;
 
-		virtual ~Module() {}
+		virtual ~System() {}
 		virtual void init(Context *ctx, CGamecubeController controller) {};
 		virtual void update(Context *ctx, CGamecubeController controller) {};
 };

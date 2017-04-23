@@ -1,9 +1,9 @@
-#include "modules/backdash.cpp"
-#include "modules/debug.cpp"
-#include "modules/input.cpp"
-#include "modules/meta.cpp"
-#include "modules/module.cpp"
-#include "modules/remap.cpp"
+#include "systems/backdash.cpp"
+#include "systems/debug.cpp"
+#include "systems/input.cpp"
+#include "systems/meta.cpp"
+#include "systems/remap.cpp"
+#include "systems/system.cpp"
 #include <Nintendo.h>
 #include <vector>
 
@@ -12,8 +12,8 @@
 
 class WaveSine {
 	private:
-		std::vector<Module*> modules;
-		std::vector<Module*>::iterator module;
+		std::vector<System*> systems;
+		std::vector<System*>::iterator system;
 
 		CGamecubeConsole console;
 		CGamecubeController controller;
@@ -33,8 +33,8 @@ class WaveSine {
 		}
 
 		void init() {
-			for (auto &module : modules) {
-				if (module->enabled) module->init(&ctx, controller);
+			for (auto &system : systems) {
+				if (system->enabled) system->init(&ctx, controller);
 			}
 			ctx.init = true;
 		}
@@ -54,8 +54,8 @@ class WaveSine {
 
 			if (!ctx.init) init();
 
-			for (auto &module : modules) {
-				if (module->enabled) module->update(&ctx, controller);
+			for (auto &system : systems) {
+				if (system->enabled) system->update(&ctx, controller);
 			}
 
 			// Sends the data to the console
@@ -68,33 +68,33 @@ class WaveSine {
 			controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
 		};
 
-		void addSystem(std::string name, Module* module) {
-			module->name = name;
-			modules.push_back(module);
+		void addSystem(std::string name, System* system) {
+			system->name = name;
+			systems.push_back(system);
 		};
 
 		void enableSystem(std::string name) {
-			for (auto &module : modules) {
-				if (module->name == name) {
-					module->enabled = true;
+			for (auto &system : systems) {
+				if (system->name == name) {
+					system->enabled = true;
 					break;
 				}
 			}
 		};
 
 		void disableSystem(std::string name) {
-			for (auto &module : modules) {
-				if (module->name == name) {
-					module->enabled = false;
+			for (auto &system : systems) {
+				if (system->name == name) {
+					system->enabled = false;
 					break;
 				}
 			}
 		};
 
 		void toggleSystem(std::string name) {
-			for (auto &module : modules) {
-				if (module->name == name) {
-					module->enabled = !module->enabled;
+			for (auto &system : systems) {
+				if (system->name == name) {
+					system->enabled = !system->enabled;
 					break;
 				}
 			}

@@ -1,7 +1,7 @@
-#include "module.cpp"
+#include "system.cpp"
 #include <Nintendo.h>
 
-class Remap: public Module {
+class Remap: public System {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
 			if (!ctx->enabled) return;

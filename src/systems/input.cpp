@@ -1,7 +1,7 @@
-#include "module.cpp"
+#include "system.cpp"
 #include <Nintendo.h>
 
-class Input: public Module {
+class Input: public System {
 	private:
 		std::string buttons[12] = { "a", "b", "start", "x", "y", "l", "r", "z", "ddown", "dleft", "dright", "dup" };
 		uint8_t value, prevValue;

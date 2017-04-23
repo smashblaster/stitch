@@ -1,7 +1,7 @@
-#include "module.cpp"
+#include "system.cpp"
 #include <Nintendo.h>
 
-class Debug: public Module {
+class Debug: public System {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
 			if (!ctx->enabled || !ctx->debug) return;

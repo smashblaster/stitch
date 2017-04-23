@@ -1,7 +1,7 @@
-#include "module.cpp"
+#include "system.cpp"
 #include <Nintendo.h>
 
-class Meta: public Module {
+class Meta: public System {
 	public:
 		void update(Context *ctx, CGamecubeController controller) {
 			ctx->meta = false;
