@@ -17,8 +17,8 @@ class Input: public System {
 			ctx->releasedButtons.clear();
 
 			for (auto &button : buttons) {
-				value = ctx->getButton(button, ctx->state);
-				prevValue = ctx->getButton(button, ctx->prevState);
+				value = ctx->get(button, ctx->state);
+				prevValue = ctx->get(button, ctx->prevState);
 
 				if (value == 1 && prevValue == 0) {
 					ctx->pressedButtons.push_back(button);

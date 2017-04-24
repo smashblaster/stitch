@@ -20,11 +20,9 @@ class Context {
 
 		~Context() {}
 
-		uint8_t getButton(std::string button) {
-			getButton(button, state);
-		}
+		uint8_t get(std::string button) { get(button, state); }
 
-		uint8_t getButton(std::string button, Gamecube_Report_t state) {
+		uint8_t get(std::string button, Gamecube_Report_t state) {
 			if (button == "a") return state.a;
 			if (button == "b") return state.b;
 			if (button == "x") return state.x;
@@ -46,7 +44,7 @@ class Context {
 			return 0;
 		}
 
-		void setButton(std::string button, uint8_t value) {
+		void set(std::string button, uint8_t value) {
 			if (button == "a") data.report.a = value;
 			if (button == "b") data.report.b = value;
 			if (button == "x") data.report.x = value;
@@ -67,13 +65,8 @@ class Context {
 			if (button == "yAxis") data.report.yAxis = value;
 		}
 
-		void press(std::string button) {
-			setButton(button, 1);
-		}
-
-		void release(std::string button) {
-			setButton(button, 0);
-		}
+		void press(std::string button) { set(button, 1); }
+		void release(std::string button) { set(button, 0); }
 
 		bool pressed(std::string button) {
 			return std::find(pressedButtons.begin(), pressedButtons.end(), button) != pressedButtons.end();
@@ -83,9 +76,7 @@ class Context {
 			return std::find(releasedButtons.begin(), releasedButtons.end(), button) != releasedButtons.end();
 		}
 
-		bool down(std::string button) {
-			return getButton(button, data.report) == 1;
-		}
+		bool down(std::string button) { return get(button, data.report) == 1; }
 };
 
 #endif
