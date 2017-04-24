@@ -3,7 +3,7 @@
 
 class Debug: public System {
 	public:
-		void update(Context *ctx, CGamecubeController controller) {
+		void update(Context *ctx) {
 			if (!ctx->debug) return;
 
 			// Serial.print(ctx->state.xAxis);

@@ -7,12 +7,12 @@ class Input: public System {
 		uint8_t value, prevValue;
 
 	public:
-		void init(Context *ctx, CGamecubeController controller) {
+		void init(Context *ctx) {
 			// Zero the controller out on startup
-			ctx->data.origin = controller.getOrigin();
+			ctx->data.origin = ctx->controller.getOrigin();
 		}
 
-		void update(Context *ctx, CGamecubeController controller) {
+		void update(Context *ctx) {
 			ctx->pressedButtons.clear();
 			ctx->releasedButtons.clear();
 

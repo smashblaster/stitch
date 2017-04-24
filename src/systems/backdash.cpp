@@ -14,12 +14,12 @@ class Backdash: public System {
 		int maxDashBuffer = maxDashBufferVanilla;
 
 	public:
-		void init(Context *ctx, CGamecubeController controller) {
+		void init(Context *ctx) {
 			// Reset x-axis
 			center = ctx->state.xAxis;
 		}
 
-		void update(Context *ctx, CGamecubeController controller) {
+		void update(Context *ctx) {
 			// If the x axis is between these two than set buffer to eight
 			if (ctx->state.xAxis > center - deadZone - 1 && ctx->state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;

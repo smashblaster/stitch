@@ -11,8 +11,8 @@ class System {
 		bool persistent = false;
 
 		virtual ~System() {}
-		virtual void init(Context *ctx, CGamecubeController controller) {};
-		virtual void update(Context *ctx, CGamecubeController controller) {};
+		virtual void init(Context *ctx) {};
+		virtual void update(Context *ctx) {};
 		void enable() { enabled = true; }
 		void disable() { enabled = false; }
 		void toggle() { enabled = !enabled; }

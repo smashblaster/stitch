@@ -7,6 +7,8 @@
 
 class Context {
 	public:
+		CGamecubeConsole console;
+		CGamecubeController controller;
 		Gamecube_Data_t data;
 		Gamecube_Report_t prevState;
 		Gamecube_Report_t state;
@@ -17,6 +19,8 @@ class Context {
 		bool rumble = false;
 		std::vector<std::string> pressedButtons;
 		std::vector<std::string> releasedButtons;
+
+		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 
 		~Context() {}
 

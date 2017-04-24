@@ -12,19 +12,14 @@
 
 class WaveSine {
 	private:
+		Context ctx;
 		std::vector<System*> systems;
-		std::vector<System*>::iterator system;
-
-		CGamecubeConsole console;
-		CGamecubeController controller;
 
 		// TODO: read from config
 		bool rumbleSetting = false;
 
 	public:
-		Context ctx;
-
-		WaveSine(int cons, int cont): console(cons), controller(cont) {
+		WaveSine(int consolePin, int controllerPin): ctx(consolePin, controllerPin) {
 			addSystem("input", new Input(), true, true);
 			addSystem("meta", new Meta(), true, true);
 			addSystem("remap", new Remap());
@@ -32,16 +27,18 @@ class WaveSine {
 			addSystem("backdash", new Backdash());
 		}
 
+		~WaveSine() {}
+
 		void init() {
 			for (auto &system : systems) {
-				if (system->enabled && (ctx.enabled || system->persistent)) system->init(&ctx, controller);
+				if (system->enabled && (ctx.enabled || system->persistent)) system->init(&ctx);
 			}
 			ctx.init = true;
 		}
 
 		void update() {
 			// Just stops the code if no controller is found
-			if (!controller.read()) {
+			if (!ctx.controller.read()) {
 				ctx.init = false;
 				delay(100);
 				return;
@@ -49,23 +46,23 @@ class WaveSine {
 
 			// Gets the data of controller
 			ctx.data = defaultGamecubeData;
-			ctx.state = controller.getReport();
+			ctx.state = ctx.controller.getReport();
 			memcpy(&ctx.data.report, &ctx.state, sizeof(ctx.state));
 
 			if (!ctx.init) init();
 
 			for (auto &system : systems) {
-				if (system->enabled && (ctx.enabled || system->persistent)) system->update(&ctx, controller);
+				if (system->enabled && (ctx.enabled || system->persistent)) system->update(&ctx);
 			}
 
 			// Sends the data to the console
-			if (!console.write(ctx.data)) {
+			if (!ctx.console.write(ctx.data)) {
 				ctx.init = false;
 				delay(100);
 				return;
 			}
 
-			controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
+			ctx.controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
 		};
 
 		void addSystem(std::string name, System* system, bool enabled = true, bool persistent = false) {

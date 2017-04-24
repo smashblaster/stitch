@@ -3,7 +3,7 @@
 
 class Remap: public System {
 	public:
-		void update(Context *ctx, CGamecubeController controller) {
+		void update(Context *ctx) {
 			// Map x => shield
 			if (ctx->down("x")) {
 				ctx->release("x");

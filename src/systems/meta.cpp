@@ -3,7 +3,7 @@
 
 class Meta: public System {
 	public:
-		void update(Context *ctx, CGamecubeController controller) {
+		void update(Context *ctx) {
 			ctx->meta = false;
 			ctx->rumble = false;
 
