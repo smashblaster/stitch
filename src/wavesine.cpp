@@ -1,3 +1,4 @@
+#include "config.cpp"
 #include "systems/backdash.cpp"
 #include "systems/debug.cpp"
 #include "systems/input.cpp"
@@ -13,10 +14,8 @@
 class WaveSine {
 	private:
 		Context ctx;
+		Config* config;
 		std::vector<System*> systems;
-
-		// TODO: read from config
-		bool rumbleSetting = false;
 
 	public:
 		WaveSine(int consolePin, int controllerPin): ctx(consolePin, controllerPin) {
@@ -29,10 +28,18 @@ class WaveSine {
 
 		~WaveSine() {}
 
+		void setup(char json[]) {
+			config = new Config(json);
+			for (auto &system : systems) {
+				if (!system->persistent) system->toggle(config->get(system->name));
+			}
+		}
+
 		void init() {
 			for (auto &system : systems) {
 				if (system->enabled && (ctx.enabled || system->persistent)) system->init(&ctx);
 			}
+
 			ctx.init = true;
 		}
 
@@ -62,7 +69,7 @@ class WaveSine {
 				return;
 			}
 
-			ctx.controller.setRumble((rumbleSetting && ctx.data.status.rumble) || ctx.rumble);
+			ctx.controller.setRumble((config->get("rumble") && ctx.data.status.rumble) || ctx.rumble);
 		};
 
 		void addSystem(std::string name, System* system, bool enabled = true, bool persistent = false) {
