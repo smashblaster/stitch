@@ -8,15 +8,16 @@
 class Config {
 	private:
 		StaticJsonBuffer<200> jsonBuffer;
+		Settings* settings_;
 
 	public:
-		Settings* settings;
-
 		Config(char json[]) {
-			settings = new Settings(jsonBuffer.parseObject(json));
+			settings_ = new Settings(jsonBuffer.parseObject(json));
 		}
 
 		~Config() {}
+
+		Settings* settings() const { return settings_; }
 };
 
 #endif
