@@ -2,17 +2,19 @@
 #include <Nintendo.h>
 
 class Input: public System {
+	using System::System;
+
 	private:
 		std::string buttons[12] = { "a", "b", "start", "x", "y", "l", "r", "z", "ddown", "dleft", "dright", "dup" };
 		uint8_t value, prevValue;
 
 	public:
-		void init(Context *ctx) {
+		void init() {
 			// Zero the controller out on startup
 			ctx->data.origin = ctx->controller.getOrigin();
 		}
 
-		void update(Context *ctx) {
+		void update() {
 			ctx->pressedButtons.clear();
 			ctx->releasedButtons.clear();
 

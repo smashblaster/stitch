@@ -2,8 +2,10 @@
 #include <Nintendo.h>
 
 class Debug: public System {
+	using System::System;
+
 	public:
-		void update(Context *ctx) {
+		void update() {
 			if (!ctx->debug) return;
 
 			// Serial.print(ctx->state.xAxis);

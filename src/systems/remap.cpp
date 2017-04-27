@@ -2,8 +2,10 @@
 #include <Nintendo.h>
 
 class Remap: public System {
+	using System::System;
+
 	public:
-		void update(Context *ctx) {
+		void update() {
 			// Map x => shield
 			if (ctx->down("x")) {
 				ctx->release("x");

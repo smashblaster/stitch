@@ -2,6 +2,8 @@
 #include <Nintendo.h>
 
 class Backdash: public System {
+	using System::System;
+
 	private:
 		int deadZone = 22;
 		int center = 128;
@@ -14,12 +16,12 @@ class Backdash: public System {
 		int maxDashBuffer = maxDashBufferVanilla;
 
 	public:
-		void init(Context *ctx) {
+		void init() {
 			// Reset x-axis
 			center = ctx->state.xAxis;
 		}
 
-		void update(Context *ctx) {
+		void update() {
 			// If the x axis is between these two than set buffer to eight
 			if (ctx->state.xAxis > center - deadZone - 1 && ctx->state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;

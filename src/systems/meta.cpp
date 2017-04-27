@@ -2,8 +2,10 @@
 #include <Nintendo.h>
 
 class Meta: public System {
+	using System::System;
+
 	public:
-		void update(Context *ctx) {
+		void update() {
 			ctx->meta = false;
 			ctx->rumble = false;
 

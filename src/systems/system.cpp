@@ -5,14 +5,21 @@
 #define SYSTEM
 
 class System {
+	protected:
+		Context* ctx;
+
 	public:
 		std::string name;
 		bool enabled = false;
 		bool persistent = false;
 
+		explicit System(Context* _ctx) {
+			ctx = _ctx;
+		}
+
 		virtual ~System() {}
-		virtual void init(Context *ctx) {};
-		virtual void update(Context *ctx) {};
+		virtual void init() {};
+		virtual void update() {};
 		void enable() { enabled = true; }
 		void disable() { enabled = false; }
 		void toggle() { enabled = !enabled; }

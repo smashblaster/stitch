@@ -22,11 +22,11 @@ class WaveSine {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
-			addSystem("input", new Input(), true, true);
-			addSystem("meta", new Meta(), true, true);
-			addSystem("remap", new Remap());
-			addSystem("debug", new Debug());
-			addSystem("backdash", new Backdash());
+			addSystem("input", new Input(ctx), true, true);
+			addSystem("meta", new Meta(ctx), true, true);
+			addSystem("remap", new Remap(ctx));
+			addSystem("debug", new Debug(ctx));
+			addSystem("backdash", new Backdash(ctx));
 
 			for (auto &system : systems) {
 				if (!system->persistent) system->toggle(config->settings->get(system->name));
@@ -37,7 +37,7 @@ class WaveSine {
 
 		void init() {
 			for (auto &system : systems) {
-				if (system->enabled && (ctx->enabled || system->persistent)) system->init(ctx);
+				if (system->enabled && (ctx->enabled || system->persistent)) system->init();
 			}
 
 			ctx->init = true;
@@ -59,7 +59,7 @@ class WaveSine {
 			if (!ctx->init) init();
 
 			for (auto &system : systems) {
-				if (system->enabled && (ctx->enabled || system->persistent)) system->update(ctx);
+				if (system->enabled && (ctx->enabled || system->persistent)) system->update();
 			}
 
 			// Sends the data to the console
