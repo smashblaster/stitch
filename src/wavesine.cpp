@@ -29,7 +29,7 @@ class WaveSine {
 			addSystem("backdash", new Backdash());
 
 			for (auto &system : systems) {
-				if (!system->persistent) system->toggle(config->get(system->name));
+				if (!system->persistent) system->toggle(config->settings->get(system->name));
 			}
 		}
 
@@ -69,7 +69,7 @@ class WaveSine {
 				return;
 			}
 
-			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
+			ctx->controller.setRumble((config->settings->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
 		};
 
 		System* getSystem(std::string name) {

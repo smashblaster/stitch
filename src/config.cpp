@@ -1,3 +1,4 @@
+#include "settings.cpp"
 #include <ArduinoJson.h>
 #include <string>
 
@@ -7,28 +8,15 @@
 class Config {
 	private:
 		StaticJsonBuffer<200> jsonBuffer;
-		JsonObject& config;
 
 	public:
-		bool backdash = true;
-		bool debug = false;
-		bool remap = true;
-		bool rumble = false;
+		Settings* settings;
 
-		Config(char json[]): config(jsonBuffer.parseObject(json)) {
-			backdash = config["backdash"];
-			remap = config["remap"];
-			rumble = config["rumble"];
+		Config(char json[]) {
+			settings = new Settings(jsonBuffer.parseObject(json));
 		}
 
 		~Config() {}
-
-		bool get(std::string path) {
-			if (path == "backdash") return backdash;
-			if (path == "debug") return debug;
-			if (path == "remap") return remap;
-			if (path == "rumble") return rumble;
-		}
 };
 
 #endif
