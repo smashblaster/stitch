@@ -21,6 +21,7 @@ class WaveSine {
 		WaveSine(int consolePin, int controllerPin, char json[]) {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
+			memcpy(&ctx->settings, &config->settings, sizeof(config->settings));
 
 			addSystem("input", new Input(ctx), true, true);
 			addSystem("meta", new Meta(ctx), true, true);
@@ -29,7 +30,7 @@ class WaveSine {
 			addSystem("backdash", new Backdash(ctx));
 
 			for (auto &system : systems) {
-				if (!system->persistent) system->toggle(config->settings()->get(system->name));
+				if (!system->persistent) system->toggle(config->settings->get(system->name));
 			}
 		}
 
@@ -69,7 +70,7 @@ class WaveSine {
 				return;
 			}
 
-			ctx->controller.setRumble((config->settings()->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
+			ctx->controller.setRumble((config->settings->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
 		};
 
 		System* getSystem(std::string name) {
@@ -84,22 +85,6 @@ class WaveSine {
 			system->setPersistent(persistent);
 			systems.push_back(system);
 		};
-
-		void enableSystem(std::string name) { toggleSystem(name, true); };
-		void disableSystem(std::string name) { toggleSystem(name, false); };
-
-		void toggleSystem(std::string name) {
-			System* system = getSystem(name);
-			toggleSystem(system, !system->enabled);
-		};
-
-		void toggleSystem(std::string name, bool value) {
-			System* system = getSystem(name);
-			toggleSystem(system, value);
-		};
-
-		void toggleSystem(System* system) { system->enabled = !system->enabled; };
-		void toggleSystem(System* system, bool value) { system->enabled = value; };
 };
 
 #endif
