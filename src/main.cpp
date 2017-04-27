@@ -3,8 +3,10 @@
 
 #define pinLed LED_BUILTIN
 
-WaveSine wavesine(3, 4);
+WaveSine* wavesine;
 const int baud = 9600;
+const int consolePin = 3;
+const int controllerPin = 4;
 
 void setup() {
 	Serial.begin(baud);
@@ -15,9 +17,9 @@ void setup() {
 		"\"remap\": \"true\","
 		"\"rumble\": \"true\""
 	"}";
-	wavesine.setup(json);
+	wavesine = new WaveSine(consolePin, controllerPin, json);
 }
 
 void loop() {
-	wavesine.update();
+	wavesine->update();
 }

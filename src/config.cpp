@@ -11,9 +11,9 @@ class Config {
 
 	public:
 		bool backdash = true;
+		bool debug = false;
 		bool remap = true;
 		bool rumble = false;
-		const bool debug = false;
 
 		Config(char json[]): config(jsonBuffer.parseObject(json)) {
 			backdash = config["backdash"];

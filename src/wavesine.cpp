@@ -13,63 +13,63 @@
 
 class WaveSine {
 	private:
-		Context ctx;
 		Config* config;
+		Context* ctx;
 		std::vector<System*> systems;
 
 	public:
-		WaveSine(int consolePin, int controllerPin): ctx(consolePin, controllerPin) {
+		WaveSine(int consolePin, int controllerPin, char json[]) {
+			config = new Config(json);
+			ctx = new Context(consolePin, controllerPin);
+
 			addSystem("input", new Input(), true, true);
 			addSystem("meta", new Meta(), true, true);
 			addSystem("remap", new Remap());
 			addSystem("debug", new Debug());
 			addSystem("backdash", new Backdash());
-		}
 
-		~WaveSine() {}
-
-		void setup(char json[]) {
-			config = new Config(json);
 			for (auto &system : systems) {
 				if (!system->persistent) system->toggle(config->get(system->name));
 			}
 		}
 
+		~WaveSine() {}
+
 		void init() {
 			for (auto &system : systems) {
-				if (system->enabled && (ctx.enabled || system->persistent)) system->init(&ctx);
+				if (system->enabled && (ctx->enabled || system->persistent)) system->init(ctx);
 			}
 
-			ctx.init = true;
+			ctx->init = true;
 		}
 
 		void update() {
 			// Just stops the code if no controller is found
-			if (!ctx.controller.read()) {
-				ctx.init = false;
+			if (!ctx->controller.read()) {
+				ctx->init = false;
 				delay(100);
 				return;
 			}
 
 			// Gets the data of controller
-			ctx.data = defaultGamecubeData;
-			ctx.state = ctx.controller.getReport();
-			memcpy(&ctx.data.report, &ctx.state, sizeof(ctx.state));
+			ctx->data = defaultGamecubeData;
+			ctx->state = ctx->controller.getReport();
+			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
 
-			if (!ctx.init) init();
+			if (!ctx->init) init();
 
 			for (auto &system : systems) {
-				if (system->enabled && (ctx.enabled || system->persistent)) system->update(&ctx);
+				if (system->enabled && (ctx->enabled || system->persistent)) system->update(ctx);
 			}
 
 			// Sends the data to the console
-			if (!ctx.console.write(ctx.data)) {
-				ctx.init = false;
+			if (!ctx->console.write(ctx->data)) {
+				ctx->init = false;
 				delay(100);
 				return;
 			}
 
-			ctx.controller.setRumble((config->get("rumble") && ctx.data.status.rumble) || ctx.rumble);
+			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
 		};
 
 		System* getSystem(std::string name) {
