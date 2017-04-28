@@ -15,8 +15,6 @@ class Settings {
 
 		Settings(JsonObject& settings) {
 			backdash = settings["backdash"];
-			input = settings["input"];
-			meta = settings["meta"];
 			remap = settings["remap"];
 			rumble = settings["rumble"];
 		}

@@ -6,8 +6,6 @@ class Debug: public System {
 
 	public:
 		void update() {
-			if (!ctx->debug) return;
-
 			// Serial.print(ctx->state.xAxis);
 			// Serial.print("\t");
 			// Serial.print(ctx->state.yAxis);
