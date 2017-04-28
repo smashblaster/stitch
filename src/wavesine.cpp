@@ -79,7 +79,7 @@ class WaveSine {
 			}
 		};
 
-		void addSystem(std::string name, System* system, bool enabled = true, bool persistent = false) {
+		void addSystem(char* name, System* system, bool enabled = true, bool persistent = false) {
 			system->name = name;
 			system->toggle(enabled);
 			system->setPersistent(persistent);

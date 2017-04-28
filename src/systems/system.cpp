@@ -9,7 +9,7 @@ class System {
 		Context* ctx;
 
 	public:
-		std::string name;
+		char* name;
 		bool enabled = false;
 		bool persistent = false;
 
