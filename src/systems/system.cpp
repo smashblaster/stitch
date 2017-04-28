@@ -10,7 +10,6 @@ class System {
 
 	public:
 		char* name;
-		bool enabled = false;
 		bool persistent = false;
 
 		explicit System(Context* _ctx) {
@@ -20,10 +19,6 @@ class System {
 		virtual ~System() {}
 		virtual void init() {};
 		virtual void update() {};
-		void enable() { enabled = true; }
-		void disable() { enabled = false; }
-		void toggle() { enabled = !enabled; }
-		void toggle(bool value) { enabled = value; }
 		void setPersistent(bool value) { persistent = value; }
 };
 

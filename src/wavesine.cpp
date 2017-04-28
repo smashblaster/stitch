@@ -30,7 +30,8 @@ class WaveSine {
 			addSystem("backdash", new Backdash(ctx));
 
 			for (auto &system : systems) {
-				if (!system->persistent) system->toggle(config->settings->get(system->name));
+				bool enabled = system->persistent || config->settings->get(system->name);
+				ctx->settings->set(system->name, enabled);
 			}
 		}
 
@@ -38,7 +39,7 @@ class WaveSine {
 
 		void init() {
 			for (auto &system : systems) {
-				if (system->enabled && (ctx->enabled || system->persistent)) system->init();
+				if (system->persistent || (ctx->settings->get(system->name) && ctx->enabled)) system->init();
 			}
 
 			ctx->init = true;
@@ -60,7 +61,7 @@ class WaveSine {
 			if (!ctx->init) init();
 
 			for (auto &system : systems) {
-				if (system->enabled && (ctx->enabled || system->persistent)) system->update();
+				if (system->persistent || (ctx->settings->get(system->name) && ctx->enabled)) system->update();
 			}
 
 			// Sends the data to the console
@@ -81,7 +82,7 @@ class WaveSine {
 
 		void addSystem(char* name, System* system, bool enabled = true, bool persistent = false) {
 			system->name = name;
-			system->toggle(enabled);
+			ctx->settings->set(name, enabled);
 			system->setPersistent(persistent);
 			systems.push_back(system);
 		};
