@@ -23,16 +23,11 @@ class WaveSine {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
-			addSystem("input", new Input(ctx), true, true);
-			addSystem("meta", new Meta(ctx), true, true);
+			addSystem("input", new Input(ctx), true);
+			addSystem("meta", new Meta(ctx), true);
 			addSystem("remap", new Remap(ctx));
-			addSystem("debug", new Debug(ctx), false);
+			addSystem("debug", new Debug(ctx));
 			addSystem("backdash", new Backdash(ctx));
-
-			for (auto &system : systems) {
-				bool enabled = system->persistent || config->get(system->name);
-				system->toggle(enabled);
-			}
 		}
 
 		~WaveSine() {}
@@ -80,7 +75,8 @@ class WaveSine {
 			}
 		};
 
-		void addSystem(char* name, System* system, bool enabled = true, bool persistent = false) {
+		void addSystem(char* name, System* system, bool persistent = false) {
+			bool enabled = system->persistent || config->get(name);
 			system->name = name;
 			system->toggle(enabled);
 			system->setPersistent(persistent);
