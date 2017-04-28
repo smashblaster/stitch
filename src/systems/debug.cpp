@@ -1,4 +1,4 @@
-#include "system.cpp"
+#include "system.hpp"
 #include <Nintendo.h>
 
 class Debug: public System {

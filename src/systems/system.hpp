@@ -1,5 +1,4 @@
 #include "../context.cpp"
-#include <Nintendo.h>
 
 #ifndef SYSTEM
 #define SYSTEM

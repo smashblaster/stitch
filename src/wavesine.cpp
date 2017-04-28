@@ -1,10 +1,11 @@
 #include "config.cpp"
+#include "context.cpp"
 #include "systems/backdash.cpp"
 #include "systems/debug.cpp"
 #include "systems/input.cpp"
 #include "systems/meta.cpp"
 #include "systems/remap.cpp"
-#include "systems/system.cpp"
+#include "systems/system.hpp"
 #include <Nintendo.h>
 #include <vector>
 
