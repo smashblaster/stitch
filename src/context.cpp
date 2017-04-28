@@ -1,4 +1,3 @@
-#include "settings.cpp"
 #include <Nintendo.h>
 #include <string>
 #include <vector>
@@ -13,7 +12,6 @@ class Context {
 		Gamecube_Data_t data;
 		Gamecube_Report_t prevState;
 		Gamecube_Report_t state;
-		Settings* settings;
 		bool debug = false;
 		bool enabled = true;
 		bool init = false;

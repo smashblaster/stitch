@@ -25,7 +25,9 @@ class Meta: public System {
 				// dup => debug
 				if (ctx->down("dup")) ctx->release("dup");
 				if (ctx->pressed("dup")) {
-					ctx->settings->toggle("debug");
+					// TODO: update
+					ctx->debug = !ctx->debug;
+					// ctx->toggle("debug");
 					ctx->rumble = true;
 				}
 			}

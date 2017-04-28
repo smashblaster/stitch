@@ -21,17 +21,16 @@ class WaveSine {
 		WaveSine(int consolePin, int controllerPin, char json[]) {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
-			memcpy(&ctx->settings, &config->settings, sizeof(config->settings));
 
 			addSystem("input", new Input(ctx), true, true);
 			addSystem("meta", new Meta(ctx), true, true);
 			addSystem("remap", new Remap(ctx));
-			addSystem("debug", new Debug(ctx));
+			addSystem("debug", new Debug(ctx), false);
 			addSystem("backdash", new Backdash(ctx));
 
 			for (auto &system : systems) {
-				bool enabled = system->persistent || config->settings->get(system->name);
-				ctx->settings->set(system->name, enabled);
+				bool enabled = system->persistent || config->get(system->name);
+				system->toggle(enabled);
 			}
 		}
 
@@ -39,7 +38,7 @@ class WaveSine {
 
 		void init() {
 			for (auto &system : systems) {
-				if (system->persistent || (ctx->settings->get(system->name) && ctx->enabled)) system->init();
+				if (system->persistent || (system->enabled && ctx->enabled)) system->init();
 			}
 
 			ctx->init = true;
@@ -61,7 +60,7 @@ class WaveSine {
 			if (!ctx->init) init();
 
 			for (auto &system : systems) {
-				if (system->persistent || (ctx->settings->get(system->name) && ctx->enabled)) system->update();
+				if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 			}
 
 			// Sends the data to the console
@@ -71,7 +70,7 @@ class WaveSine {
 				return;
 			}
 
-			ctx->controller.setRumble((config->settings->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
+			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
 		};
 
 		System* getSystem(std::string name) {
@@ -82,10 +81,26 @@ class WaveSine {
 
 		void addSystem(char* name, System* system, bool enabled = true, bool persistent = false) {
 			system->name = name;
-			ctx->settings->set(name, enabled);
+			system->toggle(enabled);
 			system->setPersistent(persistent);
 			systems.push_back(system);
 		};
+
+		void enableSystem(std::string name) { toggleSystem(name, true); };
+		void disableSystem(std::string name) { toggleSystem(name, false); };
+
+		void toggleSystem(std::string name) {
+			System* system = getSystem(name);
+			toggleSystem(system, !system->enabled);
+		};
+
+		void toggleSystem(std::string name, bool value) {
+			System* system = getSystem(name);
+			toggleSystem(system, value);
+		};
+
+		void toggleSystem(System* system) { system->enabled = !system->enabled; };
+		void toggleSystem(System* system, bool value) { system->enabled = value; };
 };
 
 #endif
