@@ -14,7 +14,6 @@ class Context {
 		Gamecube_Data_t data;
 		Gamecube_Report_t prevState;
 		Gamecube_Report_t state;
-		bool debug = false;
 		bool enabled = true;
 		bool init = false;
 		bool meta = false;

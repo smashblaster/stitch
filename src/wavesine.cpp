@@ -34,7 +34,6 @@ class WaveSine {
 			for (auto &system : ctx->systems) {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->init();
 			}
-
 			ctx->init = true;
 		}
 

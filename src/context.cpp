@@ -59,9 +59,8 @@ System* Context::getSystem(std::string name) {
 }
 
 void Context::addSystem(char* name, System* system, bool persistent, bool enabled) {
-	enabled = persistent || enabled;
 	system->name = name;
-	system->toggle(enabled);
+	system->toggle(persistent || enabled);
 	system->setPersistent(persistent);
 	systems.push_back(system);
 }
