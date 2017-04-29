@@ -2,8 +2,7 @@
 #include <string>
 #include <vector>
 
-#ifndef CONTEXT
-#define CONTEXT
+#pragma once
 
 class System;
 
@@ -44,5 +43,3 @@ class Context {
 		void toggleSystem(System* system);
 		void toggleSystem(System* system, bool value);
 };
-
-#endif

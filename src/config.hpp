@@ -1,8 +1,7 @@
 #include <ArduinoJson.h>
 #include <string>
 
-#ifndef CONFIG
-#define CONFIG
+#pragma once
 
 class Config {
 	private:
@@ -28,5 +27,3 @@ class Config {
 			if (path == "rumble") return rumble;
 		}
 };
-
-#endif

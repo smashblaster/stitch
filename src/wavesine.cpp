@@ -1,4 +1,4 @@
-#include "config.cpp"
+#include "config.hpp"
 #include "context.hpp"
 #include "systems/backdash.cpp"
 #include "systems/debug.cpp"
@@ -7,9 +7,6 @@
 #include "systems/remap.cpp"
 #include <Nintendo.h>
 #include <vector>
-
-#ifndef WAVESINE
-#define WAVESINE
 
 class WaveSine {
 	private:
@@ -70,5 +67,3 @@ class WaveSine {
 			ctx->addSystem(name, system, persistent, config->get(name));
 		}
 };
-
-#endif

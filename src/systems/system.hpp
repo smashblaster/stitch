@@ -1,7 +1,6 @@
 #include "../context.hpp"
 
-#ifndef SYSTEM
-#define SYSTEM
+#pragma once
 
 class System {
 	protected:
@@ -25,5 +24,3 @@ class System {
 		void toggle(bool value) { enabled = value; }
 		void setPersistent(bool value) { persistent = value; }
 };
-
-#endif
