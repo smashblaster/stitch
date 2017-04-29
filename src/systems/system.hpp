@@ -17,8 +17,8 @@ class System {
 		}
 
 		virtual ~System() {}
-		virtual void init() {};
-		virtual void update() {};
+		virtual void init() {}
+		virtual void update() {}
 		void enable() { enabled = true; }
 		void disable() { enabled = false; }
 		void toggle() { enabled = !enabled; }

@@ -67,13 +67,13 @@ class WaveSine {
 			}
 
 			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
-		};
+		}
 
 		System* getSystem(std::string name) {
 			for (auto &system : systems) {
 				if (system->name == name) return system;
 			}
-		};
+		}
 
 		void addSystem(char* name, System* system, bool persistent = false) {
 			bool enabled = system->persistent || config->get(name);
@@ -81,23 +81,23 @@ class WaveSine {
 			system->toggle(enabled);
 			system->setPersistent(persistent);
 			systems.push_back(system);
-		};
+		}
 
-		void enableSystem(std::string name) { toggleSystem(name, true); };
-		void disableSystem(std::string name) { toggleSystem(name, false); };
+		void enableSystem(std::string name) { toggleSystem(name, true); }
+		void disableSystem(std::string name) { toggleSystem(name, false); }
 
 		void toggleSystem(std::string name) {
 			System* system = getSystem(name);
 			toggleSystem(system, !system->enabled);
-		};
+		}
 
 		void toggleSystem(std::string name, bool value) {
 			System* system = getSystem(name);
 			toggleSystem(system, value);
-		};
+		}
 
-		void toggleSystem(System* system) { system->enabled = !system->enabled; };
-		void toggleSystem(System* system, bool value) { system->enabled = value; };
+		void toggleSystem(System* system) { system->enabled = !system->enabled; }
+		void toggleSystem(System* system, bool value) { system->enabled = value; }
 };
 
 #endif
