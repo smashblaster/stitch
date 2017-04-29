@@ -5,7 +5,6 @@
 #include "systems/input.cpp"
 #include "systems/meta.cpp"
 #include "systems/remap.cpp"
-#include "systems/system.hpp"
 #include <Nintendo.h>
 #include <vector>
 
@@ -16,7 +15,6 @@ class WaveSine {
 	private:
 		const Config* config;
 		Context* ctx;
-		std::vector<System*> systems;
 
 	public:
 		WaveSine(int consolePin, int controllerPin, char json[]) {
@@ -33,7 +31,7 @@ class WaveSine {
 		~WaveSine() {}
 
 		void init() {
-			for (auto &system : systems) {
+			for (auto &system : ctx->systems) {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->init();
 			}
 
@@ -55,7 +53,7 @@ class WaveSine {
 
 			if (!ctx->init) init();
 
-			for (auto &system : systems) {
+			for (auto &system : ctx->systems) {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 			}
 
@@ -69,35 +67,9 @@ class WaveSine {
 			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
 		}
 
-		System* getSystem(std::string name) {
-			for (auto &system : systems) {
-				if (system->name == name) return system;
-			}
-		}
-
 		void addSystem(char* name, System* system, bool persistent = false) {
-			bool enabled = system->persistent || config->get(name);
-			system->name = name;
-			system->toggle(enabled);
-			system->setPersistent(persistent);
-			systems.push_back(system);
+			ctx->addSystem(name, system, persistent, config->get(name));
 		}
-
-		void enableSystem(std::string name) { toggleSystem(name, true); }
-		void disableSystem(std::string name) { toggleSystem(name, false); }
-
-		void toggleSystem(std::string name) {
-			System* system = getSystem(name);
-			toggleSystem(system, !system->enabled);
-		}
-
-		void toggleSystem(std::string name, bool value) {
-			System* system = getSystem(name);
-			toggleSystem(system, value);
-		}
-
-		void toggleSystem(System* system) { system->enabled = !system->enabled; }
-		void toggleSystem(System* system, bool value) { system->enabled = value; }
 };
 
 #endif

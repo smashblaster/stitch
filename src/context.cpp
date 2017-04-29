@@ -1,4 +1,5 @@
 #include "context.hpp"
+#include "systems/system.hpp"
 
 uint8_t Context::get(std::string button, Gamecube_Report_t state) {
 	if (button == "a") return state.a;
@@ -50,3 +51,30 @@ bool Context::pressed(std::string button) {
 bool Context::released(std::string button) {
 	return std::find(releasedButtons.begin(), releasedButtons.end(), button) != releasedButtons.end();
 }
+
+System* Context::getSystem(std::string name) {
+	for (auto &system : systems) {
+		if (system->name == name) return system;
+	}
+}
+
+void Context::addSystem(char* name, System* system, bool persistent, bool enabled) {
+	enabled = persistent || enabled;
+	system->name = name;
+	system->toggle(enabled);
+	system->setPersistent(persistent);
+	systems.push_back(system);
+}
+
+void Context::toggleSystem(std::string name) {
+	System* system = getSystem(name);
+	toggleSystem(system, !system->enabled);
+}
+
+void Context::toggleSystem(std::string name, bool value) {
+	System* system = getSystem(name);
+	toggleSystem(system, value);
+}
+
+void Context::toggleSystem(System* system) { system->enabled = !system->enabled; }
+void Context::toggleSystem(System* system, bool value) { system->enabled = value; }

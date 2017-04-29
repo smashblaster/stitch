@@ -5,6 +5,8 @@
 #ifndef CONTEXT
 #define CONTEXT
 
+class System;
+
 class Context {
 	public:
 		CGamecubeConsole console;
@@ -17,6 +19,7 @@ class Context {
 		bool init = false;
 		bool meta = false;
 		bool rumble = false;
+		std::vector<System*> systems;
 		std::vector<std::string> pressedButtons;
 		std::vector<std::string> releasedButtons;
 
@@ -32,6 +35,15 @@ class Context {
 		bool pressed(std::string button);
 		bool released(std::string button);
 		bool down(std::string button) { return get(button, data.report) == 1; }
+
+		System* getSystem(std::string name);
+		void addSystem(char* name, System* system, bool persistent = false, bool enabled = false);
+		void enableSystem(std::string name) { toggleSystem(name, true); }
+		void disableSystem(std::string name) { toggleSystem(name, false); }
+		void toggleSystem(std::string name);
+		void toggleSystem(std::string name, bool value);
+		void toggleSystem(System* system);
+		void toggleSystem(System* system, bool value);
 };
 
 #endif
