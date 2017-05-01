@@ -6,7 +6,6 @@
 #include "systems/meta.cpp"
 #include "systems/remap.cpp"
 #include <Nintendo.h>
-#include <vector>
 
 class WaveSine {
 	private:
@@ -28,6 +27,7 @@ class WaveSine {
 		~WaveSine() {}
 
 		void init() {
+			config->init();
 			for (auto &system : ctx->systems) {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->init();
 			}
