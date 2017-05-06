@@ -6,8 +6,9 @@
 
 ```sh
 # install platformio dependencies
-pio install Nintendo
-pio install ArduinoSTL
+pio lib install ArduinoJson
+pio lib install ArduinoSTL
+pio lib install Nintendo
 ```
 
 ## Running
