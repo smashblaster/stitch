@@ -28,6 +28,20 @@ class Meta: public System {
 					ctx->toggleSystem("debug");
 					ctx->rumble = true;
 				}
+
+				// dleft => vanilla
+				if (ctx->down("dleft")) ctx->release("dleft");
+				if (ctx->pressed("dleft")) {
+					ctx->isDolphin = false;
+					ctx->rumble = true;
+				}
+
+				// dright => dolphin
+				if (ctx->down("dright")) ctx->release("dright");
+				if (ctx->pressed("dright")) {
+					ctx->isDolphin = true;
+					ctx->rumble = true;
+				}
 			}
 		}
 };
