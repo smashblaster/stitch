@@ -5,15 +5,20 @@ class Meta: public System {
 	using System::System;
 
 	public:
+		void init() {
+			if (isMeta()) {
+				ctx->enabled = false;
+				releaseMeta();
+			}
+		}
+
 		void update() {
 			ctx->meta = false;
 			ctx->rumble = false;
 
-			// meta = start + z
-			if (ctx->down("start") && ctx->down("z")) {
+			if (isMeta()) {
 				ctx->meta = true;
-				ctx->release("start");
-				ctx->release("z");
+				releaseMeta();
 
 				// ddown => toggle
 				if (ctx->down("ddown")) ctx->release("ddown");
@@ -43,5 +48,15 @@ class Meta: public System {
 					ctx->rumble = true;
 				}
 			}
+		}
+
+		// meta = start + z
+		bool isMeta() {
+			return ctx->down("start") && ctx->down("z");
+		}
+
+		void releaseMeta() {
+			ctx->release("start");
+			ctx->release("z");
 		}
 };
