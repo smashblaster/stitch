@@ -13,11 +13,13 @@ class Config {
 
 	public:
 		bool backdash = true;
-		bool remap = true;
+		bool debug = false;
+		bool remap = false;
 		bool rumble = false;
 
 		Config(char json[]): config(jsonBuffer.parseObject(json)) {
 			backdash = config["backdash"];
+			debug = config["debug"];
 			remap = config["remap"];
 			rumble = config["rumble"];
 		}
@@ -33,10 +35,11 @@ class Config {
 			}
 		}
 
-		bool get(std::string key) {
-			if (key == "backdash") return backdash;
-			if (key == "remap") return remap;
-			if (key == "rumble") return rumble;
+		bool get(std::string path) {
+			if (path == "backdash") return backdash;
+			if (path == "debug") return debug;
+			if (path == "remap") return remap;
+			if (path == "rumble") return rumble;
 		}
 
 		std::vector<char*> list() { list("/"); }

@@ -22,6 +22,8 @@ class Backdash: public System {
 		}
 
 		void update() {
+			maxDashBuffer = (ctx->isDolphin) ? maxDashBufferDolphin : maxDashBufferVanilla;
+
 			// If the x axis is between these two than set buffer to eight
 			if (ctx->state.xAxis > center - deadZone - 1 && ctx->state.xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;

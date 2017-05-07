@@ -14,8 +14,8 @@ void setup() {
 
 	char json[] = "{"
 		"\"backdash\": \"true\","
-		"\"remap\": \"true\","
-		"\"rumble\": \"true\""
+		"\"remap\": \"false\","
+		"\"rumble\": \"false\""
 	"}";
 	wavesine = new WaveSine(consolePin, controllerPin, json);
 }

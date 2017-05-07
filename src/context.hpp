@@ -15,6 +15,7 @@ class Context {
 		Gamecube_Report_t state;
 		bool enabled = true;
 		bool init = false;
+		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
 		std::vector<System*> systems;
