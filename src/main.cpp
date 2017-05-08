@@ -13,7 +13,9 @@ void setup() {
 	pinMode(pinLed, OUTPUT);
 
 	char json[] = "{"
+		"\"angles\": \"true\","
 		"\"backdash\": \"true\","
+		"\"debug\": \"false\","
 		"\"remap\": \"false\","
 		"\"rumble\": \"false\""
 	"}";

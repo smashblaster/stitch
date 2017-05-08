@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "context.hpp"
+#include "systems/angles.cpp"
 #include "systems/backdash.cpp"
 #include "systems/debug.cpp"
 #include "systems/input.cpp"
@@ -18,11 +19,12 @@ class WaveSine {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
+			addSystem("angles", new Angles(ctx));
+			addSystem("backdash", new Backdash(ctx));
+			addSystem("debug", new Debug(ctx));
 			addSystem("input", new Input(ctx), true);
 			addSystem("meta", new Meta(ctx), true);
 			addSystem("remap", new Remap(ctx));
-			addSystem("debug", new Debug(ctx));
-			addSystem("backdash", new Backdash(ctx));
 		}
 
 		~WaveSine() {}

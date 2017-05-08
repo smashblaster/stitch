@@ -10,7 +10,7 @@ class Input: public System {
 
 	public:
 		void init() {
-			// Zero the controller out on startup
+			// Zero the controller out
 			ctx->data.origin = ctx->controller.getOrigin();
 		}
 
