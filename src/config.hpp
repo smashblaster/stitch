@@ -12,6 +12,7 @@ class Config {
 		const int chipSelect = 10;
 
 	public:
+		bool angles = false;
 		bool backdash = true;
 		bool debug = false;
 		bool remap = false;
@@ -19,6 +20,7 @@ class Config {
 
 		Config(char json[]): config(jsonBuffer.parseObject(json)) {
 			backdash = config["backdash"];
+			angles = config["angles"];
 			debug = config["debug"];
 			remap = config["remap"];
 			rumble = config["rumble"];
@@ -36,6 +38,7 @@ class Config {
 		}
 
 		bool get(std::string path) {
+			if (path == "angles") return angles;
 			if (path == "backdash") return backdash;
 			if (path == "debug") return debug;
 			if (path == "remap") return remap;

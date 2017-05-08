@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "context.hpp"
+#include "systems/angles.cpp"
 #include "systems/backdash.cpp"
 #include "systems/debug.cpp"
 #include "systems/input.cpp"
@@ -7,24 +8,25 @@
 #include "systems/remap.cpp"
 #include <Nintendo.h>
 
-class WaveSine {
+class Stitch {
 	private:
 		const Config* config;
 		Context* ctx;
 
 	public:
-		WaveSine(int consolePin, int controllerPin, char json[]) {
+		Stitch(int consolePin, int controllerPin, char json[]) {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
+			addSystem("angles", new Angles(ctx));
+			addSystem("backdash", new Backdash(ctx));
+			addSystem("debug", new Debug(ctx));
 			addSystem("input", new Input(ctx), true);
 			addSystem("meta", new Meta(ctx), true);
 			addSystem("remap", new Remap(ctx));
-			addSystem("debug", new Debug(ctx));
-			addSystem("backdash", new Backdash(ctx));
 		}
 
-		~WaveSine() {}
+		~Stitch() {}
 
 		void init() {
 			config->init();
@@ -44,6 +46,7 @@ class WaveSine {
 
 			// Gets the data of controller
 			ctx->data = defaultGamecubeData;
+			ctx->data.origin = ctx->controller.getOrigin();
 			ctx->state = ctx->controller.getReport();
 			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
 
