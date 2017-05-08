@@ -1,4 +1,6 @@
-# WaveSine
+# STITCH
+
+Something That Increases the Consistency of happiness.
 
 ## Dependencies
 

@@ -9,13 +9,13 @@
 #include <Nintendo.h>
 #include <vector>
 
-class WaveSine {
+class Stitch {
 	private:
 		const Config* config;
 		Context* ctx;
 
 	public:
-		WaveSine(int consolePin, int controllerPin, char json[]) {
+		Stitch(int consolePin, int controllerPin, char json[]) {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
@@ -27,7 +27,7 @@ class WaveSine {
 			addSystem("remap", new Remap(ctx));
 		}
 
-		~WaveSine() {}
+		~Stitch() {}
 
 		void init() {
 			for (auto &system : ctx->systems) {
@@ -46,6 +46,7 @@ class WaveSine {
 
 			// Gets the data of controller
 			ctx->data = defaultGamecubeData;
+			ctx->data.origin = ctx->controller.getOrigin();
 			ctx->state = ctx->controller.getReport();
 			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
 

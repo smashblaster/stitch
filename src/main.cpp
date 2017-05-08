@@ -1,9 +1,9 @@
 #include "Arduino.h"
-#include "wavesine.cpp"
+#include "stitch.cpp"
 
 #define pinLed LED_BUILTIN
 
-WaveSine* wavesine;
+Stitch* stitch;
 const int baud = 9600;
 const int consolePin = 3;
 const int controllerPin = 4;
@@ -19,9 +19,9 @@ void setup() {
 		"\"remap\": \"false\","
 		"\"rumble\": \"false\""
 	"}";
-	wavesine = new WaveSine(consolePin, controllerPin, json);
+	stitch = new Stitch(consolePin, controllerPin, json);
 }
 
 void loop() {
-	wavesine->update();
+	stitch->update();
 }
