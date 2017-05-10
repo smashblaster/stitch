@@ -33,7 +33,7 @@ class Context {
 		void release(std::string button) { set(button, 0); }
 		bool pressed(std::string button);
 		bool released(std::string button);
-		bool down(std::string button) { return get(button, data.report) == 1; }
+		bool down(std::string button) { return get(button, data.report) > 0; }
 
 		System* getSystem(std::string name);
 		void addSystem(char* name, System* system, bool persistent = false, bool enabled = false);
