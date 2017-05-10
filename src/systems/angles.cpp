@@ -39,7 +39,7 @@ class Angles: public System {
 				}
 
 				// Shield drop
-				if (-135 - 4 <= angle && angle <= -135 + 4) {
+				if ((ctx->down("l") || ctx->down("r") || ctx->down("z")) && -135 - 4 <= angle && angle <= -135 + 4) {
 					setAngle(-135 * M_PI / 180, desiredRadius);
 				} else if (-40 - 4 <= angle && angle <= -40 + 4) {
 					setAngle(-43 * M_PI / 180, desiredRadius);
