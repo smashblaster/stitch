@@ -45,12 +45,10 @@ class Angles: public System {
 				}
 
 				// Shield drop
-				if ((ctx->down("l") || ctx->down("r"))) {
-					if (sdAngleLeft - 4 <= angle && angle <= sdAngleLeft + 4) {
-						setAngle(sdAngleLeftRad, desiredRadius);
-					} else if ((sdAngleRight + 3) - 4 <= angle && angle <= (sdAngleRight + 3) + 4) {
-						setAngle(sdAngleRightRad, desiredRadius);
-					}
+				if (sdAngleLeft - 4 <= angle && angle <= sdAngleLeft + 4) {
+					setAngle(sdAngleLeftRad, desiredRadius);
+				} else if ((sdAngleRight + 3) - 4 <= angle && angle <= (sdAngleRight + 3) + 4) {
+					setAngle(sdAngleRightRad, desiredRadius);
 				}
 			}
 
