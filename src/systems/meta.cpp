@@ -34,16 +34,16 @@ class Meta: public System {
 					ctx->rumble = true;
 				}
 
-				// dleft => vanilla
-				if (ctx->down("dleft")) ctx->release("dleft");
-				if (ctx->pressed("dleft")) {
+				// l => vanilla
+				if (ctx->down("l")) ctx->release("l");
+				if (ctx->pressed("l")) {
 					ctx->isDolphin = false;
 					ctx->rumble = true;
 				}
 
-				// dright => dolphin
-				if (ctx->down("dright")) ctx->release("dright");
-				if (ctx->pressed("dright")) {
+				// r => dolphin
+				if (ctx->down("r")) ctx->release("r");
+				if (ctx->pressed("r")) {
 					ctx->isDolphin = true;
 					ctx->rumble = true;
 				}
