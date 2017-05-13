@@ -9,12 +9,10 @@ class Input: public System {
 		uint8_t value, prevValue;
 
 	public:
-		void init() {
+		void update() {
 			// Zero the controller out
 			ctx->data.origin = ctx->controller.getOrigin();
-		}
 
-		void update() {
 			ctx->pressedButtons.clear();
 			ctx->releasedButtons.clear();
 
