@@ -10,8 +10,13 @@ class Input: public System {
 
 	public:
 		void update() {
-			// Zero the controller out
+			ctx->data = defaultGamecubeData;
+			// Zero out the controller
 			ctx->data.origin = ctx->controller.getOrigin();
+			// Get controller data
+			ctx->state = ctx->controller.getReport();
+			// Copy data
+			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
 
 			ctx->pressedButtons.clear();
 			ctx->releasedButtons.clear();

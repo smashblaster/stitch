@@ -46,12 +46,6 @@ class Stitch {
 				return;
 			}
 
-			// Get controller data
-			ctx->data = defaultGamecubeData;
-			ctx->data.origin = ctx->controller.getOrigin();
-			ctx->state = ctx->controller.getReport();
-			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
-
 			if (!ctx->init) init();
 
 			for (auto &system : ctx->systems) {
