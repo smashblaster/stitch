@@ -11,8 +11,9 @@
 
 class Stitch {
 	private:
-		const Config* config;
 		Context* ctx;
+		const Config* config;
+		const int stepInterval = 1;
 
 	public:
 		Stitch(int consolePin, int controllerPin, char json[]) {
@@ -37,14 +38,15 @@ class Stitch {
 		}
 
 		void update() {
-			// Just stops the code if no controller is found
+			// Read from controller
 			if (!ctx->controller.read()) {
+				// Continue if no controller is found
 				ctx->init = false;
 				delay(100);
 				return;
 			}
 
-			// Gets the data of controller
+			// Get controller data
 			ctx->data = defaultGamecubeData;
 			ctx->data.origin = ctx->controller.getOrigin();
 			ctx->state = ctx->controller.getReport();
@@ -56,11 +58,15 @@ class Stitch {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 			}
 
-			// Sends the data to the console
-			if (!ctx->console.write(ctx->data)) {
-				ctx->init = false;
-				delay(100);
-				return;
+			int step = 0;
+			while (step < stepInterval) {
+				// Write to console
+				if (!ctx->console.write(ctx->data)) {
+					ctx->init = false;
+					delay(100);
+					return;
+				}
+				step += 1;
 			}
 
 			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
