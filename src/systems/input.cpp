@@ -7,17 +7,16 @@ class Input: public System {
 	private:
 		std::string buttons[12] = { "a", "b", "start", "x", "y", "l", "r", "z", "ddown", "dleft", "dright", "dup" };
 		uint8_t value, prevValue;
-		Gamecube_Origin_t origin;
 
 	public:
 		void init() {
-			origin = ctx->controller.getOrigin();
+			// Set default data
 			ctx->data = defaultGamecubeData;
+			// Zero out the controller
+			ctx->data.origin = ctx->controller.getOrigin();
 		}
 
 		void update() {
-			// Zero out the controller
-			ctx->data.origin = origin;
 			// Get controller data
 			ctx->state = ctx->controller.getReport();
 			// Copy data
