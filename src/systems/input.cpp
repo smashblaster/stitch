@@ -5,23 +5,14 @@ class Input: public System {
 	using System::System;
 
 	private:
-		std::string buttons[12] = { "a", "b", "start", "x", "y", "l", "r", "z", "ddown", "dleft", "dright", "dup" };
+		std::string buttons[12] = { "A", "B", "START", "X", "Y", "L", "R", "Z", "DDOWN", "DLEFT", "DRIGHT", "DUP" };
 		uint8_t value, prevValue;
 
 	public:
 		void init() {
-			// Set default data
-			ctx->data = defaultGamecubeData;
-			// Zero out the controller
-			ctx->data.origin = ctx->controller.getOrigin();
 		}
 
 		void update() {
-			// Get controller data
-			ctx->state = ctx->controller.getReport();
-			// Copy data
-			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
-
 			ctx->pressedButtons.clear();
 			ctx->releasedButtons.clear();
 
