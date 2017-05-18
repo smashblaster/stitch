@@ -10,9 +10,16 @@ class Input: public System {
 
 	public:
 		void init() {
+			// Zero out the controller
+			ctx->data.origin = ctx->controller.getOrigin();
 		}
 
 		void update() {
+			// Get controller data
+			ctx->state = ctx->controller.getReport();
+			// Copy data
+			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
+
 			ctx->pressedButtons.clear();
 			ctx->releasedButtons.clear();
 

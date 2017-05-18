@@ -47,17 +47,6 @@ class Stitch {
 				return;
 			}
 
-			// TODO: figure out which can be moved to init
-			// TODO: figure out which can be moved to input
-			// Set default data
-			ctx->data = defaultGamecubeData;
-			// Zero out the controller
-			ctx->data.origin = ctx->controller.getOrigin();
-			// Get controller data
-			ctx->state = ctx->controller.getReport();
-			// Copy data
-			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
-
 			if (!ctx->init) init();
 
 			for (auto &system : ctx->systems) {

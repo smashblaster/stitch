@@ -10,7 +10,7 @@ class Context {
 	public:
 		CGamecubeConsole console;
 		CGamecubeController controller;
-		Gamecube_Data_t data;
+		Gamecube_Data_t data = defaultGamecubeData;
 		Gamecube_Report_t prevState;
 		Gamecube_Report_t state;
 		bool enabled = true;
