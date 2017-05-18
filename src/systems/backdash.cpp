@@ -11,9 +11,6 @@ class Backdash: public System {
 		uint8_t smashZone = 64;
 
 		int dashBuffer = 0;
-		int maxDashBufferVanilla = 2;
-		int maxDashBufferDolphin = 8;
-		int maxDashBuffer = maxDashBufferVanilla;
 
 		uint8_t xAxis;
 
@@ -24,13 +21,11 @@ class Backdash: public System {
 		}
 
 		void update() {
-			maxDashBuffer = (ctx->isDolphin) ? maxDashBufferDolphin : maxDashBufferVanilla;
-
 			xAxis = ctx->data.report.xAxis;
 
 			// If the x axis is between these two than set buffer to eight
 			if (xAxis > center - deadZone - 1 && xAxis < center + deadZone - 1) {
-				dashBuffer = maxDashBuffer;
+				dashBuffer = ctx->maxDashBuffer;
 			}
 
 			if (xAxis < center - deadZone || xAxis > center + deadZone) {
