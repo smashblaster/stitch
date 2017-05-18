@@ -57,14 +57,14 @@ class Angles: public System {
 		}
 
 		float getAngle() {
-			int x = ctx->state.xAxis - gridOffset;
-			int y = ctx->state.yAxis - gridOffset;
+			int x = ctx->data.report.xAxis - gridOffset;
+			int y = ctx->data.report.yAxis - gridOffset;
 			return atan2(y, x) * (180.0 / M_PI);
 		}
 
 		float getRadius() {
-			int x = ctx->state.xAxis - gridOffset;
-			int y = ctx->state.yAxis - gridOffset;
+			int x = ctx->data.report.xAxis - gridOffset;
+			int y = ctx->data.report.yAxis - gridOffset;
 			return sqrt(pow(x, 2) + pow(y, 2));
 		}
 

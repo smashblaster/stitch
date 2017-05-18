@@ -5,34 +5,38 @@ class Backdash: public System {
 	using System::System;
 
 	private:
-		int deadZone = 22;
-		int center = 128;
-		// int smashZone = 97;
-		int smashZone = 64;
+		uint8_t deadZone = 22;
+		uint8_t center = 128;
+		// uint8_t smashZone = 97;
+		uint8_t smashZone = 64;
 
 		int dashBuffer = 0;
 		int maxDashBufferVanilla = 2;
 		int maxDashBufferDolphin = 8;
 		int maxDashBuffer = maxDashBufferVanilla;
 
+		uint8_t xAxis;
+
 	public:
 		void init() {
 			// Reset x-axis
-			center = ctx->state.xAxis;
+			center = ctx->data.report.xAxis;
 		}
 
 		void update() {
 			maxDashBuffer = (ctx->isDolphin) ? maxDashBufferDolphin : maxDashBufferVanilla;
 
+			xAxis = ctx->data.report.xAxis;
+
 			// If the x axis is between these two than set buffer to eight
-			if (ctx->state.xAxis > center - deadZone - 1 && ctx->state.xAxis < center + deadZone - 1) {
+			if (xAxis > center - deadZone - 1 && xAxis < center + deadZone - 1) {
 				dashBuffer = maxDashBuffer;
 			}
 
-			if (ctx->state.xAxis < center - deadZone || ctx->state.xAxis > center + deadZone) {
+			if (xAxis < center - deadZone || xAxis > center + deadZone) {
 				// Automatically dashes and skips all buffer if you enter running state
-				if (ctx->state.xAxis > center + smashZone || ctx->state.xAxis < center - smashZone) {
-					ctx->data.report.xAxis = ctx->state.xAxis;
+				if (xAxis > center + smashZone || xAxis < center - smashZone) {
+					ctx->data.report.xAxis = xAxis;
 					dashBuffer = 0;
 				}
 				if (dashBuffer > 0) {

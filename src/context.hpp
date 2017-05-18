@@ -12,7 +12,6 @@ class Context {
 		CGamecubeController controller;
 		Gamecube_Data_t data = defaultGamecubeData;
 		Gamecube_Report_t prevState;
-		Gamecube_Report_t state;
 		bool enabled = true;
 		bool init = false;
 		bool isDolphin = false;
@@ -25,7 +24,7 @@ class Context {
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
 
-		uint8_t get(std::string button) { get(button, state); }
+		uint8_t get(std::string button) { get(button, data.report); }
 		uint8_t get(std::string button, Gamecube_Report_t state);
 		void set(std::string button, uint8_t value);
 
