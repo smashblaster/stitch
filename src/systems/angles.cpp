@@ -4,7 +4,7 @@ class Angles: public System {
 	using System::System;
 
 	// const float wdAngleLeft = -163.4465;
-	const float wdAngleLeft = -162;
+	const float wdAngleLeft = -161;
 	const float wdAngleLeftRad = wdAngleLeft * M_PI / 180;
 	// const float wdAngleRight = -16.5;
 	const float wdAngleRight = -17.5;
@@ -33,14 +33,14 @@ class Angles: public System {
 				// if (radius >= 98 && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
 				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
 					// Serial.println("left");
-					// ctx->set("xAxis", -98 + gridOffset);
-					// ctx->set("yAxis", -31 + gridOffset);
+					// ctx->set("XAXIS", -98 + gridOffset);
+					// ctx->set("YAXIS", -31 + gridOffset);
 					setAngle(wdAngleLeftRad, desiredRadius);
 				// } else if (radius >= 98 && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
 				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
 					// Serial.println("right");
-					// ctx->set("xAxis", 102 + gridOffset);
-					// ctx->set("yAxis", -33 + gridOffset);
+					// ctx->set("XAXIS", 102 + gridOffset);
+					// ctx->set("YAXIS", -33 + gridOffset);
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
 
@@ -69,7 +69,7 @@ class Angles: public System {
 		}
 
 		void setAngle(float angle, int r) {
-			ctx->set("xAxis", round(r * cos(angle)) + gridOffset);
-			ctx->set("yAxis", round(r * sin(angle)) + gridOffset);
+			ctx->set("XAXIS", round(r * cos(angle)) + gridOffset);
+			ctx->set("YAXIS", round(r * sin(angle)) + gridOffset);
 		}
 };

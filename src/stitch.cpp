@@ -10,20 +10,22 @@
 
 class Stitch {
 	private:
-		const Config* config;
 		Context* ctx;
+		const Config* config;
+		const int stepInterval = 1;
 
 	public:
 		Stitch(int consolePin, int controllerPin, char json[]) {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
-			addSystem("angles", new Angles(ctx));
-			addSystem("backdash", new Backdash(ctx));
-			addSystem("debug", new Debug(ctx));
 			addSystem("input", new Input(ctx), true);
 			addSystem("meta", new Meta(ctx), true);
+
 			addSystem("remap", new Remap(ctx));
+			addSystem("backdash", new Backdash(ctx));
+			addSystem("angles", new Angles(ctx));
+			addSystem("debug", new Debug(ctx));
 		}
 
 		~Stitch() {}
@@ -37,17 +39,23 @@ class Stitch {
 		}
 
 		void update() {
-			// Just stops the code if no controller is found
+			// Read from controller
 			if (!ctx->controller.read()) {
+				// Continue if no controller is found
 				ctx->init = false;
 				delay(100);
 				return;
 			}
 
-			// Gets the data of controller
+			// TODO: figure out which can be moved to init
+			// TODO: figure out which can be moved to input
+			// Set default data
 			ctx->data = defaultGamecubeData;
+			// Zero out the controller
 			ctx->data.origin = ctx->controller.getOrigin();
+			// Get controller data
 			ctx->state = ctx->controller.getReport();
+			// Copy data
 			memcpy(&ctx->data.report, &ctx->state, sizeof(ctx->state));
 
 			if (!ctx->init) init();
@@ -56,11 +64,15 @@ class Stitch {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 			}
 
-			// Sends the data to the console
-			if (!ctx->console.write(ctx->data)) {
-				ctx->init = false;
-				delay(100);
-				return;
+			int step = 0;
+			while (step < stepInterval) {
+				// Write to console
+				if (!ctx->console.write(ctx->data)) {
+					ctx->init = false;
+					delay(100);
+					return;
+				}
+				step += 1;
 			}
 
 			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);

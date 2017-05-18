@@ -21,29 +21,29 @@ class Meta: public System {
 				releaseMeta();
 
 				// ddown => toggle
-				if (ctx->down("ddown")) ctx->release("ddown");
-				if (ctx->pressed("ddown")) {
+				if (ctx->down("DDOWN")) ctx->release("DDOWN");
+				if (ctx->pressed("DDOWN")) {
 					ctx->enabled = !ctx->enabled;
 					ctx->rumble = true;
 				}
 
 				// dup => debug
-				if (ctx->down("dup")) ctx->release("dup");
-				if (ctx->pressed("dup")) {
+				if (ctx->down("DUP")) ctx->release("DUP");
+				if (ctx->pressed("DUP")) {
 					ctx->toggleSystem("debug");
 					ctx->rumble = true;
 				}
 
-				// dleft => vanilla
-				if (ctx->down("dleft")) ctx->release("dleft");
-				if (ctx->pressed("dleft")) {
+				// l => vanilla
+				if (ctx->down("L")) ctx->release("L");
+				if (ctx->pressed("L")) {
 					ctx->isDolphin = false;
 					ctx->rumble = true;
 				}
 
-				// dright => dolphin
-				if (ctx->down("dright")) ctx->release("dright");
-				if (ctx->pressed("dright")) {
+				// r => dolphin
+				if (ctx->down("R")) ctx->release("R");
+				if (ctx->pressed("R")) {
 					ctx->isDolphin = true;
 					ctx->rumble = true;
 				}
@@ -52,11 +52,11 @@ class Meta: public System {
 
 		// meta = start + z
 		bool isMeta() {
-			return ctx->down("start") && ctx->down("z");
+			return ctx->down("START") && ctx->down("Z");
 		}
 
 		void releaseMeta() {
-			ctx->release("start");
-			ctx->release("z");
+			ctx->release("START");
+			ctx->release("Z");
 		}
 };
