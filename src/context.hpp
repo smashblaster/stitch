@@ -7,6 +7,10 @@
 class System;
 
 class Context {
+	private:
+		const int stepIntervalConsole = 1;
+		const int stepIntervalDolphin = 7;
+
 	public:
 		CGamecubeConsole console;
 		CGamecubeController controller;
@@ -17,6 +21,7 @@ class Context {
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
+		int stepInterval = stepIntervalConsole;
 		std::vector<System*> systems;
 		std::vector<std::string> pressedButtons;
 		std::vector<std::string> releasedButtons;
@@ -42,4 +47,9 @@ class Context {
 		void toggleSystem(std::string name, bool value);
 		void toggleSystem(System* system);
 		void toggleSystem(System* system, bool value);
+
+		void dolphin(bool enabled) {
+			isDolphin = enabled;
+			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
+		}
 };

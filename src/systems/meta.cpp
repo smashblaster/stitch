@@ -37,14 +37,14 @@ class Meta: public System {
 				// l => vanilla
 				if (ctx->down("L")) ctx->release("L");
 				if (ctx->pressed("L")) {
-					ctx->isDolphin = false;
+					ctx->dolphin(false);
 					ctx->rumble = true;
 				}
 
 				// r => dolphin
 				if (ctx->down("R")) ctx->release("R");
 				if (ctx->pressed("R")) {
-					ctx->isDolphin = true;
+					ctx->dolphin(true);
 					ctx->rumble = true;
 				}
 			}
