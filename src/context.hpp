@@ -7,17 +7,24 @@
 class System;
 
 class Context {
+	private:
+		const int stepIntervalConsole = 1;
+		const int stepIntervalDolphin = 7;
+		const int maxDashBufferConsole = 2;
+		const int maxDashBufferDolphin = 8;
+
 	public:
 		CGamecubeConsole console;
 		CGamecubeController controller;
-		Gamecube_Data_t data;
+		Gamecube_Data_t data = defaultGamecubeData;
 		Gamecube_Report_t prevState;
-		Gamecube_Report_t state;
 		bool enabled = true;
 		bool init = false;
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
+		int maxDashBuffer = maxDashBufferConsole;
+		int stepInterval = stepIntervalConsole;
 		std::vector<System*> systems;
 		std::vector<std::string> pressedButtons;
 		std::vector<std::string> releasedButtons;
@@ -25,7 +32,7 @@ class Context {
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
 
-		uint8_t get(std::string button) { get(button, state); }
+		uint8_t get(std::string button) { get(button, data.report); }
 		uint8_t get(std::string button, Gamecube_Report_t state);
 		void set(std::string button, uint8_t value);
 
@@ -43,4 +50,10 @@ class Context {
 		void toggleSystem(std::string name, bool value);
 		void toggleSystem(System* system);
 		void toggleSystem(System* system, bool value);
+
+		void dolphin(bool enabled) {
+			isDolphin = enabled;
+			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
+			maxDashBuffer = (enabled) ? maxDashBufferDolphin : maxDashBufferConsole;
+		}
 };
