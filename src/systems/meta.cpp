@@ -1,7 +1,7 @@
 #include "system.hpp"
 #include <Nintendo.h>
 
-class Meta: public System {
+class MetaSystem: public System {
 	using System::System;
 
 	public:

@@ -1,7 +1,7 @@
 #include "system.hpp"
 #include <Nintendo.h>
 
-class Input: public System {
+class InputSystem: public System {
 	using System::System;
 
 	private:

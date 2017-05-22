@@ -1,6 +1,6 @@
 #include "system.hpp"
 
-class Debug: public System {
+class DebugSystem: public System {
 	using System::System;
 
 	public:

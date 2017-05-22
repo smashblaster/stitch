@@ -1,7 +1,7 @@
 #include "system.hpp"
 #include <Nintendo.h>
 
-class Backdash: public System {
+class BackdashSystem: public System {
 	using System::System;
 
 	private:

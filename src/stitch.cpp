@@ -20,13 +20,13 @@ class Stitch {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
-			addSystem("input", new Input(ctx), true);
-			addSystem("meta", new Meta(ctx), true);
+			addSystem("input", new InputSystem(ctx), true);
+			addSystem("meta", new MetaSystem(ctx), true);
 
-			addSystem("remap", new Remap(ctx));
-			addSystem("backdash", new Backdash(ctx));
-			addSystem("angles", new Angles(ctx));
-			addSystem("debug", new Debug(ctx));
+			addSystem("remap", new RemapSystem(ctx));
+			addSystem("backdash", new BackdashSystem(ctx));
+			addSystem("angles", new AnglesSystem(ctx));
+			addSystem("debug", new DebugSystem(ctx));
 		}
 
 		~Stitch() {}
