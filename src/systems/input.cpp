@@ -1,4 +1,3 @@
-#include "../buttons.cpp"
 #include "system.hpp"
 #include <Nintendo.h>
 
@@ -6,6 +5,7 @@ class InputSystem: public System {
 	using System::System;
 
 	private:
+		const char* buttons[12] = { "A", "B", "X", "Y", "Z", "L", "R", "START", "DDOWN", "DLEFT", "DRIGHT", "DUP" };
 		uint8_t value, prevValue;
 
 	public:
