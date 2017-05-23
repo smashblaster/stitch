@@ -17,7 +17,6 @@ class Context {
 		CGamecubeConsole console;
 		CGamecubeController controller;
 		Gamecube_Data_t data = defaultGamecubeData;
-		Gamecube_Report_t prevState;
 		bool enabled = true;
 		bool init = false;
 		bool isDolphin = false;
@@ -42,6 +41,8 @@ class Context {
 		bool pressed(std::string button);
 		bool released(std::string button);
 		bool down(std::string button) { return get(button, data.report) > 0; }
+
+		void setState(Gamecube_Report_t state) { data.report = state; }
 
 		System* getSystem(std::string name);
 		void addSystem(char* name, System* system, bool persistent = false, bool enabled = false);
