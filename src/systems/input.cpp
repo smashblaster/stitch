@@ -19,7 +19,7 @@ class InputSystem: public System {
 			ctx->data.report = ctx->controller.getReport();
 
 			ctx->pressedButtons.clear();
-			// ctx->releasedButtons.clear();
+			ctx->releasedButtons.clear();
 
 			for (auto &button : buttons) {
 				value = ctx->get(button, ctx->data.report);
@@ -28,8 +28,7 @@ class InputSystem: public System {
 				if (value == 1 && prevValue == 0) {
 					ctx->pressedButtons.push_back(button);
 				} else if (value == 0 && prevValue == 1) {
-					// TODO: Add back when actually used for something
-					// ctx->releasedButtons.push_back(button);
+					ctx->releasedButtons.push_back(button);
 				}
 			}
 

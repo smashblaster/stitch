@@ -27,7 +27,7 @@ class Context {
 		int stepInterval = stepIntervalConsole;
 		std::vector<System*> systems;
 		std::vector<std::string> pressedButtons;
-		// std::vector<std::string> releasedButtons;
+		std::vector<std::string> releasedButtons;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
@@ -39,7 +39,7 @@ class Context {
 		void press(std::string button) { set(button, 1); }
 		void release(std::string button) { set(button, 0); }
 		bool pressed(std::string button);
-		// bool released(std::string button);
+		bool released(std::string button);
 		bool down(std::string button) { return get(button, data.report) > 0; }
 
 		System* getSystem(std::string name);
