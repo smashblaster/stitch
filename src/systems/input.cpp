@@ -28,7 +28,8 @@ class InputSystem: public System {
 				if (value == 1 && prevValue == 0) {
 					ctx->pressedButtons.push_back(button);
 				} else if (value == 0 && prevValue == 1) {
-					ctx->releasedButtons.push_back(button);
+					// TODO: Add back when actually used for something
+					// ctx->releasedButtons.push_back(button);
 				}
 			}
 
