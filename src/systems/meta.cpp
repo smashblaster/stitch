@@ -52,7 +52,8 @@ class MetaSystem: public System {
 
 		// meta = start + z
 		bool isMeta() {
-			return ctx->down("START") && ctx->down("Z");
+			// return ctx->down("START") && ctx->down("Z");
+			return ctx->data.report.start & ctx->data.report.z;
 		}
 
 		void releaseMeta() {
