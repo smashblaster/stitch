@@ -19,7 +19,7 @@ class InputSystem: public System {
 			ctx->data.report = ctx->controller.getReport();
 
 			ctx->pressedButtons.clear();
-			ctx->releasedButtons.clear();
+			// ctx->releasedButtons.clear();
 
 			for (auto &button : buttons) {
 				value = ctx->get(button, ctx->data.report);
