@@ -28,6 +28,7 @@ class Context {
 		std::vector<System*> systems;
 		std::vector<std::string> pressedButtons;
 		std::vector<std::string> releasedButtons;
+		unsigned long debug;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
@@ -50,6 +51,10 @@ class Context {
 		void toggleSystem(std::string name, bool value);
 		void toggleSystem(System* system);
 		void toggleSystem(System* system, bool value);
+
+		// Profiler
+		void begin() { debug = micros(); }
+		void end() { debug = micros() - debug; }
 
 		void dolphin(bool enabled) {
 			isDolphin = enabled;
