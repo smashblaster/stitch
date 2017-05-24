@@ -21,16 +21,15 @@ class InputSystem: public System {
 			state = ctx->controller.getReport();
 
 			ctx->pressedButtons.clear();
-			ctx->releasedButtons.clear();
+			// ctx->releasedButtons.clear();
 
 			for (auto &button : buttons) {
 				uint8_t value = ctx->get(button, state);
 				uint8_t prevValue = ctx->get(button, prevState);
-
 				if (value == 1 && prevValue == 0) {
 					ctx->pressedButtons.push_back(button);
-				} else if (value == 0 && prevValue == 1) {
-					ctx->releasedButtons.push_back(button);
+				// } else if (value == 0 && prevValue == 1) {
+				// 	ctx->releasedButtons.push_back(button);
 				}
 			}
 
