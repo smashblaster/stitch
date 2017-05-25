@@ -53,6 +53,8 @@ class Stitch {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 			}
 
+			delay(1);
+
 			step = 0;
 			while (step < ctx->stepInterval) {
 				// Write to console
