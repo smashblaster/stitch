@@ -1,4 +1,3 @@
-#include "../buttons.cpp"
 #include "system.hpp"
 #include <Nintendo.h>
 

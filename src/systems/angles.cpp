@@ -33,14 +33,14 @@ class AnglesSystem: public System {
 				// if (radius >= 98 && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
 				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
 					// Serial.println("left");
-					// ctx->set("XAXIS", -98 + gridOffset);
-					// ctx->set("YAXIS", -31 + gridOffset);
+					// ctx->set(Inputs::XAXIS, -98 + gridOffset);
+					// ctx->set(Inputs::YAXIS, -31 + gridOffset);
 					setAngle(wdAngleLeftRad, desiredRadius);
 				// } else if (radius >= 98 && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
 				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
 					// Serial.println("right");
-					// ctx->set("XAXIS", 102 + gridOffset);
-					// ctx->set("YAXIS", -33 + gridOffset);
+					// ctx->set(Inputs::XAXIS, 102 + gridOffset);
+					// ctx->set(Inputs::YAXIS, -33 + gridOffset);
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
 
@@ -69,7 +69,7 @@ class AnglesSystem: public System {
 		}
 
 		void setAngle(float angle, int r) {
-			ctx->set("XAXIS", round(r * cos(angle)) + gridOffset);
-			ctx->set("YAXIS", round(r * sin(angle)) + gridOffset);
+			ctx->set(Inputs::XAXIS, round(r * cos(angle)) + gridOffset);
+			ctx->set(Inputs::YAXIS, round(r * sin(angle)) + gridOffset);
 		}
 };
