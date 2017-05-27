@@ -10,6 +10,9 @@ class MetaSystem: public System {
 				ctx->enabled = false;
 				releaseMeta();
 			}
+			if (ctx->data.report.r) {
+				ctx->dolphin(true);
+			}
 		}
 
 		void update() {

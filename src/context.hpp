@@ -10,8 +10,6 @@ class System;
 
 class Context {
 	private:
-		const int stepIntervalConsole = 1;
-		const int stepIntervalDolphin = 7;
 		const int maxDashBufferConsole = 2;
 		const int maxDashBufferDolphin = 8;
 
@@ -24,8 +22,8 @@ class Context {
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
+		const int stepInterval = 1;
 		int maxDashBuffer = maxDashBufferConsole;
-		int stepInterval = stepIntervalConsole;
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
@@ -61,7 +59,6 @@ class Context {
 
 		void dolphin(bool enabled) {
 			isDolphin = enabled;
-			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
 			maxDashBuffer = (enabled) ? maxDashBufferDolphin : maxDashBufferConsole;
 		}
 };
