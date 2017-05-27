@@ -1,3 +1,4 @@
+#include "buttons.cpp"
 #include <Nintendo.h>
 #include <string>
 #include <vector>
@@ -25,8 +26,8 @@ class Context {
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
 		std::vector<System*> systems;
-		std::vector<std::string> pressedButtons;
-		// std::vector<std::string> releasedButtons;
+		std::vector<Buttons> pressedButtons;
+		// std::vector<Buttons> releasedButtons;
 		unsigned long debug;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
@@ -38,8 +39,8 @@ class Context {
 
 		void press(std::string button) { set(button, 1); }
 		void release(std::string button) { set(button, 0); }
-		bool pressed(std::string button);
-		// bool released(std::string button);
+		bool pressed(Buttons button);
+		// bool released(Buttons button);
 		bool down(std::string button) { return get(button, data.report) > 0; }
 
 		void setState(Gamecube_Report_t state) { data.report = state; }

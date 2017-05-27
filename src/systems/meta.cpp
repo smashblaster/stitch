@@ -22,28 +22,28 @@ class MetaSystem: public System {
 
 				// ddown => toggle
 				if (ctx->down("DDOWN")) ctx->release("DDOWN");
-				if (ctx->pressed("DDOWN")) {
+				if (ctx->pressed(Buttons::DDOWN)) {
 					ctx->enabled = !ctx->enabled;
 					ctx->rumble = true;
 				}
 
 				// dup => debug
 				if (ctx->down("DUP")) ctx->release("DUP");
-				if (ctx->pressed("DUP")) {
+				if (ctx->pressed(Buttons::DUP)) {
 					ctx->toggleSystem("debug");
 					ctx->rumble = true;
 				}
 
 				// l => vanilla
 				if (ctx->down("L")) ctx->release("L");
-				if (ctx->pressed("L")) {
+				if (ctx->pressed(Buttons::L)) {
 					ctx->dolphin(false);
 					ctx->rumble = true;
 				}
 
 				// r => dolphin
 				if (ctx->down("R")) ctx->release("R");
-				if (ctx->pressed("R")) {
+				if (ctx->pressed(Buttons::R)) {
 					ctx->dolphin(true);
 					ctx->rumble = true;
 				}
