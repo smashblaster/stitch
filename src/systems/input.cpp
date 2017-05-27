@@ -21,41 +21,41 @@ class InputSystem: public System {
 			ctx->releasedButtons.reset();
 
 			// A
-			if (state.a - prevState.a == 1) ctx->pressedButtons.set(Inputs::A);
-			else if (state.a - prevState.a == -1) ctx->releasedButtons.set(Inputs::A);
+			if (state.a - prevState.a == 1) ctx->pressedButtons.set(Buttons::A);
+			else if (state.a - prevState.a == -1) ctx->releasedButtons.set(Buttons::A);
 			// B
-			if (state.b - prevState.b == 1) ctx->pressedButtons.set(Inputs::B);
-			else if (state.b - prevState.b == -1) ctx->releasedButtons.set(Inputs::B);
+			if (state.b - prevState.b == 1) ctx->pressedButtons.set(Buttons::B);
+			else if (state.b - prevState.b == -1) ctx->releasedButtons.set(Buttons::B);
 			// X
-			if (state.x - prevState.x == 1) ctx->pressedButtons.set(Inputs::X);
-			else if (state.x - prevState.x == -1) ctx->releasedButtons.set(Inputs::X);
+			if (state.x - prevState.x == 1) ctx->pressedButtons.set(Buttons::X);
+			else if (state.x - prevState.x == -1) ctx->releasedButtons.set(Buttons::X);
 			// Y
-			if (state.y - prevState.y == 1) ctx->pressedButtons.set(Inputs::Y);
-			else if (state.y - prevState.y == -1) ctx->releasedButtons.set(Inputs::Y);
+			if (state.y - prevState.y == 1) ctx->pressedButtons.set(Buttons::Y);
+			else if (state.y - prevState.y == -1) ctx->releasedButtons.set(Buttons::Y);
 			// Z
-			if (state.z - prevState.z == 1) ctx->pressedButtons.set(Inputs::Z);
-			else if (state.z - prevState.z == -1) ctx->releasedButtons.set(Inputs::Z);
+			if (state.z - prevState.z == 1) ctx->pressedButtons.set(Buttons::Z);
+			else if (state.z - prevState.z == -1) ctx->releasedButtons.set(Buttons::Z);
 			// L
-			if (state.l - prevState.l == 1) ctx->pressedButtons.set(Inputs::L);
-			else if (state.l - prevState.l == -1) ctx->releasedButtons.set(Inputs::L);
+			if (state.l - prevState.l == 1) ctx->pressedButtons.set(Buttons::L);
+			else if (state.l - prevState.l == -1) ctx->releasedButtons.set(Buttons::L);
 			// R
-			if (state.r - prevState.r == 1) ctx->pressedButtons.set(Inputs::R);
-			else if (state.r - prevState.r == -1) ctx->releasedButtons.set(Inputs::R);
+			if (state.r - prevState.r == 1) ctx->pressedButtons.set(Buttons::R);
+			else if (state.r - prevState.r == -1) ctx->releasedButtons.set(Buttons::R);
 			// START
-			if (state.start - prevState.start == 1) ctx->pressedButtons.set(Inputs::START);
-			else if (state.start - prevState.start == -1) ctx->releasedButtons.set(Inputs::START);
+			if (state.start - prevState.start == 1) ctx->pressedButtons.set(Buttons::START);
+			else if (state.start - prevState.start == -1) ctx->releasedButtons.set(Buttons::START);
 			// DDOWN
-			if (state.ddown - prevState.ddown == 1) ctx->pressedButtons.set(Inputs::DDOWN);
-			else if (state.ddown - prevState.ddown == -1) ctx->releasedButtons.set(Inputs::DDOWN);
+			if (state.ddown - prevState.ddown == 1) ctx->pressedButtons.set(Buttons::DDOWN);
+			else if (state.ddown - prevState.ddown == -1) ctx->releasedButtons.set(Buttons::DDOWN);
 			// DLEFT
-			if (state.dleft - prevState.dleft == 1) ctx->pressedButtons.set(Inputs::DLEFT);
-			else if (state.dleft - prevState.dleft == -1) ctx->releasedButtons.set(Inputs::DLEFT);
+			if (state.dleft - prevState.dleft == 1) ctx->pressedButtons.set(Buttons::DLEFT);
+			else if (state.dleft - prevState.dleft == -1) ctx->releasedButtons.set(Buttons::DLEFT);
 			// DRIGHT
-			if (state.dright - prevState.dright == 1) ctx->pressedButtons.set(Inputs::DRIGHT);
-			else if (state.dright - prevState.dright == -1) ctx->releasedButtons.set(Inputs::DRIGHT);
+			if (state.dright - prevState.dright == 1) ctx->pressedButtons.set(Buttons::DRIGHT);
+			else if (state.dright - prevState.dright == -1) ctx->releasedButtons.set(Buttons::DRIGHT);
 			// DUP
-			if (state.dup - prevState.dup == 1) ctx->pressedButtons.set(Inputs::DUP);
-			else if (state.dup - prevState.dup == -1) ctx->releasedButtons.set(Inputs::DUP);
+			if (state.dup - prevState.dup == 1) ctx->pressedButtons.set(Buttons::DUP);
+			else if (state.dup - prevState.dup == -1) ctx->releasedButtons.set(Buttons::DUP);
 
 			prevState = state;
 			ctx->setState(state);

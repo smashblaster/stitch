@@ -6,7 +6,7 @@ class DebugSystem: public System {
 
 	public:
 		void update() {
-			if (ctx->pressed(Inputs::X)) {
+			if (ctx->pressed(Buttons::X)) {
 				Serial.print("mem: ");
 				Serial.print(freeMemory());
 				Serial.print("\t");

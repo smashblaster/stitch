@@ -26,23 +26,23 @@ class Context {
 		bool rumble = false;
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
-		std::bitset<Inputs::length> pressedButtons;
-		std::bitset<Inputs::length> releasedButtons;
+		std::bitset<Buttons::length> pressedButtons;
+		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
 		unsigned long debug;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
 
-		uint8_t get(Inputs input) { get(input, data.report); }
-		uint8_t get(Inputs input, Gamecube_Report_t state);
-		void set(Inputs input, uint8_t value);
+		uint8_t get(Buttons button) { get(button, data.report); }
+		uint8_t get(Buttons button, Gamecube_Report_t state);
+		void set(Buttons button, uint8_t value);
 
-		void press(Inputs input) { set(input, 1); }
-		void release(Inputs input) { set(input, 0); }
-		bool pressed(Inputs input);
-		bool released(Inputs input);
-		bool down(Inputs input) { return get(input, data.report) > 0; }
+		void press(Buttons button) { set(button, 1); }
+		void release(Buttons button) { set(button, 0); }
+		bool pressed(Buttons button);
+		bool released(Buttons button);
+		bool down(Buttons button) { return get(button, data.report) > 0; }
 
 		void setState(Gamecube_Report_t state) { data.report = state; }
 
