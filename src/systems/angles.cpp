@@ -33,14 +33,14 @@ class AnglesSystem: public System {
 				// if (radius >= 98 && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
 				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
 					// Serial.println("left");
-					// ctx->set(Buttons::XAXIS, -98 + gridOffset);
-					// ctx->set(Buttons::YAXIS, -31 + gridOffset);
+					// ctx->data.report.xAxis = -98 + gridOffset;
+					// ctx->data.report.yAxis = -31 + gridOffset;
 					setAngle(wdAngleLeftRad, desiredRadius);
 				// } else if (radius >= 98 && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
 				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
 					// Serial.println("right");
-					// ctx->set(Buttons::XAXIS, 102 + gridOffset);
-					// ctx->set(Buttons::YAXIS, -33 + gridOffset);
+					// ctx->data.report.xAxis = 102 + gridOffset;
+					// ctx->data.report.yAxis = -33 + gridOffset;
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
 
@@ -69,7 +69,7 @@ class AnglesSystem: public System {
 		}
 
 		void setAngle(float angle, int r) {
-			ctx->set(Buttons::XAXIS, round(r * cos(angle)) + gridOffset);
-			ctx->set(Buttons::YAXIS, round(r * sin(angle)) + gridOffset);
+			ctx->data.report.xAxis = round(r * cos(angle)) + gridOffset;
+			ctx->data.report.yAxis = round(r * sin(angle)) + gridOffset;
 		}
 };

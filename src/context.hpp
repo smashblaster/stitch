@@ -29,7 +29,7 @@ class Context {
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
-		unsigned long debug;
+		unsigned long debug = 0;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
