@@ -1,6 +1,6 @@
 #include "system.hpp"
 
-class Angles: public System {
+class AnglesSystem: public System {
 	using System::System;
 
 	// const float wdAngleLeft = -163.4465;

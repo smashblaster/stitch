@@ -17,7 +17,6 @@ class Context {
 		CGamecubeConsole console;
 		CGamecubeController controller;
 		Gamecube_Data_t data = defaultGamecubeData;
-		Gamecube_Report_t prevState;
 		bool enabled = true;
 		bool init = false;
 		bool isDolphin = false;
@@ -27,7 +26,8 @@ class Context {
 		int stepInterval = stepIntervalConsole;
 		std::vector<System*> systems;
 		std::vector<std::string> pressedButtons;
-		std::vector<std::string> releasedButtons;
+		// std::vector<std::string> releasedButtons;
+		unsigned long debug;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
@@ -39,8 +39,10 @@ class Context {
 		void press(std::string button) { set(button, 1); }
 		void release(std::string button) { set(button, 0); }
 		bool pressed(std::string button);
-		bool released(std::string button);
+		// bool released(std::string button);
 		bool down(std::string button) { return get(button, data.report) > 0; }
+
+		void setState(Gamecube_Report_t state) { data.report = state; }
 
 		System* getSystem(std::string name);
 		void addSystem(char* name, System* system, bool persistent = false, bool enabled = false);
@@ -50,6 +52,10 @@ class Context {
 		void toggleSystem(std::string name, bool value);
 		void toggleSystem(System* system);
 		void toggleSystem(System* system, bool value);
+
+		// Profiler
+		void begin() { debug = micros(); }
+		void end() { debug = micros() - debug; }
 
 		void dolphin(bool enabled) {
 			isDolphin = enabled;

@@ -1,9 +1,18 @@
 #include "system.hpp"
+#include <MemoryFree.h>
 
-class Debug: public System {
+class DebugSystem: public System {
 	using System::System;
 
 	public:
 		void update() {
+			if (ctx->pressed("X")) {
+				Serial.print("mem: ");
+				Serial.print(freeMemory());
+				Serial.print("\t");
+				Serial.print("cpu: ");
+				Serial.print(ctx->debug);
+				Serial.println("");
+			}
 		}
 };

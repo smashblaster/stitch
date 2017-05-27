@@ -1,6 +1,6 @@
 #include "system.hpp"
 
-class Remap: public System {
+class RemapSystem: public System {
 	using System::System;
 
 	public:
