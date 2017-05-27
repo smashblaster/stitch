@@ -44,11 +44,11 @@ void Context::set(std::string button, uint8_t value) {
 	if (button == "YAXIS") data.report.yAxis = value;
 }
 
-bool Context::pressed(Buttons button) {
+bool Context::pressed(Inputs button) {
 	return std::find(pressedButtons.begin(), pressedButtons.end(), button) != pressedButtons.end();
 }
 
-// bool Context::released(Buttons button) {
+// bool Context::released(Inputs button) {
 // 	return std::find(releasedButtons.begin(), releasedButtons.end(), button) != releasedButtons.end();
 // }
 
