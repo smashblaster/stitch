@@ -21,29 +21,29 @@ class MetaSystem: public System {
 				releaseMeta();
 
 				// ddown => toggle
-				if (ctx->down("DDOWN")) ctx->release("DDOWN");
-				if (ctx->pressed("DDOWN")) {
+				if (ctx->down(Buttons::DDOWN)) ctx->release(Buttons::DDOWN);
+				if (ctx->pressed(Buttons::DDOWN)) {
 					ctx->enabled = !ctx->enabled;
 					ctx->rumble = true;
 				}
 
 				// dup => debug
-				if (ctx->down("DUP")) ctx->release("DUP");
-				if (ctx->pressed("DUP")) {
+				if (ctx->down(Buttons::DUP)) ctx->release(Buttons::DUP);
+				if (ctx->pressed(Buttons::DUP)) {
 					ctx->toggleSystem("debug");
 					ctx->rumble = true;
 				}
 
 				// l => vanilla
-				if (ctx->down("L")) ctx->release("L");
-				if (ctx->pressed("L")) {
+				if (ctx->down(Buttons::L)) ctx->release(Buttons::L);
+				if (ctx->pressed(Buttons::L)) {
 					ctx->dolphin(false);
 					ctx->rumble = true;
 				}
 
 				// r => dolphin
-				if (ctx->down("R")) ctx->release("R");
-				if (ctx->pressed("R")) {
+				if (ctx->down(Buttons::R)) ctx->release(Buttons::R);
+				if (ctx->pressed(Buttons::R)) {
 					ctx->dolphin(true);
 					ctx->rumble = true;
 				}
@@ -52,12 +52,12 @@ class MetaSystem: public System {
 
 		// meta = start + z
 		bool isMeta() {
-			// return ctx->down("START") && ctx->down("Z");
+			// return ctx->down(Buttons::START) && ctx->down(Buttons::Z);
 			return ctx->data.report.start & ctx->data.report.z;
 		}
 
 		void releaseMeta() {
-			ctx->release("START");
-			ctx->release("Z");
+			ctx->release(Buttons::START);
+			ctx->release(Buttons::Z);
 		}
 };
