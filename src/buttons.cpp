@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Inputs {
+enum Inputs {
 	A, B, X, Y, Z, L, R, START,
 	DDOWN, DLEFT, DRIGHT, DUP,
 	XAXIS, YAXIS, LEFT, RIGHT, CXAXIS, CYAXIS,

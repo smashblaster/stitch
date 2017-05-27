@@ -45,11 +45,11 @@ void Context::set(Inputs input, uint8_t value) {
 }
 
 bool Context::pressed(Inputs input) {
-	return std::find(pressedButtons.begin(), pressedButtons.end(), input) != pressedButtons.end();
+	return pressedButtons.test(input);
 }
 
 bool Context::released(Inputs input) {
-	return std::find(releasedButtons.begin(), releasedButtons.end(), input) != releasedButtons.end();
+	return releasedButtons.test(input);
 }
 
 System* Context::getSystem(std::string name) {

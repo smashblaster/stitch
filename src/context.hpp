@@ -1,5 +1,6 @@
 #include "buttons.cpp"
 #include <Nintendo.h>
+#include <bitset>
 #include <string>
 #include <vector>
 
@@ -25,8 +26,8 @@ class Context {
 		bool rumble = false;
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
-		std::vector<Inputs> pressedButtons;
-		std::vector<Inputs> releasedButtons;
+		std::bitset<Inputs::length> pressedButtons;
+		std::bitset<Inputs::length> releasedButtons;
 		std::vector<System*> systems;
 		unsigned long debug;
 
