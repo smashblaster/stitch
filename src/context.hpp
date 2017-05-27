@@ -33,15 +33,15 @@ class Context {
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
 
-		uint8_t get(Inputs button) { get(button, data.report); }
-		uint8_t get(Inputs button, Gamecube_Report_t state);
-		void set(Inputs button, uint8_t value);
+		uint8_t get(Inputs input) { get(input, data.report); }
+		uint8_t get(Inputs input, Gamecube_Report_t state);
+		void set(Inputs input, uint8_t value);
 
-		void press(Inputs button) { set(button, 1); }
-		void release(Inputs button) { set(button, 0); }
-		bool pressed(Inputs button);
-		// bool released(Inputs button);
-		bool down(Inputs button) { return get(button, data.report) > 0; }
+		void press(Inputs input) { set(input, 1); }
+		void release(Inputs input) { set(input, 0); }
+		bool pressed(Inputs input);
+		// bool released(Inputs input);
+		bool down(Inputs input) { return get(input, data.report) > 0; }
 
 		void setState(Gamecube_Report_t state) { data.report = state; }
 
