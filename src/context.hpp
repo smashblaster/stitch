@@ -25,9 +25,9 @@ class Context {
 		bool rumble = false;
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
-		std::vector<System*> systems;
 		std::vector<Inputs> pressedButtons;
-		// std::vector<Inputs> releasedButtons;
+		std::vector<Inputs> releasedButtons;
+		std::vector<System*> systems;
 		unsigned long debug;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
@@ -40,7 +40,7 @@ class Context {
 		void press(Inputs input) { set(input, 1); }
 		void release(Inputs input) { set(input, 0); }
 		bool pressed(Inputs input);
-		// bool released(Inputs input);
+		bool released(Inputs input);
 		bool down(Inputs input) { return get(input, data.report) > 0; }
 
 		void setState(Gamecube_Report_t state) { data.report = state; }

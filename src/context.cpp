@@ -48,9 +48,9 @@ bool Context::pressed(Inputs input) {
 	return std::find(pressedButtons.begin(), pressedButtons.end(), input) != pressedButtons.end();
 }
 
-// bool Context::released(Inputs input) {
-// 	return std::find(releasedButtons.begin(), releasedButtons.end(), input) != releasedButtons.end();
-// }
+bool Context::released(Inputs input) {
+	return std::find(releasedButtons.begin(), releasedButtons.end(), input) != releasedButtons.end();
+}
 
 System* Context::getSystem(std::string name) {
 	for (auto &system : systems) {
