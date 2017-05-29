@@ -12,6 +12,8 @@ class Context {
 	private:
 		const int maxDashBufferConsole = 2;
 		const int maxDashBufferDolphin = maxDashBufferConsole * 4;
+		const int stepIntervalConsole = 1;
+		const int stepIntervalDolphin = 7;
 
 	public:
 		CGamecubeConsole console;
@@ -23,6 +25,7 @@ class Context {
 		bool meta = false;
 		bool rumble = false;
 		int maxDashBuffer = maxDashBufferConsole;
+		int stepInterval = stepIntervalConsole;
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
@@ -58,6 +61,7 @@ class Context {
 
 		void dolphin(bool enabled) {
 			isDolphin = enabled;
+			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
 			maxDashBuffer = (enabled) ? maxDashBufferDolphin : maxDashBufferConsole;
 		}
 };
