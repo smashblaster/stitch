@@ -13,7 +13,6 @@ class Stitch {
 	private:
 		Context* ctx;
 		const Config* config;
-		int step;
 
 	public:
 		Stitch(int consolePin, int controllerPin, char json[]) {
@@ -55,15 +54,11 @@ class Stitch {
 
 			if (ctx->isDolphin) delay(1);
 
-			step = 0;
-			while (step < ctx->stepInterval) {
-				// Write to console
-				if (!ctx->console.write(ctx->data)) {
-					ctx->init = false;
-					delay(100);
-					return;
-				}
-				step += 1;
+			// Write to console
+			if (!ctx->console.write(ctx->data)) {
+				ctx->init = false;
+				delay(100);
+				return;
 			}
 
 			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
