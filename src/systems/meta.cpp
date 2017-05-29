@@ -9,8 +9,8 @@ class MetaSystem: public System {
 
 	public:
 		void init() {
-			if (isMeta()) {
-				releaseMeta();
+			if (ctx->data.report.ddown) {
+				ctx->release(Buttons::DDOWN);
 				ctx->enabled = false;
 				halt = true;
 				disable();
