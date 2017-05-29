@@ -4,11 +4,16 @@
 class MetaSystem: public System {
 	using System::System;
 
+	private:
+		bool halt = false;
+
 	public:
 		void init() {
 			if (isMeta()) {
 				releaseMeta();
 				ctx->enabled = false;
+				halt = true;
+				disable();
 			}
 			if (ctx->data.report.r) {
 				ctx->release(Buttons::R);
@@ -19,6 +24,12 @@ class MetaSystem: public System {
 		void update() {
 			ctx->meta = false;
 			ctx->rumble = false;
+
+			if (halt) {
+				releaseMeta();
+				if (!ctx->data.report.start && !ctx->data.report.z) setPersistent(false);
+				return;
+			}
 
 			if (isMeta()) {
 				releaseMeta();
@@ -56,7 +67,6 @@ class MetaSystem: public System {
 
 		// META = START + Z
 		bool isMeta() {
-			// return ctx->down(Buttons::START) && ctx->down(Buttons::Z);
 			return ctx->data.report.start & ctx->data.report.z;
 		}
 
