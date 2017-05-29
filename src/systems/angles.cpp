@@ -3,16 +3,14 @@
 class AnglesSystem: public System {
 	using System::System;
 
-	// const float wdAngleLeft = -163.4465;
-	const float wdAngleLeft = -161;
+	const float wdAngleLeft = -360 + 198.5;
 	const float wdAngleLeftRad = wdAngleLeft * M_PI / 180;
-	// const float wdAngleRight = -16.5;
-	const float wdAngleRight = -17.5;
+	const float wdAngleRight = -360 + 342.5;
 	const float wdAngleRightRad = wdAngleRight * M_PI / 180;
 
-	const float sdAngleLeft = -135;
+	const float sdAngleLeft = -360 + 225;
 	const float sdAngleLeftRad = sdAngleLeft * M_PI / 180;
-	const float sdAngleRight = -43;
+	const float sdAngleRight = -360 + 318;
 	const float sdAngleRightRad = sdAngleRight * M_PI / 180;
 
 	const int desiredRadius = 110;
