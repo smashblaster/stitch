@@ -15,6 +15,7 @@ void setup() {
 	char json[] = "{"
 		"\"angles\": \"true\","
 		"\"backdash\": \"true\","
+		"\"cardinal\": \"false\","
 		"\"debug\": \"false\","
 		"\"remap\": \"false\","
 		"\"rumble\": \"false\""

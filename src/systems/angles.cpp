@@ -1,5 +1,7 @@
 #include "system.hpp"
 
+// TODO: move angle methods to common place
+
 class AnglesSystem: public System {
 	using System::System;
 
@@ -16,13 +18,9 @@ class AnglesSystem: public System {
 
 		const int desiredRadius = 110;
 		const int angleThreshold = 12;
-		const int gridOffset = 129;
 		int i = 0;
 
 	public:
-		void init() {
-		}
-
 		void update() {
 			float angle = getAngle();
 			float radius = getRadius();
@@ -32,14 +30,14 @@ class AnglesSystem: public System {
 				// if (radius >= 98 && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
 				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
 					// Serial.println("left");
-					// ctx->data.report.xAxis = -98 + gridOffset;
-					// ctx->data.report.yAxis = -31 + gridOffset;
+					// ctx->data.report.xAxis = -98 + ctx->gridOffset;
+					// ctx->data.report.yAxis = -31 + ctx->gridOffset;
 					setAngle(wdAngleLeftRad, desiredRadius);
 				// } else if (radius >= 98 && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
 				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
 					// Serial.println("right");
-					// ctx->data.report.xAxis = 102 + gridOffset;
-					// ctx->data.report.yAxis = -33 + gridOffset;
+					// ctx->data.report.xAxis = 102 + ctx->gridOffset;
+					// ctx->data.report.yAxis = -33 + ctx->gridOffset;
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
 
@@ -56,19 +54,19 @@ class AnglesSystem: public System {
 		}
 
 		float getAngle() {
-			int x = ctx->data.report.xAxis - gridOffset;
-			int y = ctx->data.report.yAxis - gridOffset;
+			int x = ctx->data.report.xAxis - ctx->gridOffset;
+			int y = ctx->data.report.yAxis - ctx->gridOffset;
 			return atan2(y, x) * (180.0 / M_PI);
 		}
 
 		float getRadius() {
-			int x = ctx->data.report.xAxis - gridOffset;
-			int y = ctx->data.report.yAxis - gridOffset;
+			int x = ctx->data.report.xAxis - ctx->gridOffset;
+			int y = ctx->data.report.yAxis - ctx->gridOffset;
 			return sqrt(pow(x, 2) + pow(y, 2));
 		}
 
 		void setAngle(float angle, int r) {
-			ctx->data.report.xAxis = round(r * cos(angle)) + gridOffset;
-			ctx->data.report.yAxis = round(r * sin(angle)) + gridOffset;
+			ctx->data.report.xAxis = round(r * cos(angle)) + ctx->gridOffset;
+			ctx->data.report.yAxis = round(r * sin(angle)) + ctx->gridOffset;
 		}
 };

@@ -24,6 +24,7 @@ class Context {
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
+		const int gridOffset = 129;
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
 		std::bitset<Buttons::length> pressedButtons;
