@@ -6,7 +6,7 @@ class AnglesSystem: public System {
 	private:
 		const float wdAngleLeft = -360 + 198.5;
 		const float wdAngleLeftRad = wdAngleLeft * M_PI / 180;
-		const float wdAngleRight = -360 + 342.5;
+		const float wdAngleRight = -360 + 342;
 		const float wdAngleRightRad = wdAngleRight * M_PI / 180;
 
 		const float sdAngleLeft = -360 + 225;
