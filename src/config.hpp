@@ -5,13 +5,13 @@
 
 class Config {
 	private:
-		StaticJsonBuffer<200> jsonBuffer;
 		JsonObject& config;
+		StaticJsonBuffer<200> jsonBuffer;
 
 	public:
 		bool angles = false;
 		bool backdash = true;
-		bool cardinal = false;
+		bool cardinal = true;
 		bool debug = false;
 		bool remap = false;
 		bool rumble = false;
@@ -25,7 +25,7 @@ class Config {
 			rumble = config["rumble"];
 		}
 
-		~Config() {}
+		~Config() = default;
 
 		bool get(std::string path) {
 			if (path == "angles") return angles;
