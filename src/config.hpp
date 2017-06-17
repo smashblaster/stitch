@@ -5,8 +5,8 @@
 
 class Config {
 	private:
-		JsonObject& config;
 		StaticJsonBuffer<200> jsonBuffer;
+		JsonObject& config;
 
 	public:
 		bool angles = false;
