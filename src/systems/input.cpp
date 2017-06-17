@@ -11,6 +11,7 @@ class InputSystem: public System {
 		void init() {
 			// Zero out the controller
 			ctx->data.origin = ctx->controller.getOrigin();
+			ctx->data.report = ctx->controller.getReport();
 		}
 
 		void update() {

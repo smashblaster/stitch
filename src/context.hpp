@@ -10,10 +10,10 @@ class System;
 
 class Context {
 	private:
+		const int maxDashBufferConsole = 2;
+		const int maxDashBufferDolphin = maxDashBufferConsole * 4;
 		const int stepIntervalConsole = 1;
 		const int stepIntervalDolphin = 7;
-		const int maxDashBufferConsole = 2;
-		const int maxDashBufferDolphin = 8;
 
 	public:
 		CGamecubeConsole console;
@@ -24,6 +24,7 @@ class Context {
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
+		const int gridOffset = 129;
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
 		std::bitset<Buttons::length> pressedButtons;
