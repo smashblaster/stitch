@@ -18,7 +18,6 @@ class AnglesSystem: public System {
 
 		const int desiredRadius = 110;
 		const int angleThreshold = 12;
-		int i = 0;
 
 	public:
 		void update() {
@@ -27,17 +26,11 @@ class AnglesSystem: public System {
 
 			// Wavedash
 			if (90 <= radius) {
-				// if (radius >= 98 && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
+				// if (98 <= radius && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
 				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
-					// Serial.println("left");
-					// ctx->data.report.xAxis = -98 + ctx->gridOffset;
-					// ctx->data.report.yAxis = -31 + ctx->gridOffset;
 					setAngle(wdAngleLeftRad, desiredRadius);
-				// } else if (radius >= 98 && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
+				// } else if (98 <= radius && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
 				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
-					// Serial.println("right");
-					// ctx->data.report.xAxis = 102 + ctx->gridOffset;
-					// ctx->data.report.yAxis = -33 + ctx->gridOffset;
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
 
