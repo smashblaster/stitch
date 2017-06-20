@@ -1,4 +1,5 @@
 #include "Arduino.h"
+#include "Serial.h"
 #include "stitch.cpp"
 
 #define pinLed LED_BUILTIN

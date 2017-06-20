@@ -8,7 +8,7 @@ class CardinalSystem: public System {
 
 	public:
 		void update() {
-			if (getRadius() < 100) return false;
+			if (getRadius() < 100) return;
 			int x = ctx->data.report.xAxis - ctx->gridOffset;
 			int y = ctx->data.report.yAxis - ctx->gridOffset;
 

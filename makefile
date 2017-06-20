@@ -22,3 +22,6 @@ update:
 
 watch:
 	platformio device monitor
+
+native:
+	platformio -f -c vim run -e native

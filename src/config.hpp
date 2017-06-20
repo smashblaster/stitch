@@ -27,7 +27,7 @@ class Config {
 
 		~Config() = default;
 
-		bool get(std::string path) {
+		bool get(std::string path) const {
 			if (path == "angles") return angles;
 			if (path == "backdash") return backdash;
 			if (path == "cardinal") return cardinal;
