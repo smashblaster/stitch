@@ -2,26 +2,28 @@
 #SHELL := /bin/bash
 #PATH := /usr/local/bin:$(PATH)
 
-all:
-	platformio -f -c vim run
+env = nano
 
-upload:
-	platformio -f -c vim run --target upload
+all:
+	platformio -f -c vim run -e ${env}
 
 clean:
-	platformio -f -c vim run --target clean
+	platformio -f -c vim run -e ${env} -t clean
 
 program:
-	platformio -f -c vim run --target program
+	platformio -f -c vim run -e ${env} -t program
 
-uploadfs:
-	platformio -f -c vim run --target uploadfs
+test:
+	platformio test
 
 update:
-	platformio -f -c vim update
+	platformio -f -c vim update -e ${env}
+
+upload:
+	platformio -f -c vim run -e ${env} -t upload
+
+uploadfs:
+	platformio -f -c vim run -e ${env} -t uploadfs
 
 watch:
 	platformio device monitor
-
-native:
-	platformio -f -c vim run -e native
