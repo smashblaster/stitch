@@ -31,7 +31,7 @@ class Stitch {
 			addSystem("debug", new DebugSystem(ctx));
 		}
 
-		~Stitch() {}
+		~Stitch() = default;
 
 		void init() {
 			for (auto &system : ctx->systems) {
