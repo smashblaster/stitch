@@ -7,13 +7,18 @@ class DebugSystem: public System {
 	public:
 		void update() {
 			ctx->end();
-			if (ctx->pressed(Buttons::X)) {
-				Serial.print("mem: ");
-				Serial.print(freeMemory());
-				Serial.print("\t");
-				Serial.print("cpu: ");
-				Serial.print(ctx->debug);
-				Serial.println("");
+			if (Serial.available()) {
+				String cmd = Serial.readString();
+				usage();
 			}
+		}
+
+		void usage() {
+			Serial.print("mem: ");
+			Serial.print(freeMemory());
+			Serial.print("\t");
+			Serial.print("cpu: ");
+			Serial.print(ctx->debug);
+			Serial.println("");
 		}
 };
