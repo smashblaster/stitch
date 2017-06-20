@@ -16,8 +16,8 @@ class AnglesSystem: public System {
 		const float sdAngleRight = -360 + 318;
 		const float sdAngleRightRad = sdAngleRight * M_PI / 180;
 
-		const int desiredRadius = 110;
-		const int angleThreshold = 12;
+		const uint8_t desiredRadius = 110;
+		const uint8_t angleThreshold = 12;
 
 	public:
 		void update() {
@@ -47,18 +47,18 @@ class AnglesSystem: public System {
 		}
 
 		float getAngle() {
-			int x = ctx->data.report.xAxis - ctx->gridOffset;
-			int y = ctx->data.report.yAxis - ctx->gridOffset;
+			int8_t x = ctx->data.report.xAxis - ctx->gridOffset;
+			int8_t y = ctx->data.report.yAxis - ctx->gridOffset;
 			return atan2(y, x) * (180.0 / M_PI);
 		}
 
 		float getRadius() {
-			int x = ctx->data.report.xAxis - ctx->gridOffset;
-			int y = ctx->data.report.yAxis - ctx->gridOffset;
+			int8_t x = ctx->data.report.xAxis - ctx->gridOffset;
+			int8_t y = ctx->data.report.yAxis - ctx->gridOffset;
 			return sqrt(pow(x, 2) + pow(y, 2));
 		}
 
-		void setAngle(float angle, int r) {
+		void setAngle(float angle, uint8_t r) {
 			ctx->data.report.xAxis = round(r * cos(angle)) + ctx->gridOffset;
 			ctx->data.report.yAxis = round(r * sin(angle)) + ctx->gridOffset;
 		}

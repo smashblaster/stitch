@@ -4,13 +4,13 @@ class CardinalSystem: public System {
 	using System::System;
 
 	private:
-		const int threshold = 8;
+		const uint8_t threshold = 8;
 
 	public:
 		void update() {
 			if (getRadius() < 100) return;
-			int x = ctx->data.report.xAxis - ctx->gridOffset;
-			int y = ctx->data.report.yAxis - ctx->gridOffset;
+			int8_t x = ctx->data.report.xAxis - ctx->gridOffset;
+			int8_t y = ctx->data.report.yAxis - ctx->gridOffset;
 
 			if (abs(x) <= threshold) {
 				ctx->data.report.xAxis = 131;
@@ -23,16 +23,16 @@ class CardinalSystem: public System {
 		}
 
 		float getRadius() {
-			int x = ctx->data.report.xAxis - ctx->gridOffset;
-			int y = ctx->data.report.yAxis - ctx->gridOffset;
+			int8_t x = ctx->data.report.xAxis - ctx->gridOffset;
+			int8_t y = ctx->data.report.yAxis - ctx->gridOffset;
 			return sqrt(pow(x, 2) + pow(y, 2));
 		}
 
 		// TODO: move to common place
 		bool isCardinal() {
 			if (getRadius() < 100) return false;
-			int x = ctx->data.report.xAxis - ctx->gridOffset;
-			int y = ctx->data.report.yAxis - ctx->gridOffset;
+			int8_t x = ctx->data.report.xAxis - ctx->gridOffset;
+			int8_t y = ctx->data.report.yAxis - ctx->gridOffset;
 			return (abs(x) <= threshold || abs(y) <= threshold);
 		}
 };

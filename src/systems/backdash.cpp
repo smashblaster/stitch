@@ -5,13 +5,11 @@ class BackdashSystem: public System {
 	using System::System;
 
 	private:
-		uint8_t deadZone = 22;
 		uint8_t center = 128;
+		uint8_t dashBuffer = 0;
+		uint8_t deadZone = 22;
 		// uint8_t smashZone = 97;
 		uint8_t smashZone = 64;
-
-		int dashBuffer = 0;
-
 		uint8_t xAxis;
 
 	public:

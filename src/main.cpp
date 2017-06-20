@@ -5,8 +5,8 @@
 
 Stitch* stitch;
 const int baud = 9600;
-const int consolePin = 3;
-const int controllerPin = 4;
+const uint8_t consolePin = 3;
+const uint8_t controllerPin = 4;
 
 void setup() {
 	Serial.begin(baud);

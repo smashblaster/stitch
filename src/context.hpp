@@ -10,10 +10,10 @@ class System;
 
 class Context {
 	private:
-		const int maxDashBufferConsole = 2;
-		const int maxDashBufferDolphin = maxDashBufferConsole * 4;
-		const int stepIntervalConsole = 1;
-		const int stepIntervalDolphin = 7;
+		const uint8_t maxDashBufferConsole = 2;
+		const uint8_t maxDashBufferDolphin = maxDashBufferConsole * 4;
+		const uint8_t stepIntervalConsole = 1;
+		const uint8_t stepIntervalDolphin = 7;
 
 	public:
 		CGamecubeConsole console;
@@ -24,15 +24,15 @@ class Context {
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
-		const int gridOffset = 129;
-		int maxDashBuffer = maxDashBufferConsole;
-		int stepInterval = stepIntervalConsole;
+		const uint8_t gridOffset = 129;
+		uint8_t maxDashBuffer = maxDashBufferConsole;
+		uint8_t stepInterval = stepIntervalConsole;
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
 		unsigned long debug = 0;
 
-		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
+		Context(uint8_t consolePin, uint8_t controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
 
 		uint8_t get(Buttons button) { get(button, data.report); }

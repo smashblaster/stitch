@@ -14,10 +14,10 @@ class Stitch {
 	private:
 		Context* ctx;
 		const Config* config;
-		int step;
+		uint8_t step;
 
 	public:
-		Stitch(int consolePin, int controllerPin, char json[]) {
+		Stitch(uint8_t consolePin, uint8_t controllerPin, char json[]) {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
