@@ -20,7 +20,6 @@ class Context {
 		CGamecubeController controller;
 		Gamecube_Data_t data = defaultGamecubeData;
 		bool enabled = true;
-		bool init = false;
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
@@ -29,8 +28,15 @@ class Context {
 		int stepInterval = stepIntervalConsole;
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
-		std::vector<System*> systems;
 		unsigned long debug = 0;
+
+		System* inputSystem;
+		System* metaSystem;
+		System* remapSystem;
+		System* cardinalSystem;
+		System* backdashSystem;
+		System* anglesSystem;
+		System* debugSystem;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() {}
@@ -46,15 +52,6 @@ class Context {
 		bool down(Buttons button) { return get(button, data.report) > 0; }
 
 		void setState(Gamecube_Report_t state) { data.report = state; }
-
-		System* getSystem(std::string name);
-		void addSystem(char* name, System* system, bool persistent = false, bool enabled = false);
-		void enableSystem(std::string name) { toggleSystem(name, true); }
-		void disableSystem(std::string name) { toggleSystem(name, false); }
-		void toggleSystem(std::string name);
-		void toggleSystem(std::string name, bool value);
-		void toggleSystem(System* system);
-		void toggleSystem(System* system, bool value);
 
 		// Profiler
 		void begin() { debug = micros(); }

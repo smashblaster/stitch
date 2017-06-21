@@ -45,7 +45,7 @@ class MetaSystem: public System {
 				// DUP => debug
 				if (ctx->data.report.dup) ctx->release(Buttons::DUP);
 				if (ctx->pressed(Buttons::DUP)) {
-					ctx->toggleSystem("debug");
+					ctx->debugSystem->toggle();
 					ctx->rumble = true;
 				}
 
