@@ -31,15 +31,14 @@ class Config {
 
 		~Config() = default;
 
-		void init() {
-			SdFat SD;
-
-			if (!SD.begin(selectPin)) {
+		void load() {
+			SdFat sd;
+			if (!sd.begin(selectPin)) {
 				Serial.println("Card failed, or not present");
 				return;
 			}
 
-			File profile = SD.open("00.txt");
+			File profile = sd.open("0.txt");
 
 			if (!profile) {
 				Serial.println("Error opening profile");
@@ -50,6 +49,18 @@ class Config {
 				Serial.write(profile.read());
 			}
 			profile.close();
+		}
+
+		void list() {
+			SdFat sd;
+			if (!sd.begin(selectPin)) {
+				Serial.println("Card failed, or not present");
+				return;
+			}
+
+			Serial.println("========");
+			Serial.println("LS:");
+			sd.ls(LS_R);
 		}
 
 		bool get(std::string path) const {
