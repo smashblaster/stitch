@@ -1,5 +1,5 @@
+#include "SdFat.h"
 #include <ArduinoJson.h>
-#include <SD.h>
 #include <SPI.h>
 #include <string>
 
@@ -27,18 +27,18 @@ class Config {
 			debug = config["debug"];
 			remap = config["remap"];
 			rumble = config["rumble"];
-
-			Serial.print("Initializing SD card...");
-			if (!SD.begin(selectPin)) {
-				Serial.println("Card failed, or not present");
-				return;
-			}
-			Serial.println("card initialized.");
 		}
 
 		~Config() = default;
 
 		void init() {
+			SdFat SD;
+
+			if (!SD.begin(selectPin)) {
+				Serial.println("Card failed, or not present");
+				return;
+			}
+
 			File profile = SD.open("00.txt");
 
 			if (!profile) {

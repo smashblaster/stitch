@@ -11,6 +11,7 @@ Something That Increases the Consistency of happiness.
 pio lib install ArduinoJson
 pio lib install ArduinoSTL
 pio lib install Nintendo
+pio lib install SdFat
 ```
 
 ## Running
