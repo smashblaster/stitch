@@ -11,8 +11,10 @@ class System {
 		bool enabled = false;
 		bool persistent = false;
 
-		explicit System(Context* _ctx) {
+		explicit System(char* _name, Context* _ctx, bool _persistent = false) {
+			name = _name;
 			ctx = _ctx;
+			persistent = _persistent;
 		}
 
 		virtual ~System() {}

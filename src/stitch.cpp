@@ -13,6 +13,7 @@
 class Stitch {
 	private:
 		Context* ctx;
+		bool isInit = false;
 		const Config* config;
 		uint8_t step;
 
@@ -21,39 +22,48 @@ class Stitch {
 			config = new Config(json);
 			ctx = new Context(consolePin, controllerPin);
 
-			addSystem("input", new InputSystem(ctx), true);
-			addSystem("meta", new MetaSystem(ctx), true);
-
-			addSystem("remap", new RemapSystem(ctx));
-			addSystem("cardinal", new CardinalSystem(ctx));
-			addSystem("backdash", new BackdashSystem(ctx));
-			addSystem("angles", new AnglesSystem(ctx));
-			addSystem("debug", new DebugSystem(ctx));
+			ctx->inputSystem = new InputSystem("input", ctx, true);
+			ctx->metaSystem = new MetaSystem("meta", ctx, true);
+			ctx->remapSystem = new RemapSystem("remap", ctx);
+			ctx->cardinalSystem = new CardinalSystem("cardinal", ctx);
+			ctx->backdashSystem = new BackdashSystem("backdash", ctx);
+			ctx->anglesSystem = new AnglesSystem("angles", ctx);
+			ctx->debugSystem = new DebugSystem("debug", ctx);
 		}
 
 		~Stitch() = default;
 
 		void init() {
-			for (auto &system : ctx->systems) {
-				if (system->persistent || (system->enabled && ctx->enabled)) system->init();
-			}
-			ctx->init = true;
+			initSystem(ctx->inputSystem);
+			initSystem(ctx->metaSystem);
+			initSystem(ctx->remapSystem);
+			initSystem(ctx->cardinalSystem);
+			initSystem(ctx->backdashSystem);
+			initSystem(ctx->anglesSystem);
+			initSystem(ctx->debugSystem);
+			isInit = true;
 		}
 
 		void update() {
 			// Read from controller
 			if (!ctx->controller.read()) {
 				// Continue if no controller is found
-				ctx->init = false;
+				isInit = false;
 				delay(100);
 				return;
 			}
 
-			if (!ctx->init) init();
+			ctx->begin();
 
-			for (auto &system : ctx->systems) {
-				if (system->persistent || (system->enabled && ctx->enabled)) system->update();
-			}
+			if (!isInit) init();
+
+			updateSystem(ctx->inputSystem);
+			updateSystem(ctx->metaSystem);
+			updateSystem(ctx->remapSystem);
+			updateSystem(ctx->cardinalSystem);
+			updateSystem(ctx->backdashSystem);
+			updateSystem(ctx->anglesSystem);
+			updateSystem(ctx->debugSystem);
 
 			if (ctx->isDolphin) delay(1);
 
@@ -61,7 +71,7 @@ class Stitch {
 			while (step < ctx->stepInterval) {
 				// Write to console
 				if (!ctx->console.write(ctx->data)) {
-					ctx->init = false;
+					isInit = false;
 					delay(100);
 					return;
 				}
@@ -71,7 +81,12 @@ class Stitch {
 			ctx->controller.setRumble((config->get("rumble") && ctx->data.status.rumble) || ctx->rumble);
 		}
 
-		void addSystem(char* name, System* system, bool persistent = false) {
-			ctx->addSystem(name, system, persistent, config->get(name));
+		void initSystem(System* system) {
+			system->toggle(system->persistent || config->get(system->name));
+			if (system->persistent || (system->enabled && ctx->enabled)) system->init();
+		}
+
+		void updateSystem(System* system) {
+			if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 		}
 };
