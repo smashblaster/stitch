@@ -34,7 +34,7 @@ class Stitch {
 		~Stitch() = default;
 
 		void init() {
-			config->init();
+			config->load();
 			for (auto &system : ctx->systems) {
 				if (system->persistent || (system->enabled && ctx->enabled)) system->init();
 			}
