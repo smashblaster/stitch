@@ -53,8 +53,6 @@ class Stitch {
 				return;
 			}
 
-			ctx->begin();
-
 			if (!isInit) init();
 
 			updateSystem(ctx->inputSystem);
