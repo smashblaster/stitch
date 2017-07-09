@@ -12,6 +12,10 @@ class InputSystem: public System {
 			// Zero out the controller
 			ctx->data.origin = ctx->controller.getOrigin();
 			ctx->data.report = ctx->controller.getReport();
+
+			// Set a consistent origin.
+			ctx->data.origin.inititalData.xAxis = 128;
+			ctx->data.origin.inititalData.yAxis = 128;
 		}
 
 		void update() {
