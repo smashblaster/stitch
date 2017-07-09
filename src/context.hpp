@@ -10,10 +10,11 @@ class System;
 
 class Context {
 	private:
+		const int dolphinMultiplier = 7;
 		const int maxDashBufferConsole = 2;
-		const int maxDashBufferDolphin = maxDashBufferConsole * 4;
+		const int maxDashBufferDolphin = maxDashBufferConsole * dolphinMultiplier;
 		const int stepIntervalConsole = 1;
-		const int stepIntervalDolphin = 7;
+		const int stepIntervalDolphin = dolphinMultiplier;
 
 	public:
 		CGamecubeConsole console;
