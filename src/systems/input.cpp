@@ -7,6 +7,11 @@ class InputSystem: public System {
 	private:
 		Gamecube_Report_t state, prevState;
 
+		bool started = false;
+		const int boot = millis();
+		int startup;
+		int timer = 2;
+
 	public:
 		void init() {
 			// Zero out the controller
@@ -16,9 +21,16 @@ class InputSystem: public System {
 			// Set a consistent origin.
 			ctx->data.origin.inititalData.xAxis = 128;
 			ctx->data.origin.inititalData.yAxis = 128;
+
+			startup = millis() - boot;
 		}
 
 		void update() {
+			if (!started && timer-- == 0) {
+				if (startup > 10) ctx->dolphin(true);
+				started = true;
+			}
+
 			// Get controller data
 			state = ctx->controller.getReport();
 

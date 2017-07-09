@@ -10,7 +10,6 @@ class System;
 
 class Context {
 	private:
-		const int dolphinMultiplier = 7;
 		const int maxDashBufferConsole = 2;
 		const int maxDashBufferDolphin = maxDashBufferConsole * dolphinMultiplier;
 		const int stepIntervalConsole = 1;
@@ -25,6 +24,7 @@ class Context {
 		bool isDolphin = false;
 		bool meta = false;
 		bool rumble = false;
+		const int dolphinMultiplier = 7;
 		const int gridOffset = 129;
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
