@@ -6,20 +6,35 @@ class AnglesSystem: public System {
 	using System::System;
 
 	private:
-		const float wdAngleLeft = -360 + 197.5;
-		const float wdAngleLeftRad = wdAngleLeft * M_PI / 180;
-		const float wdAngleRight = -360 + 342;
-		const float wdAngleRightRad = wdAngleRight * M_PI / 180;
+		float wdAngleLeft = -360 + 197.5;
+		float wdAngleLeftRad = wdAngleLeft * M_PI / 180;
+		float wdAngleRight = -360 + 342;
+		float wdAngleRightRad = wdAngleRight * M_PI / 180;
 
-		const float sdAngleLeft = -360 + 223;
-		const float sdAngleLeftRad = sdAngleLeft * M_PI / 180;
-		const float sdAngleRight = -360 + 316;
-		const float sdAngleRightRad = sdAngleRight * M_PI / 180;
+		float sdAngleLeft = -360 + 223;
+		float sdAngleLeftRad = sdAngleLeft * M_PI / 180;
+		float sdAngleRight = -360 + 316;
+		float sdAngleRightRad = sdAngleRight * M_PI / 180;
 
 		const int desiredRadius = 110;
 		const int angleThreshold = 12;
 
 	public:
+		void init() {
+			// TODO: remove this temporary workaround once we figure out setting origin on dolphin
+			if (ctx->isDolphin) {
+				wdAngleLeft = -360 + 199;
+				wdAngleLeftRad = wdAngleLeft * M_PI / 180;
+				wdAngleRight = -360 + 341.75;
+				wdAngleRightRad = wdAngleRight * M_PI / 180;
+
+				sdAngleLeft = -360 + 225;
+				sdAngleLeftRad = sdAngleLeft * M_PI / 180;
+				sdAngleRight = -360 + 318;
+				sdAngleRightRad = sdAngleRight * M_PI / 180;
+			}
+		}
+
 		void update() {
 			float angle = getAngle();
 			float radius = getRadius();
