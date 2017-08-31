@@ -15,8 +15,8 @@ class MetaSystem: public System {
 				halt = true;
 				disable();
 			}
-			if (ctx->data.report.r) {
-				ctx->release(Buttons::R);
+			if (ctx->data.report.dright) {
+				ctx->release(Buttons::DRIGHT);
 				ctx->dolphin(true);
 			}
 		}
