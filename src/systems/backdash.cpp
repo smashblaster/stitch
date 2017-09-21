@@ -24,13 +24,13 @@ class BackdashSystem: public System {
 			xAxis = ctx->data.report.xAxis;
 
 			// If the x axis is between these two than set buffer to eight
-			if (xAxis > center - deadZone - 1 && xAxis < center + deadZone - 1) {
+			if (xAxis < center + deadZone - 1 && xAxis > center - deadZone - 1) {
 				dashBuffer = ctx->maxDashBuffer;
 			}
 
 			if (xAxis < center - deadZone || xAxis > center + deadZone) {
 				// Automatically dashes and skips all buffer if you enter running state
-				if (xAxis > center + smashZone || xAxis < center - smashZone) {
+				if (xAxis < center - smashZone || xAxis > center + smashZone) {
 					ctx->data.report.xAxis = xAxis;
 					dashBuffer = 0;
 				}
