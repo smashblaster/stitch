@@ -65,4 +65,14 @@ class Context {
 			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
 			maxDashBuffer = (enabled) ? maxDashBufferDolphin : maxDashBufferConsole;
 		}
+
+		void setOrigin(int x = 128, int y = 128) {
+			// Zero out the controller
+			data.origin = controller.getOrigin();
+			data.report = controller.getReport();
+
+			// Set a consistent origin.
+			data.origin.inititalData.xAxis = x;
+			data.origin.inititalData.yAxis = y;
+		}
 };

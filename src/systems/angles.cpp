@@ -24,21 +24,6 @@ class AnglesSystem: public System {
 		const int wdThreshold = 12;
 
 	public:
-		void init() {
-			// TODO: remove this temporary workaround once we figure out setting origin on dolphin
-			if (ctx->isDolphin) {
-				wdAngleLeft = -360 + 199;
-				wdAngleLeftRad = wdAngleLeft * M_PI / 180;
-				wdAngleRight = -360 + 341.75;
-				wdAngleRightRad = wdAngleRight * M_PI / 180;
-
-				sdAngleLeft = -360 + 225;
-				sdAngleLeftRad = sdAngleLeft * M_PI / 180;
-				sdAngleRight = -360 + 318;
-				sdAngleRightRad = sdAngleRight * M_PI / 180;
-			}
-		}
-
 		void update() {
 			const float angle = getAngle();
 			const float radius = getRadius();

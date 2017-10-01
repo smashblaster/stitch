@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "system.hpp"
 #include <Nintendo.h>
 
@@ -9,13 +10,7 @@ class InputSystem: public System {
 
 	public:
 		void init() {
-			// Zero out the controller
-			ctx->data.origin = ctx->controller.getOrigin();
-			ctx->data.report = ctx->controller.getReport();
-
-			// Set a consistent origin.
-			ctx->data.origin.inititalData.xAxis = 128;
-			ctx->data.origin.inititalData.yAxis = 128;
+			ctx->setOrigin();
 		}
 
 		void update() {

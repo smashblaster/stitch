@@ -79,7 +79,6 @@ void loop() {
 	while (step < ctx->stepInterval) {
 		// Write to console
 		if (!ctx->console.write(ctx->data)) {
-			ctx->init = false;
 			delay(100);
 			return;
 		}
