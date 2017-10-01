@@ -31,10 +31,10 @@ class Context {
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
-		unsigned long debug = 0;
+		uint64 debug = 0;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
-		~Context() {}
+		~Context() = default;
 
 		uint8_t get(Buttons button) { get(button, data.report); }
 		uint8_t get(Buttons button, Gamecube_Report_t state);

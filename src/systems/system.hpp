@@ -7,7 +7,7 @@ class System {
 		Context* ctx;
 
 	public:
-		char* name;
+		char* name = "";
 		bool enabled = false;
 		bool persistent = false;
 
@@ -15,7 +15,7 @@ class System {
 			ctx = _ctx;
 		}
 
-		virtual ~System() {}
+		virtual ~System() = default;
 		virtual void init() {}
 		virtual void update() {}
 		void enable() { enabled = true; }

@@ -36,15 +36,13 @@ class AnglesSystem: public System {
 		}
 
 		void update() {
-			float angle = getAngle();
-			float radius = getRadius();
+			const float angle = getAngle();
+			const float radius = getRadius();
 
-			// Wavedash
 			if (90 <= radius) {
-				// if (98 <= radius && (angle - (wdAngleLeft - angleThreshold)) <= ((wdAngleLeft + angleThreshold) - (wdAngleLeft - angleThreshold))) {
+				// Wavedash
 				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
 					setAngle(wdAngleLeftRad, desiredRadius);
-				// } else if (98 <= radius && (angle - (wdAngleRight - angleThreshold)) <= ((wdAngleRight + angleThreshold) - (wdAngleRight - angleThreshold))) {
 				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
