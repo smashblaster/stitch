@@ -2,6 +2,8 @@
 
 // TODO: move angle methods to common place
 
+#define isNearAngle(angle, target, threshold) ((target) - (threshold) <= (angle) && (angle) <= (target) + (threshold))
+
 class AnglesSystem: public System {
 	using System::System;
 
@@ -16,8 +18,10 @@ class AnglesSystem: public System {
 		float sdAngleRight = -360 + 316;
 		float sdAngleRightRad = sdAngleRight * M_PI / 180;
 
+		const int cardinalThreshold = 5;
 		const int desiredRadius = 110;
-		const int angleThreshold = 12;
+		const int sdThreshold = 4;
+		const int wdThreshold = 12;
 
 	public:
 		void init() {
@@ -41,17 +45,36 @@ class AnglesSystem: public System {
 
 			if (90 <= radius) {
 				// Wavedash
-				if (wdAngleLeft - angleThreshold <= angle && angle <= wdAngleLeft + angleThreshold) {
+				if (isNearAngle(angle, wdAngleLeft, wdThreshold)) {
 					setAngle(wdAngleLeftRad, desiredRadius);
-				} else if (wdAngleRight - angleThreshold <= angle && angle <= wdAngleRight + angleThreshold) {
+				} else if (isNearAngle(angle, wdAngleRight, wdThreshold)) {
 					setAngle(wdAngleRightRad, desiredRadius);
 				}
 
 				// Shield drop
-				if (sdAngleLeft - 4 <= angle && angle <= sdAngleLeft + 4) {
+				if (isNearAngle(angle, sdAngleLeft, sdThreshold)) {
 					setAngle(sdAngleLeftRad, desiredRadius);
-				} else if ((sdAngleRight + 3) - 4 <= angle && angle <= (sdAngleRight + 3) + 4) {
+				} else if (isNearAngle(angle, sdAngleRight + 3, sdThreshold)) {
 					setAngle(sdAngleRightRad, desiredRadius);
+				}
+
+				// Cardinals
+				if (isNearAngle(angle, 90, cardinalThreshold)) {
+					// UP
+					ctx->data.report.xAxis = 128;
+					ctx->data.report.yAxis = 233;
+				} else if (isNearAngle(angle, -90, cardinalThreshold)) {
+					// DOWN
+					ctx->data.report.xAxis = 128;
+					ctx->data.report.yAxis = 23;
+				} else if (isNearAngle(angle, 180, cardinalThreshold) || isNearAngle(angle, -180, cardinalThreshold)) {
+					// LEFT
+					ctx->data.report.xAxis = 28;
+					ctx->data.report.yAxis = 128;
+				} else if (isNearAngle(angle, 0, cardinalThreshold)) {
+					// RIGHT
+					ctx->data.report.xAxis = 234;
+					ctx->data.report.yAxis = 128;
 				}
 			}
 
