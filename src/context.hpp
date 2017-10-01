@@ -23,7 +23,6 @@ class Context {
 		bool enabled = true;
 		bool init = false;
 		bool isDolphin = false;
-		bool meta = false;
 		bool rumble = false;
 		const int gridOffset = 129;
 		int maxDashBuffer = maxDashBufferConsole;
@@ -31,7 +30,7 @@ class Context {
 		std::bitset<Buttons::length> pressedButtons;
 		std::bitset<Buttons::length> releasedButtons;
 		std::vector<System*> systems;
-		uint64 debug = 0;
+		unsigned long debug = 0;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() = default;
