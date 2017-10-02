@@ -14,7 +14,7 @@ class Context {
 		const int maxDashBufferConsole = 2;
 		const int maxDashBufferDolphin = maxDashBufferConsole * dolphinMultiplier;
 		const int stepIntervalConsole = 1;
-		const int stepIntervalDolphin = dolphinMultiplier;
+		const int stepIntervalDolphin = stepIntervalConsole * dolphinMultiplier;
 
 	public:
 		CGamecubeConsole console;
@@ -64,6 +64,7 @@ class Context {
 			isDolphin = enabled;
 			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
 			maxDashBuffer = (enabled) ? maxDashBufferDolphin : maxDashBufferConsole;
+			init = false;
 		}
 
 		void setOrigin(int x = 128, int y = 128) {

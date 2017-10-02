@@ -18,24 +18,46 @@ class AnglesSystem: public System {
 		float sdAngleRight = -360 + 316;
 		float sdAngleRightRad = sdAngleRight * M_PI / 180;
 
-		const int cardinalThreshold = 5;
+		int cardUp[2] = { 128, 233 };
+		int cardDown[2] = { 128, 23 };
+		int cardLeft[2] = { 28, 128 };
+		int cardRight[2] = { 234, 128 };
+
+		const int cardThreshold = 5;
 		const int desiredRadius = 110;
 		const int sdThreshold = 4;
 		const int wdThreshold = 12;
 
 	public:
+		void init() {
+			// TODO: remove this temporary workaround once we figure out setting origin on dolphin
+			if (ctx->isDolphin) {
+				wdAngleLeft = -360 + 197;
+				wdAngleLeftRad = wdAngleLeft * M_PI / 180;
+				wdAngleRight = -360 + 343;
+				wdAngleRightRad = wdAngleRight * M_PI / 180;
+
+				sdAngleLeft = -360 + 223;
+				sdAngleLeftRad = sdAngleLeft * M_PI / 180;
+				sdAngleRight = -360 + 318;
+				sdAngleRightRad = sdAngleRight * M_PI / 180;
+
+				cardUp[0] = 130;
+				cardUp[1] = 233;
+				cardDown[0] = 130;
+				cardDown[1] = 24;
+				cardLeft[0] = 29;
+				cardLeft[1] = 129;
+				cardRight[0] = 234;
+				cardRight[1] = 129;
+			}
+		}
+
 		void update() {
 			const float angle = getAngle();
 			const float radius = getRadius();
 
 			if (90 <= radius) {
-				// Wavedash
-				if (isNearAngle(angle, wdAngleLeft, wdThreshold)) {
-					setAngle(wdAngleLeftRad, desiredRadius);
-				} else if (isNearAngle(angle, wdAngleRight, wdThreshold)) {
-					setAngle(wdAngleRightRad, desiredRadius);
-				}
-
 				// Shield drop
 				if (isNearAngle(angle, sdAngleLeft, sdThreshold)) {
 					setAngle(sdAngleLeftRad, desiredRadius);
@@ -43,23 +65,30 @@ class AnglesSystem: public System {
 					setAngle(sdAngleRightRad, desiredRadius);
 				}
 
+				// Wavedash
+				else if (isNearAngle(angle, wdAngleLeft, wdThreshold)) {
+					setAngle(wdAngleLeftRad, desiredRadius);
+				} else if (isNearAngle(angle, wdAngleRight, wdThreshold)) {
+					setAngle(wdAngleRightRad, desiredRadius);
+				}
+
 				// Cardinals
-				if (isNearAngle(angle, 90, cardinalThreshold)) {
+				else if (isNearAngle(angle, 90, cardThreshold)) {
 					// UP
-					ctx->data.report.xAxis = 128;
-					ctx->data.report.yAxis = 233;
-				} else if (isNearAngle(angle, -90, cardinalThreshold)) {
+					ctx->data.report.xAxis = cardUp[0];
+					ctx->data.report.yAxis = cardUp[1];
+				} else if (isNearAngle(angle, -90, cardThreshold)) {
 					// DOWN
-					ctx->data.report.xAxis = 128;
-					ctx->data.report.yAxis = 23;
-				} else if (isNearAngle(angle, 180, cardinalThreshold) || isNearAngle(angle, -180, cardinalThreshold)) {
+					ctx->data.report.xAxis = cardDown[0];
+					ctx->data.report.yAxis = cardDown[1];
+				} else if (isNearAngle(angle, 180, cardThreshold) || isNearAngle(angle, -180, cardThreshold)) {
 					// LEFT
-					ctx->data.report.xAxis = 28;
-					ctx->data.report.yAxis = 128;
-				} else if (isNearAngle(angle, 0, cardinalThreshold)) {
+					ctx->data.report.xAxis = cardLeft[0];
+					ctx->data.report.yAxis = cardLeft[1];
+				} else if (isNearAngle(angle, 0, cardThreshold)) {
 					// RIGHT
-					ctx->data.report.xAxis = 234;
-					ctx->data.report.yAxis = 128;
+					ctx->data.report.xAxis = cardRight[0];
+					ctx->data.report.yAxis = cardRight[1];
 				}
 			}
 
