@@ -3,13 +3,11 @@
 #include "context.hpp"
 #include "systems/angles.cpp"
 #include "systems/backdash.cpp"
-#include "systems/cardinal.cpp"
 #include "systems/debug.cpp"
 #include "systems/input.cpp"
 #include "systems/meta.cpp"
 #include "systems/remap.cpp"
 #include <Nintendo.h>
-#include <vector>
 
 #define pinLed LED_BUILTIN
 
@@ -32,7 +30,6 @@ void setup() {
 	char json[] = "{"
 		"\"angles\": \"true\","
 		"\"backdash\": \"true\","
-		"\"cardinal\": \"false\","
 		"\"debug\": \"false\","
 		"\"remap\": \"false\","
 		"\"rumble\": \"false\""
@@ -45,7 +42,6 @@ void setup() {
 	addSystem("meta", new MetaSystem(ctx), true);
 
 	addSystem("remap", new RemapSystem(ctx));
-	addSystem("cardinal", new CardinalSystem(ctx));
 	addSystem("backdash", new BackdashSystem(ctx));
 	addSystem("angles", new AnglesSystem(ctx));
 	addSystem("debug", new DebugSystem(ctx));

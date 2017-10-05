@@ -11,15 +11,14 @@ class Config {
 	public:
 		bool angles = false;
 		bool backdash = true;
-		bool cardinal = true;
 		bool debug = false;
 		bool remap = false;
 		bool rumble = false;
 
 		Config(char json[]): config(jsonBuffer.parseObject(json)) {
+			// TODO: add cardinal setting to angles
 			angles = config["angles"];
 			backdash = config["backdash"];
-			cardinal = config["cardinal"];
 			debug = config["debug"];
 			remap = config["remap"];
 			rumble = config["rumble"];
@@ -30,7 +29,6 @@ class Config {
 		bool get(std::string path) const {
 			if (path == "angles") return angles;
 			if (path == "backdash") return backdash;
-			if (path == "cardinal") return cardinal;
 			if (path == "debug") return debug;
 			if (path == "remap") return remap;
 			if (path == "rumble") return rumble;

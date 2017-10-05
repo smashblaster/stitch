@@ -10,13 +10,12 @@ class MetaSystem: public System {
 	public:
 		void init() {
 			if (ctx->data.report.ddown) {
-				ctx->release(Buttons::DDOWN);
+				ctx->release("ddown");
 				ctx->enabled = false;
 				halt = true;
 				disable();
-			}
-			if (ctx->data.report.dright) {
-				ctx->release(Buttons::DRIGHT);
+			} else if (ctx->data.report.dright) {
+				ctx->release("dright");
 				ctx->dolphin(true);
 			}
 		}
@@ -25,40 +24,53 @@ class MetaSystem: public System {
 			ctx->rumble = false;
 
 			if (halt) {
-				ctx->release(Buttons::Z);
+				ctx->release("z");
 				if (!ctx->data.report.z) setPersistent(false);
 				return;
 			}
 
 			if (ctx->data.report.z) {
-				// DDOWN => toggle
-				if (ctx->data.report.ddown) ctx->release(Buttons::DDOWN);
-				if (ctx->pressed(Buttons::DDOWN)) {
-					ctx->release(Buttons::Z);
-					ctx->enabled = !ctx->enabled;
+				// START+DUP => debug on
+				if (ctx->data.report.start && ctx->data.report.dup) {
+					ctx->release("z");
+					ctx->release("dup");
+					ctx->enableSystem("debug");
+					ctx->rumble = true;
+				}
+				// START+DDOWN => debug off
+				else if (ctx->data.report.start && ctx->data.report.ddown) {
+					ctx->release("z");
+					ctx->release("ddown");
+					ctx->disableSystem("debug");
 					ctx->rumble = true;
 				}
 
-				// DUP => debug
-				if (ctx->data.report.dup) ctx->release(Buttons::DUP);
-				if (ctx->pressed(Buttons::DUP)) {
-					ctx->release(Buttons::Z);
-					ctx->toggleSystem("debug");
+				// DUP => on
+				else if (ctx->data.report.dup) {
+					ctx->release("z");
+					ctx->release("dup");
+					ctx->enabled = true;
+					ctx->rumble = true;
+				}
+				// DDOWN => off
+				else if (ctx->data.report.ddown) {
+					ctx->release("z");
+					ctx->release("ddown");
+					ctx->enabled = false;
 					ctx->rumble = true;
 				}
 
-				// L => vanilla
-				if (ctx->data.report.dleft) ctx->release(Buttons::DLEFT);
-				if (ctx->pressed(Buttons::DLEFT)) {
-					ctx->release(Buttons::Z);
+				// DLEFT => vanilla
+				else if (ctx->data.report.dleft) {
+					ctx->release("z");
+					ctx->release("dleft");
 					ctx->dolphin(false);
 					ctx->rumble = true;
 				}
-
-				// R => dolphin
-				if (ctx->data.report.dright) ctx->release(Buttons::DRIGHT);
-				if (ctx->pressed(Buttons::DRIGHT)) {
-					ctx->release(Buttons::Z);
+				// DRIGHT => dolphin
+				else if (ctx->data.report.dright) {
+					ctx->release("z");
+					ctx->release("dright");
 					ctx->dolphin(true);
 					ctx->rumble = true;
 				}
