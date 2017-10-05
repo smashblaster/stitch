@@ -32,9 +32,9 @@ class AnglesSystem: public System {
 		void init() {
 			// TODO: remove this temporary workaround once we figure out setting origin on dolphin
 			if (ctx->isDolphin) {
-				wdAngleLeft = -360 + 197;
+				wdAngleLeft = -360 + 197.5;
 				wdAngleLeftRad = wdAngleLeft * M_PI / 180;
-				wdAngleRight = -360 + 343;
+				wdAngleRight = -360 + 343.5;
 				wdAngleRightRad = wdAngleRight * M_PI / 180;
 
 				sdAngleLeft = -360 + 223;
@@ -42,14 +42,14 @@ class AnglesSystem: public System {
 				sdAngleRight = -360 + 318;
 				sdAngleRightRad = sdAngleRight * M_PI / 180;
 
-				cardUp[0] = 130;
+				cardUp[0] = 131;
 				cardUp[1] = 233;
-				cardDown[0] = 130;
+				cardDown[0] = 131;
 				cardDown[1] = 24;
-				cardLeft[0] = 29;
-				cardLeft[1] = 129;
+				cardLeft[0] = 28;
+				cardLeft[1] = 130;
 				cardRight[0] = 234;
-				cardRight[1] = 129;
+				cardRight[1] = 130;
 			}
 		}
 

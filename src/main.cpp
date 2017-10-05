@@ -73,15 +73,10 @@ void loop() {
 		if (system->persistent || (system->enabled && ctx->enabled)) system->update();
 	}
 
-	if (ctx->isDolphin) delay(1);
-
 	step = 0;
 	while (step < ctx->stepInterval) {
 		// Write to console
-		if (!ctx->console.write(ctx->data)) {
-			delay(100);
-			return;
-		}
+		ctx->console.write(ctx->data);
 		step += 1;
 	}
 
