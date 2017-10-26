@@ -23,9 +23,9 @@ class AnglesSystem: public System {
 		int cardLeft[2] = { 28, 128 };
 		int cardRight[2] = { 234, 128 };
 
-		const int cardThreshold = 5;
+		const int cardThreshold = 10;
 		const int desiredRadius = 110;
-		const int sdThreshold = 4;
+		const int sdThreshold = 6;
 		const int wdThreshold = 12;
 
 	public:

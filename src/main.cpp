@@ -3,10 +3,8 @@
 #include "context.hpp"
 #include "systems/angles.cpp"
 #include "systems/backdash.cpp"
-#include "systems/debug.cpp"
 #include "systems/input.cpp"
 #include "systems/meta.cpp"
-#include "systems/remap.cpp"
 #include <Nintendo.h>
 
 #define pinLed LED_BUILTIN
@@ -41,10 +39,10 @@ void setup() {
 	addSystem("input", new InputSystem(ctx), true);
 	addSystem("meta", new MetaSystem(ctx), true);
 
-	addSystem("remap", new RemapSystem(ctx));
+	// addSystem("remap", new RemapSystem(ctx));
 	addSystem("backdash", new BackdashSystem(ctx));
 	addSystem("angles", new AnglesSystem(ctx));
-	addSystem("debug", new DebugSystem(ctx));
+	// addSystem("debug", new DebugSystem(ctx));
 }
 
 void init2() {

@@ -29,51 +29,66 @@ class MetaSystem: public System {
 				return;
 			}
 
-			if (ctx->data.report.z) {
-				// START+DUP => debug on
-				if (ctx->data.report.start && ctx->data.report.dup) {
-					ctx->release("z");
-					ctx->release("dup");
-					ctx->enableSystem("debug");
-					ctx->rumble = true;
-				}
-				// START+DDOWN => debug off
-				else if (ctx->data.report.start && ctx->data.report.ddown) {
-					ctx->release("z");
-					ctx->release("ddown");
-					ctx->disableSystem("debug");
-					ctx->rumble = true;
-				}
+			if (!ctx->data.report.z) return;
 
-				// DUP => on
-				else if (ctx->data.report.dup) {
-					ctx->release("z");
-					ctx->release("dup");
-					ctx->enabled = true;
-					ctx->rumble = true;
-				}
-				// DDOWN => off
-				else if (ctx->data.report.ddown) {
-					ctx->release("z");
-					ctx->release("ddown");
-					ctx->enabled = false;
-					ctx->rumble = true;
-				}
+			// START+DUP => debug on
+			if (ctx->data.report.start && ctx->data.report.dup) {
+				ctx->release("z");
+				ctx->release("dup");
+				ctx->enableSystem("debug");
+				ctx->rumble = true;
+			}
+			// START+DDOWN => debug off
+			else if (ctx->data.report.start && ctx->data.report.ddown) {
+				ctx->release("z");
+				ctx->release("ddown");
+				ctx->disableSystem("debug");
+				ctx->rumble = true;
+			}
 
-				// DLEFT => vanilla
-				else if (ctx->data.report.dleft) {
-					ctx->release("z");
-					ctx->release("dleft");
-					ctx->dolphin(false);
-					ctx->rumble = true;
-				}
-				// DRIGHT => dolphin
-				else if (ctx->data.report.dright) {
-					ctx->release("z");
-					ctx->release("dright");
-					ctx->dolphin(true);
-					ctx->rumble = true;
-				}
+			// START+DLEFT => enable backdash
+			else if (ctx->data.report.start && ctx->data.report.dleft) {
+				ctx->release("z");
+				ctx->release("dleft");
+				ctx->enableSystem("backdash");
+				ctx->rumble = true;
+			}
+			// START+DRIGHT => disable backdash
+			else if (ctx->data.report.start && ctx->data.report.dright) {
+				ctx->release("z");
+				ctx->release("dright");
+				ctx->disableSystem("backdash");
+				ctx->rumble = true;
+			}
+
+			// DUP => on
+			else if (ctx->data.report.dup) {
+				ctx->release("z");
+				ctx->release("dup");
+				ctx->enabled = true;
+				ctx->rumble = true;
+			}
+			// DDOWN => off
+			else if (ctx->data.report.ddown) {
+				ctx->release("z");
+				ctx->release("ddown");
+				ctx->enabled = false;
+				ctx->rumble = true;
+			}
+
+			// DLEFT => vanilla
+			else if (ctx->data.report.dleft) {
+				ctx->release("z");
+				ctx->release("dleft");
+				ctx->dolphin(false);
+				ctx->rumble = true;
+			}
+			// DRIGHT => dolphin
+			else if (ctx->data.report.dright) {
+				ctx->release("z");
+				ctx->release("dright");
+				ctx->dolphin(true);
+				ctx->rumble = true;
 			}
 		}
 };
