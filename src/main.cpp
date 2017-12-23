@@ -28,7 +28,6 @@ void setup() {
 	char json[] = "{"
 		"\"angles\": \"true\","
 		"\"backdash\": \"true\","
-		"\"debug\": \"false\","
 		"\"remap\": \"false\","
 		"\"rumble\": \"false\""
 	"}";
@@ -42,7 +41,6 @@ void setup() {
 	// addSystem("remap", new RemapSystem(ctx));
 	addSystem("backdash", new BackdashSystem(ctx));
 	addSystem("angles", new AnglesSystem(ctx));
-	// addSystem("debug", new DebugSystem(ctx));
 }
 
 void init2() {

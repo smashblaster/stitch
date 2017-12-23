@@ -32,7 +32,7 @@ class AnglesSystem: public System {
 		void init() {
 			// TODO: remove this temporary workaround once we figure out setting origin on dolphin
 			if (ctx->isDolphin) {
-				wdAngleLeft = -360 + 197.5;
+				wdAngleLeft = -360 + 198;
 				wdAngleLeftRad = wdAngleLeft * M_PI / 180;
 				wdAngleRight = -360 + 343.5;
 				wdAngleRightRad = wdAngleRight * M_PI / 180;

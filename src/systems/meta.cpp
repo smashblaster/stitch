@@ -31,61 +31,52 @@ class MetaSystem: public System {
 
 			if (!ctx->data.report.z) return;
 
-			// START+DUP => debug on
-			if (ctx->data.report.start && ctx->data.report.dup) {
+			// START+L => disable backdash
+			else if (ctx->data.report.start && ctx->data.report.l) {
 				ctx->release("z");
-				ctx->release("dup");
-				ctx->enableSystem("debug");
-				ctx->rumble = true;
-			}
-			// START+DDOWN => debug off
-			else if (ctx->data.report.start && ctx->data.report.ddown) {
-				ctx->release("z");
-				ctx->release("ddown");
-				ctx->disableSystem("debug");
-				ctx->rumble = true;
-			}
-
-			// START+DLEFT => enable backdash
-			else if (ctx->data.report.start && ctx->data.report.dleft) {
-				ctx->release("z");
-				ctx->release("dleft");
-				ctx->enableSystem("backdash");
-				ctx->rumble = true;
-			}
-			// START+DRIGHT => disable backdash
-			else if (ctx->data.report.start && ctx->data.report.dright) {
-				ctx->release("z");
-				ctx->release("dright");
+				ctx->release("start");
+				ctx->release("l");
 				ctx->disableSystem("backdash");
 				ctx->rumble = true;
 			}
-
-			// DUP => on
-			else if (ctx->data.report.dup) {
+			// START+R => enable backdash
+			else if (ctx->data.report.start && ctx->data.report.r) {
 				ctx->release("z");
-				ctx->release("dup");
-				ctx->enabled = true;
+				ctx->release("start");
+				ctx->release("r");
+				ctx->enableSystem("backdash");
 				ctx->rumble = true;
 			}
-			// DDOWN => off
-			else if (ctx->data.report.ddown) {
+
+			// START+DDOWN => off
+			else if (ctx->data.report.start && ctx->data.report.ddown) {
 				ctx->release("z");
+				ctx->release("start");
 				ctx->release("ddown");
 				ctx->enabled = false;
 				ctx->rumble = true;
 			}
-
-			// DLEFT => vanilla
-			else if (ctx->data.report.dleft) {
+			// START+DUP => on
+			else if (ctx->data.report.start && ctx->data.report.dup) {
 				ctx->release("z");
+				ctx->release("start");
+				ctx->release("dup");
+				ctx->enabled = true;
+				ctx->rumble = true;
+			}
+
+			// START+DLEFT => vanilla
+			else if (ctx->data.report.start && ctx->data.report.dleft) {
+				ctx->release("z");
+				ctx->release("start");
 				ctx->release("dleft");
 				ctx->dolphin(false);
 				ctx->rumble = true;
 			}
-			// DRIGHT => dolphin
-			else if (ctx->data.report.dright) {
+			// START+DRIGHT => dolphin
+			else if (ctx->data.report.start && ctx->data.report.dright) {
 				ctx->release("z");
+				ctx->release("start");
 				ctx->release("dright");
 				ctx->dolphin(true);
 				ctx->rumble = true;

@@ -26,7 +26,6 @@ class Context {
 		int maxDashBuffer = maxDashBufferConsole;
 		int stepInterval = stepIntervalConsole;
 		std::vector<System*> systems;
-		unsigned long debug = 0;
 
 		Context(int consolePin, int controllerPin): console(consolePin), controller(controllerPin) {}
 		~Context() = default;
@@ -50,10 +49,6 @@ class Context {
 		void toggleSystem(System* system);
 		void toggleSystem(System* system, bool value);
 
-		// Profiler
-		void begin() { debug = micros(); }
-		void end() { debug = micros() - debug; }
-
 		void dolphin(bool enabled) {
 			isDolphin = enabled;
 			stepInterval = (enabled) ? stepIntervalDolphin : stepIntervalConsole;
@@ -69,5 +64,7 @@ class Context {
 			// Set a consistent origin.
 			data.origin.inititalData.xAxis = x;
 			data.origin.inititalData.yAxis = y;
+			data.report.xAxis = x;
+			data.report.yAxis = y;
 		}
 };
